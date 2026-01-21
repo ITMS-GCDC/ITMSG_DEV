@@ -19,7 +19,7 @@ IT 프로젝트의 SR(Service Request), SPEC, 승인, 장애 등을 통합 관�
 - ✅ **파트너 관리** (Partner Management)
 - ✅ **자산 관리** (Asset Management)
 - ⏳ **통계 및 분석** (Statistics & Analytics - Backend 준비 중)
-- ⏳ **Excel 리포트** (Report Generation - Backend 준비 중)
+- ⏳ **Excel 리포트** (Report Generation - Backend 준비 중) 
 
 ## 🛠 기술 스택
 
