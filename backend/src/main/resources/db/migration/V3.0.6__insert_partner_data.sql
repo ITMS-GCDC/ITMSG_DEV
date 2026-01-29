@@ -3,14 +3,14 @@
 
 -- 1. 삼성그룹 계열사 (Samsung Group Affiliates)
 INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
-('COMP002', '삼성전자', '123-45-67890', '김현석', '서울특별시 영등포구 여의도동 60', '02-2222-2222', 'system', 'system'),
-('COMP003', '삼성물산', '123-45-67891', '오세철', '서울특별시 중구 을지로 30', '02-3333-3333', 'system', 'system'),
-('COMP004', '삼성생명', '123-45-67892', '이명우', '서울특별시 중구 남대문로 5가 1-1', '02-4444-4444', 'system', 'system'),
-('COMP005', '삼성화재', '123-45-67893', '박동훈', '서울특별시 중구 퇴계로 30', '02-5555-5555', 'system', 'system'),
-('COMP006', '삼성전기', '123-45-67895', '전동수', '경기도 수원시 영통구 삼성로 129', '031-222-2222', 'system', 'system'),
-('COMP007', '삼성SDI', '123-45-67896', '전동수', '경기도 용인시 기흥구 삼성로 1', '031-333-3333', 'system', 'system'),
-('COMP008', '삼성바이오로직스', '123-45-67897', '김태한', '인천광역시 연수구 컨벤시아로 117', '032-444-4444', 'system', 'system'),
-('COMP009', '삼성엔지니어링', '123-45-67898', '윤석금', '서울특별시 영등포구 여의도동 3', '02-6666-6666', 'system', 'system');
+('COMP002', '삼성전자', '123-99-67890', '김현석', '서울특별시 영등포구 여의도동 60', '02-2222-2222', 'system', 'system'),
+('COMP003', '삼성물산', '123-99-67891', '오세철', '서울특별시 중구 을지로 30', '02-3333-3333', 'system', 'system'),
+('COMP004', '삼성생명', '123-99-67892', '이명우', '서울특별시 중구 남대문로 5가 1-1', '02-4444-4444', 'system', 'system'),
+('COMP005', '삼성화재', '123-99-67893', '박동훈', '서울특별시 중구 퇴계로 30', '02-5555-5555', 'system', 'system'),
+('COMP006', '삼성전기', '123-99-67895', '전동수', '경기도 수원시 영통구 삼성로 129', '031-222-2222', 'system', 'system'),
+('COMP007', '삼성SDI', '123-99-67896', '전동수', '경기도 용인시 기흥구 삼성로 1', '031-333-3333', 'system', 'system'),
+('COMP008', '삼성바이오로직스', '123-99-67897', '김태한', '인천광역시 연수구 컨벤시아로 117', '032-444-4444', 'system', 'system'),
+('COMP009', '삼성엔지니어링', '123-99-67898', '윤석금', '서울특별시 영등포구 여의도동 3', '02-6666-6666', 'system', 'system');
 
 -- 2. 현대자동차그룹 계열사 (Hyundai Auto Group)
 INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
@@ -264,16 +264,16 @@ INSERT INTO users (email, password, name, company_id, is_active, is_approved, cr
 
 -- 1. 삼성그룹 계열사 (Samsung Group Affiliates)
 INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by) VALUES
-('PAR002', '삼성전자 파트너', '123-45-67890', '김현석', (SELECT id FROM users WHERE email = 'samsung-electronics@partner.com'), 'system', 'system'),
-('PAR003', '삼성물산 파트너', '123-45-67891', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt@partner.com'), 'system', 'system'),
-('PAR004', '삼성생명 파트너', '123-45-67892', '이명우', (SELECT id FROM users WHERE email = 'samsung-life@partner.com'), 'system', 'system'),
-('PAR005', '삼성화재 파트너', '123-45-67893', '박동훈', (SELECT id FROM users WHERE email = 'samsung-fire@partner.com'), 'system', 'system'),
-('PAR006', '삼성물산 파트너', '123-45-67894', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt2@partner.com'), 'system', 'system'),
-('PAR007', '삼성전기 파트너', '123-45-67895', '전동수', (SELECT id FROM users WHERE email = 'samsung-electro@partner.com'), 'system', 'system'),
-('PAR008', '삼성SDI 파트너', '123-45-67896', '전동수', (SELECT id FROM users WHERE email = 'samsung-sdi@partner.com'), 'system', 'system'),
-('PAR009', '삼성바이오로직스 파트너', '123-45-67897', '김태한', (SELECT id FROM users WHERE email = 'samsung-bio@partner.com'), 'system', 'system'),
-('PAR010', '삼성엔지니어링 파트너', '123-45-67898', '윤석금', (SELECT id FROM users WHERE email = 'samsung-engineering@partner.com'), 'system', 'system'),
-('PAR011', '삼성물산 파트너', '123-45-67899', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt@partner.com'), 'system', 'system');
+('PAR002', '삼성전자 파트너', '123-99-67890', '김현석', (SELECT id FROM users WHERE email = 'samsung-electronics@partner.com'), 'system', 'system'),
+('PAR003', '삼성물산 파트너', '123-99-67891', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt@partner.com'), 'system', 'system'),
+('PAR004', '삼성생명 파트너', '123-99-67892', '이명우', (SELECT id FROM users WHERE email = 'samsung-life@partner.com'), 'system', 'system'),
+('PAR005', '삼성화재 파트너', '123-99-67893', '박동훈', (SELECT id FROM users WHERE email = 'samsung-fire@partner.com'), 'system', 'system'),
+('PAR006', '삼성물산 파트너', '123-99-67894', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt2@partner.com'), 'system', 'system'),
+('PAR007', '삼성전기 파트너', '123-99-67895', '전동수', (SELECT id FROM users WHERE email = 'samsung-electro@partner.com'), 'system', 'system'),
+('PAR008', '삼성SDI 파트너', '123-99-67896', '전동수', (SELECT id FROM users WHERE email = 'samsung-sdi@partner.com'), 'system', 'system'),
+('PAR009', '삼성바이오로직스 파트너', '123-99-67897', '김태한', (SELECT id FROM users WHERE email = 'samsung-bio@partner.com'), 'system', 'system'),
+('PAR010', '삼성엔지니어링 파트너', '123-99-67898', '윤석금', (SELECT id FROM users WHERE email = 'samsung-engineering@partner.com'), 'system', 'system'),
+('PAR011', '삼성물산 파트너', '123-99-67899', '오세철', (SELECT id FROM users WHERE email = 'samsung-cnt@partner.com'), 'system', 'system');
 
 -- 2. 현대자동차그룹 계열사 (Hyundai Auto Group)
 INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by) VALUES
