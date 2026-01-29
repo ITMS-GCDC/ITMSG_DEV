@@ -128,9 +128,9 @@ INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created
 ('PAR096', '한진해운 파트너', '012-34-56794', '박연호', 1, 'system', 'system');
 
 INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by) VALUES
-('PAR097', 'GCDC 파트너', '012-34-56795', '김영실', 1, 'system', 'system')
-('PAR098', '디플럭스 파트너', '012-34-56796', '김회석', 1, 'system', 'system')
-('PAR099', '잔소프트 파트너', '012-34-56797', '김지환', 1, 'system', 'system')
+('PAR097', 'GCDC 파트너', '012-34-56795', '김영실', 1, 'system', 'system'),
+('PAR098', '디플럭스 파트너', '012-34-56796', '김회석', 1, 'system', 'system'),
+('PAR099', '잔소프트 파트너', '012-34-56797', '김지환', 1, 'system', 'system'),
 ('PAR100', '진커뮤니케이션 파트너', '012-34-56798', '이명호', 1, 'system', 'system');
 
 -- 파트너 데이터 삽입 완료
