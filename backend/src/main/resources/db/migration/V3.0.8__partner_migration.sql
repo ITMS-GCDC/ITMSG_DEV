@@ -1187,6 +1187,137 @@ FROM users u
 WHERE u.email = 'jinkomm@partner.com'
 ON CONFLICT (business_number) DO NOTHING;
 
+-- 12. 추가 파트너 기업 (COMP091-COMP100)
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR091' as code,
+    '네이버 파트너' as name,
+    '123-45-67899' as business_number,
+    '최수연' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'naver@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR092' as code,
+    '카카오 파트너' as name,
+    '234-56-78900' as business_number,
+    '홍은택' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'kakao@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR093' as code,
+    '쿠팡 파트너' as name,
+    '345-67-89011' as business_number,
+    '김범석' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'coupang@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR094' as code,
+    '배달의민족 파트너' as name,
+    '456-78-90122' as business_number,
+    '김봉진' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'baedal@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR095' as code,
+    '야놀자 파트너' as name,
+    '567-89-01233' as business_number,
+    '이수영' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'yanolja@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR096' as code,
+    '무신사 파트너' as name,
+    '678-90-12344' as business_number,
+    '강준영' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'musinsa@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR097' as code,
+    '당근마켓 파트너' as name,
+    '789-01-23455' as business_number,
+    '김용현' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'danggeun@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR098' as code,
+    '요기요 파트너' as name,
+    '890-12-34566' as business_number,
+    '이정욱' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'yogiyo@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR099' as code,
+    '라인 파트너' as name,
+    '901-23-45677' as business_number,
+    '신중호' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'line@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
+INSERT INTO partners (code, name, business_number, ceo_name, manager_id, created_by, updated_by)
+SELECT 
+    'PAR100' as code,
+    '토스 파트너' as name,
+    '012-34-56788' as business_number,
+    '이승건' as ceo_name,
+    u.id as manager_id,
+    'system' as created_by,
+    'system' as updated_by
+FROM users u 
+WHERE u.email = 'toss@partner.com'
+ON CONFLICT (business_number) DO NOTHING;
+
 -- 4. 파트너 코드 자동 생성을 위한 시퀀스 초기화 쿼리
 -- NumberingService에서 사용하는 파트너 코드 시퀀스 초기화
 -- 기존에 삽입된 최대 파트너 코드를 기반으로 시퀀스 값 설정

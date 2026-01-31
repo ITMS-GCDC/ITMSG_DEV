@@ -991,6 +991,117 @@ ON CONFLICT (code) DO UPDATE SET
     updated_by = EXCLUDED.updated_by,
     updated_at = NOW();
 
+-- 12. 추가 파트너 기업 (COMP091-COMP100)
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP091', '네이버', '123-45-67899', '최수연', '경기도 성남시 분당구 정자동 1781', '031-908-8888', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP092', '카카오', '234-56-78900', '홍은택', '서울특별시 서초구 서초대로 77길 55', '02-333-3333', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP093', '쿠팡', '345-67-89011', '김범석', '서울특별시 송파구 올림픽로 35', '02-123-4567', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP094', '배달의민족', '456-78-90122', '김봉진', '서울특별시 강남구 테헤란로 14길 6', '02-2108-7777', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP095', '야놀자', '567-89-01233', '이수영', '서울특별시 강남구 영동대로 511', '02-2108-8888', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP096', '무신사', '678-90-12344', '강준영', '서울특별시 강남구 영동대로 511', '02-2108-9999', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP097', '당근마켓', '789-01-23455', '김용현', '서울특별시 서초구 서초대로 77길 55', '02-2108-1111', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP098', '요기요', '890-12-34566', '이정욱', '서울특별시 강남구 영동대로 511', '02-2108-2222', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP099', '라인', '901-23-45677', '신중호', '서울특별시 강남구 영동대로 511', '02-2108-3333', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO companies (code, name, business_number, ceo_name, address, phone_number, created_by, updated_by) VALUES
+('COMP100', '토스', '012-34-56788', '이승건', '서울특별시 강남구 영동대로 511', '02-2108-4444', 'system', 'system')
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    business_number = EXCLUDED.business_number,
+    ceo_name = EXCLUDED.ceo_name,
+    address = EXCLUDED.address,
+    phone_number = EXCLUDED.phone_number,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
 -- 파트너별 담당자(사용자) 데이터 삽입
 -- 각 파트너당 1명의 담당자를 생성합니다.
 -- 비밀번호: admin1234 (BCrypt 해시: $2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa)
@@ -2086,6 +2197,117 @@ ON CONFLICT (email) DO UPDATE SET
 
 INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
 ('jinkomm@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '진커뮤니케이션 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP090'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+-- 12. 추가 파트너 기업 담당자 (COMP091-COMP100)
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('naver@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '네이버 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP091'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('kakao@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '카카오 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP092'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('coupang@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '쿠팡 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP093'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('baedal@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '배달의민족 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP094'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('yanolja@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '야놀자 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP095'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('musinsa@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '무신사 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP096'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('danggeun@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '당근마켓 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP097'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('yogiyo@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '요기요 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP098'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('line@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '라인 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP099'), true, true, 'system', 'system')
+ON CONFLICT (email) DO UPDATE SET
+    password = EXCLUDED.password,
+    name = EXCLUDED.name,
+    company_id = EXCLUDED.company_id,
+    is_active = EXCLUDED.is_active,
+    is_approved = EXCLUDED.is_approved,
+    updated_by = EXCLUDED.updated_by,
+    updated_at = NOW();
+
+INSERT INTO users (email, password, name, company_id, is_active, is_approved, created_by, updated_by) VALUES
+('toss@partner.com', '$2a$10$RSih82WGdPGHLKwNmBKFAeIEc69TebIajf97uZh8Ziq0X05V1SRqa', '토스 파트너 담당자', (SELECT id FROM companies WHERE code = 'COMP100'), true, true, 'system', 'system')
 ON CONFLICT (email) DO UPDATE SET
     password = EXCLUDED.password,
     name = EXCLUDED.name,
