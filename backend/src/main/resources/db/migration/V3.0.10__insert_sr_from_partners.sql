@@ -2483,15 +2483,15 @@ ON CONFLICT (sr_number) DO NOTHING;
 
 -- SR 코드 시퀀스 값 확인 및 업데이트 쿼리
 WITH max_sr_code AS (
-    SELECT MAX(CAST(SUBSTRING(code, 3) AS INTEGER)) as max_code_num
+    SELECT MAX(CAST(SUBSTRING(sr_number, 3) AS INTEGER)) as max_code_num
     FROM service_requests
-    WHERE code LIKE 'SR%'
+    WHERE sr_number LIKE 'SR%'
 )
 UPDATE service_requests 
-SET code = 'SR' || LPAD((SELECT max_code_num + 1 FROM max_sr_code)::TEXT, 3, '0')
+SET sr_number = 'SR' || LPAD((SELECT max_code_num + 1 FROM max_sr_code)::TEXT, 3, '0')
 WHERE id IN (
     SELECT id FROM service_requests 
-    WHERE code IS NULL OR code = ''
+    WHERE sr_number IS NULL OR sr_number = ''
     LIMIT 1
 );
 
@@ -2502,19 +2502,19 @@ WHERE id IN (
 SELECT COUNT(*) as sr_count FROM service_requests;
 
 -- SR 코드 중복 검증
-SELECT code, COUNT(*) as duplicate_count 
+SELECT sr_number, COUNT(*) as duplicate_count 
 FROM service_requests 
-GROUP BY code 
+GROUP BY sr_number 
 HAVING COUNT(*) > 1;
 
 -- 파트너 존재 검증
-SELECT sr.code, sr.name, sr.partner_id, p.name as partner_name
+SELECT sr.sr_number, sr.title, sr.partner_id, p.name as partner_name
 FROM service_requests sr
 LEFT JOIN partners p ON sr.partner_id = p.id
 WHERE p.id IS NULL;
 
 -- 프로젝트 존재 검증
-SELECT sr.code, sr.name, sr.project_id, pr.name as project_name
+SELECT sr.sr_number, sr.title, sr.project_id, pr.name as project_name
 FROM service_requests sr
 LEFT JOIN projects pr ON sr.project_id = pr.id
 WHERE pr.id IS NULL;
