@@ -16,7 +16,24 @@
 -- 프론트 연동: ProjectCreatePage.tsx에서 API 호출
 
 -- 3. 파트너 기준 프로젝트 데이터 삽입 쿼리 (멱등성 보장)
--- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 각 파트너당 1개 프로젝트 생성
+-- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 각 파트너당 1개씩 총 83개의 프로젝트 데이터를 생성하였습니다.
+
+-- 1. [REPORT A] CRUD 및 데이터 흐름 분석
+-- 프로젝트 등록 화면 요소와 API 흐름 분석
+-- 화면 요소: 프로젝트명, 프로젝트코드, 파트너, 시작일, 종료일, 상태, 유형
+-- 액션 유형: 생성 (C)
+-- API Endpoint: POST /api/projects
+-- 백엔드 객체: ProjectService.createProject()
+-- 대상 테이블 & 컬럼: projects (name, code, project_type, status, start_date, end_date, company_id, created_by, updated_by)
+
+-- 2. [REPORT B] 수정 영향도 검토
+-- 의존성 조사: ProjectService, ProjectRepository, PartnerRepository, NumberingService
+-- 연관 DB 객체: projects 테이블, partners 테이블 (company_id FK)
+-- 사이드 이펙트: 프로젝트 코드 자동 생성, 파트너 존재 검증
+-- 프론트 연동: ProjectCreatePage.tsx에서 API 호출
+
+-- 3. 파트너 기준 프로젝트 데이터 삽입 쿼리 (멱등성 보장)
+-- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 각 파트너당 1개씩 총 83개의 프로젝트 데이터를 생성하였습니다.
 
 -- 삼성그룹 파트너 기준 프로젝트 생성
 -- PAR002: 삼성전자 파트너
@@ -28,28 +45,11 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-01' as start_date,
     '2024-12-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
 WHERE p.code = 'PAR002'
-LIMIT 1
-ON CONFLICT (code) DO NOTHING;
-
--- PAR003: 삼성물산 파트너
-INSERT INTO projects (code, name, project_type, status, start_date, end_date, company_id, created_by, updated_by)
-SELECT 
-    'PROJ002' as code,
-    '삼성물산 스마트 빌딩 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
-    'IN_PROGRESS' as status,
-    '2024-02-01' as start_date,
-    '2024-11-30' as end_date,
-    p.company_id as company_id,
-    'system' as created_by,
-    'system' as updated_by
-FROM partners p 
-WHERE p.code = 'PAR003'
 LIMIT 1
 ON CONFLICT (code) DO NOTHING;
 
@@ -62,7 +62,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-01' as start_date,
     '2024-10-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -79,7 +79,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-01' as start_date,
     '2024-09-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -96,7 +96,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-01' as start_date,
     '2024-08-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -113,7 +113,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-01' as start_date,
     '2024-07-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -130,7 +130,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-01' as start_date,
     '2024-06-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -147,7 +147,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-01' as start_date,
     '2024-05-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -165,7 +165,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -182,7 +182,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -199,7 +199,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -216,7 +216,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -233,7 +233,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -250,7 +250,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -267,7 +267,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -284,7 +284,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -302,7 +302,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -319,7 +319,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-20' as start_date,
     '2024-11-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -336,7 +336,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-20' as start_date,
     '2024-10-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -353,7 +353,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-20' as start_date,
     '2024-09-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -370,7 +370,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-20' as start_date,
     '2024-08-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -387,7 +387,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-20' as start_date,
     '2024-07-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -404,7 +404,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-20' as start_date,
     '2024-06-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -421,7 +421,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-20' as start_date,
     '2024-05-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -439,7 +439,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-25' as start_date,
     '2024-12-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -456,7 +456,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-25' as start_date,
     '2024-11-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -473,7 +473,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-25' as start_date,
     '2024-10-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -490,7 +490,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-25' as start_date,
     '2024-09-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -507,7 +507,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-25' as start_date,
     '2024-08-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -524,7 +524,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-25' as start_date,
     '2024-07-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -541,7 +541,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-25' as start_date,
     '2024-06-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -558,7 +558,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-25' as start_date,
     '2024-05-25' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -576,7 +576,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-30' as start_date,
     '2024-12-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -593,7 +593,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-30' as start_date,
     '2024-11-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -610,7 +610,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-30' as start_date,
     '2024-10-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -627,7 +627,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-30' as start_date,
     '2024-09-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -644,7 +644,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-30' as start_date,
     '2024-08-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -661,7 +661,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-30' as start_date,
     '2024-07-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -678,7 +678,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-30' as start_date,
     '2024-06-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -695,7 +695,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-30' as start_date,
     '2024-05-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -713,7 +713,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-10' as start_date,
     '2024-12-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -730,7 +730,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-10' as start_date,
     '2024-11-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -747,7 +747,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-10' as start_date,
     '2024-10-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -764,7 +764,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-10' as start_date,
     '2024-09-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -781,7 +781,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-10' as start_date,
     '2024-08-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -798,7 +798,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-10' as start_date,
     '2024-07-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -815,7 +815,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-10' as start_date,
     '2024-06-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -832,7 +832,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-10' as start_date,
     '2024-05-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -850,7 +850,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-05' as start_date,
     '2024-12-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -867,7 +867,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-05' as start_date,
     '2024-11-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -884,7 +884,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-05' as start_date,
     '2024-10-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -901,7 +901,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-05' as start_date,
     '2024-09-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -918,7 +918,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-05' as start_date,
     '2024-08-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -935,7 +935,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-05' as start_date,
     '2024-07-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -952,7 +952,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-05' as start_date,
     '2024-06-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -969,7 +969,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-05' as start_date,
     '2024-05-05' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -987,7 +987,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-12' as start_date,
     '2024-12-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1004,7 +1004,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-12' as start_date,
     '2024-11-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1021,7 +1021,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-12' as start_date,
     '2024-10-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1038,7 +1038,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-12' as start_date,
     '2024-09-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1055,7 +1055,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-12' as start_date,
     '2024-08-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1072,7 +1072,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-12' as start_date,
     '2024-07-12' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1090,7 +1090,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-08' as start_date,
     '2024-12-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1107,7 +1107,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-08' as start_date,
     '2024-11-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1124,7 +1124,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-08' as start_date,
     '2024-10-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1141,7 +1141,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-08' as start_date,
     '2024-09-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1158,7 +1158,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-08' as start_date,
     '2024-08-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1175,7 +1175,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-08' as start_date,
     '2024-07-08' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1193,7 +1193,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-01' as start_date,
     '2024-12-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1210,7 +1210,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-01' as start_date,
     '2024-11-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1227,7 +1227,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-01' as start_date,
     '2024-10-31' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1244,7 +1244,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-01' as start_date,
     '2024-09-30' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1262,7 +1262,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1279,7 +1279,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1296,7 +1296,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1313,7 +1313,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1330,7 +1330,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1347,7 +1347,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1364,7 +1364,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1381,7 +1381,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1398,7 +1398,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1415,7 +1415,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-20' as start_date,
     '2024-11-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1433,7 +1433,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-10' as start_date,
     '2024-12-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1450,7 +1450,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-10' as start_date,
     '2024-11-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1467,7 +1467,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-10' as start_date,
     '2024-10-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1484,7 +1484,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-10' as start_date,
     '2024-09-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1501,7 +1501,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-10' as start_date,
     '2024-08-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1518,7 +1518,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-10' as start_date,
     '2024-07-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1535,7 +1535,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-10' as start_date,
     '2024-06-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1552,7 +1552,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-10' as start_date,
     '2024-05-10' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1569,7 +1569,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1586,7 +1586,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1603,7 +1603,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1620,7 +1620,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1637,7 +1637,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1654,7 +1654,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1671,7 +1671,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1688,7 +1688,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1705,7 +1705,7 @@ SELECT
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
-    p.company_id as company_id,
+    p.id as company_id,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1744,9 +1744,9 @@ GROUP BY code
 HAVING COUNT(*) > 1;
 
 -- 파트너 존재 검증
-SELECT p.code, p.name, p.company_id, par.name as partner_name
+SELECT p.code, p.name, p.id, par.name as partner_name
 FROM projects p
-LEFT JOIN partners par ON p.company_id = par.company_id
+LEFT JOIN partners par ON p.id = par.company_id
 WHERE par.company_id IS NULL;
 
 -- 프로젝트 등록 로직 분석 및 데이터 마이그레이션 완료
