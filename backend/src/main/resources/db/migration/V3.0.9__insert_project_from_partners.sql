@@ -41,7 +41,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ001' as code,
     '삼성전자 반도체 공정 개선 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-01' as start_date,
     '2024-12-31' as end_date,
@@ -58,7 +58,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ003' as code,
     '삼성생명 디지털 보험 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-01' as start_date,
     '2024-10-31' as end_date,
@@ -75,7 +75,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ004' as code,
     '삼성화재 디지털 손해사정 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-01' as start_date,
     '2024-09-30' as end_date,
@@ -92,7 +92,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ005' as code,
     '삼성전기 고성능 MLCC 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-01' as start_date,
     '2024-08-31' as end_date,
@@ -109,7 +109,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ006' as code,
     '삼성SDI 차세대 배터리 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-01' as start_date,
     '2024-07-31' as end_date,
@@ -126,7 +126,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ007' as code,
     '삼성바이오로직스 바이오의약품 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-01' as start_date,
     '2024-06-30' as end_date,
@@ -143,7 +143,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ008' as code,
     '삼성엔지니어링 스마트 플랜트 구축 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-01' as start_date,
     '2024-05-31' as end_date,
@@ -161,7 +161,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ009' as code,
     '현대자동차 전기차 플랫폼 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
@@ -178,7 +178,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ010' as code,
     '기아 디지털 콕핏 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
@@ -195,7 +195,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ011' as code,
     '현대모비스 차량용 소프트웨어 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
@@ -212,7 +212,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ012' as code,
     '현대위아 스마트 공장 자동화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
@@ -229,7 +229,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ013' as code,
     '현대글로비스 스마트 물류 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
@@ -246,7 +246,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ014' as code,
     '현대건설 스마트 시티 구축 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
@@ -263,7 +263,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ015' as code,
     '현대제철 스마트 제철 공정 개선 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
@@ -280,7 +280,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ016' as code,
     '현대오토에버 자동차 소프트웨어 개발 플랫폼' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
@@ -298,7 +298,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ017' as code,
     'SK하이닉스 차세대 메모리 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
@@ -315,7 +315,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ018' as code,
     'SK이노베이션 친환경 에너지 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-20' as start_date,
     '2024-11-20' as end_date,
@@ -332,7 +332,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ019' as code,
     'SK텔레콤 5G 네트워크 최적화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-20' as start_date,
     '2024-10-20' as end_date,
@@ -349,7 +349,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ020' as code,
     'SK스퀘어 반도체 투자 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-20' as start_date,
     '2024-09-20' as end_date,
@@ -366,7 +366,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ021' as code,
     'SK디스커버리 신사업 발굴 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-20' as start_date,
     '2024-08-20' as end_date,
@@ -383,7 +383,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ022' as code,
     'SKC 친환경 소재 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-20' as start_date,
     '2024-07-20' as end_date,
@@ -400,7 +400,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ023' as code,
     'SK가스 스마트 가스 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-20' as start_date,
     '2024-06-20' as end_date,
@@ -417,7 +417,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ024' as code,
     'SK엔무브 모빌리티 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-20' as start_date,
     '2024-05-20' as end_date,
@@ -435,7 +435,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ025' as code,
     'LG전자 AI 가전 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-25' as start_date,
     '2024-12-25' as end_date,
@@ -452,7 +452,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ026' as code,
     'LG화학 바이오소재 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-25' as start_date,
     '2024-11-25' as end_date,
@@ -469,7 +469,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ027' as code,
     'LG디스플레이 차세대 디스플레이 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-25' as start_date,
     '2024-10-25' as end_date,
@@ -486,7 +486,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ028' as code,
     'LG이노텍 차량용 센서 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-25' as start_date,
     '2024-09-25' as end_date,
@@ -503,7 +503,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ029' as code,
     'LG유플러스 IoT 서비스 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-25' as start_date,
     '2024-08-25' as end_date,
@@ -520,7 +520,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ030' as code,
     'LG생활건강 스마트 코스메틱 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-25' as start_date,
     '2024-07-25' as end_date,
@@ -537,7 +537,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ031' as code,
     'LG CNS 클라우드 보안 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-25' as start_date,
     '2024-06-25' as end_date,
@@ -554,7 +554,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ032' as code,
     'LG상사 글로벌 무역 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-25' as start_date,
     '2024-05-25' as end_date,
@@ -572,7 +572,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ033' as code,
     '롯데제과 스마트 제조 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-30' as start_date,
     '2024-12-30' as end_date,
@@ -589,7 +589,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ034' as code,
     '롯데칠성음료 스마트 물류 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-30' as start_date,
     '2024-11-30' as end_date,
@@ -606,7 +606,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ035' as code,
     '롯데마트 디지털 매장 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-30' as start_date,
     '2024-10-30' as end_date,
@@ -623,7 +623,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ036' as code,
     '롯데백화점 스마트 쇼핑 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-30' as start_date,
     '2024-09-30' as end_date,
@@ -640,7 +640,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ037' as code,
     '롯데호텔 스마트 투숙 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-30' as start_date,
     '2024-08-30' as end_date,
@@ -657,7 +657,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ038' as code,
     '롯데푸드 스마트 생산 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-30' as start_date,
     '2024-07-30' as end_date,
@@ -674,7 +674,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ039' as code,
     '롯데렌탈 차량 관리 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-30' as start_date,
     '2024-06-30' as end_date,
@@ -691,7 +691,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ040' as code,
     '롯데손해보험 디지털 보험 서비스 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-30' as start_date,
     '2024-05-30' as end_date,
@@ -709,7 +709,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ041' as code,
     'GS칼텍스 스마트 에너지 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-10' as start_date,
     '2024-12-10' as end_date,
@@ -726,7 +726,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ042' as code,
     'GS리테일 편의점 디지털 전환 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-10' as start_date,
     '2024-11-10' as end_date,
@@ -743,7 +743,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ043' as code,
     'GS건설 스마트 건설 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-10' as start_date,
     '2024-10-10' as end_date,
@@ -760,7 +760,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ044' as code,
     'GS글로벌 무역 플랫폼 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-10' as start_date,
     '2024-09-10' as end_date,
@@ -777,7 +777,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ045' as code,
     'GS EPS 에너지 솔루션 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-10' as start_date,
     '2024-08-10' as end_date,
@@ -794,7 +794,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ046' as code,
     'GS네오텍 스마트 팩토리 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-10' as start_date,
     '2024-07-10' as end_date,
@@ -811,7 +811,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ047' as code,
     'GS수퍼마켓 디지털 매장 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-10' as start_date,
     '2024-06-10' as end_date,
@@ -828,7 +828,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ048' as code,
     'GS홈쇼핑 모바일 쇼핑 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-10' as start_date,
     '2024-05-10' as end_date,
@@ -846,7 +846,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ049' as code,
     '한화솔루션 태양광 에너지 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-05' as start_date,
     '2024-12-05' as end_date,
@@ -863,7 +863,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ050' as code,
     '한화에어로스페이스 항공우주 소프트웨어 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-05' as start_date,
     '2024-11-05' as end_date,
@@ -880,7 +880,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ051' as code,
     '한화시스템 국방 IT 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-05' as start_date,
     '2024-10-05' as end_date,
@@ -897,7 +897,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ052' as code,
     '한화에너지 스마트 그리드 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-05' as start_date,
     '2024-09-05' as end_date,
@@ -914,7 +914,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ053' as code,
     '한화생명 디지털 보험 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-05' as start_date,
     '2024-08-05' as end_date,
@@ -931,7 +931,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ054' as code,
     '한화손해보험 인슈어테크 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-05' as start_date,
     '2024-07-05' as end_date,
@@ -948,7 +948,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ055' as code,
     '한화투자증권 모바일 트레이딩 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-05' as start_date,
     '2024-06-05' as end_date,
@@ -965,7 +965,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ056' as code,
     '한화자산운용 로보어드바이저 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-05' as start_date,
     '2024-05-05' as end_date,
@@ -983,7 +983,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ057' as code,
     '대우조선해양 스마트 조선소 구축 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-12' as start_date,
     '2024-12-12' as end_date,
@@ -1000,7 +1000,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ058' as code,
     '대우건설 스마트 건설 기술 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-12' as start_date,
     '2024-11-12' as end_date,
@@ -1017,7 +1017,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ059' as code,
     '대우산업 스마트 공장 자동화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-12' as start_date,
     '2024-10-12' as end_date,
@@ -1034,7 +1034,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ060' as code,
     '대우중공업 대형 설비 제어 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-12' as start_date,
     '2024-09-12' as end_date,
@@ -1051,7 +1051,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ061' as code,
     '대우조선 선박 설계 자동화 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-12' as start_date,
     '2024-08-12' as end_date,
@@ -1068,7 +1068,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ062' as code,
     '대우해양 해양 구조물 설계 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-12' as start_date,
     '2024-07-12' as end_date,
@@ -1086,7 +1086,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ063' as code,
     '대한항공 스마트 항공기 관리 시스템 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-08' as start_date,
     '2024-12-08' as end_date,
@@ -1103,7 +1103,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ064' as code,
     '한진 스마트 물류 네트워크 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-08' as start_date,
     '2024-11-08' as end_date,
@@ -1120,7 +1120,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ065' as code,
     '한진칼 항공 IT 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-08' as start_date,
     '2024-10-08' as end_date,
@@ -1137,7 +1137,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ066' as code,
     '대한통운 실시간 배송 추적 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-08' as start_date,
     '2024-09-08' as end_date,
@@ -1154,7 +1154,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ067' as code,
     '한진중공업 대형 크레인 제어 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-08' as start_date,
     '2024-08-08' as end_date,
@@ -1171,7 +1171,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ068' as code,
     '한진해운 선박 운항 최적화 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-08' as start_date,
     '2024-07-08' as end_date,
@@ -1189,7 +1189,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ069' as code,
     'GCDC ITMS 개발 플랫폼 구축' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-01' as start_date,
     '2024-12-31' as end_date,
@@ -1206,7 +1206,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ070' as code,
     '디플럭스 AI 솔루션 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-01' as start_date,
     '2024-11-30' as end_date,
@@ -1223,7 +1223,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ071' as code,
     '잔소프트 ERP 시스템 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-01' as start_date,
     '2024-10-31' as end_date,
@@ -1240,7 +1240,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ072' as code,
     '진커뮤니케이션 통신 인프라 구축 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-01' as start_date,
     '2024-09-30' as end_date,
@@ -1258,7 +1258,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ073' as code,
     '네이버 AI 검색 엔진 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
@@ -1275,7 +1275,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ074' as code,
     '카카오 모빌리티 플랫폼 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
@@ -1292,7 +1292,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ075' as code,
     '쿠팡 물류 자동화 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
@@ -1309,7 +1309,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ076' as code,
     '배달의민족 스마트 주문 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
@@ -1326,7 +1326,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ077' as code,
     '야놀자 숙박 플랫폼 AI 최적화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
@@ -1343,7 +1343,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ078' as code,
     '무신사 패션 AI 추천 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
@@ -1360,7 +1360,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ079' as code,
     '당근마켓 중고거래 AI 매칭 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
@@ -1377,7 +1377,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ080' as code,
     '요기요 실시간 배달 최적화 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
@@ -1394,7 +1394,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ081' as code,
     '라인 메신저 AI 챗봇 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
@@ -1411,7 +1411,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ082' as code,
     '토스 핀테크 보안 시스템 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-20' as start_date,
     '2024-11-20' as end_date,
@@ -1429,7 +1429,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ083' as code,
     '애플 차세대 iOS 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-10' as start_date,
     '2024-12-10' as end_date,
@@ -1446,7 +1446,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ084' as code,
     '마이크로소프트 Azure 클라우드 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-10' as start_date,
     '2024-11-10' as end_date,
@@ -1463,7 +1463,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ085' as code,
     '아마존 AWS 인프라 최적화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-10' as start_date,
     '2024-10-10' as end_date,
@@ -1480,7 +1480,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ086' as code,
     '구글 안드로이드 AI 기능 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-10' as start_date,
     '2024-09-10' as end_date,
@@ -1497,7 +1497,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ087' as code,
     '메타 메타버스 플랫폼 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-10' as start_date,
     '2024-08-10' as end_date,
@@ -1514,7 +1514,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ088' as code,
     'IBM 왓슨 AI 비즈니스 솔루션 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-10' as start_date,
     '2024-07-10' as end_date,
@@ -1531,7 +1531,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ089' as code,
     '오라클 데이터베이스 클라우드 전환 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-10' as start_date,
     '2024-06-10' as end_date,
@@ -1548,7 +1548,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ090' as code,
     '인텔 차세대 프로세서 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-10' as start_date,
     '2024-05-10' as end_date,
@@ -1565,7 +1565,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ091' as code,
     'AMD GPU 성능 최적화 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-15' as start_date,
     '2024-12-15' as end_date,
@@ -1582,7 +1582,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ092' as code,
     'NVIDIA AI 가속기 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-02-15' as start_date,
     '2024-11-15' as end_date,
@@ -1599,7 +1599,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ093' as code,
     '퀄컴 5G 모뎀 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-03-15' as start_date,
     '2024-10-15' as end_date,
@@ -1616,7 +1616,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ094' as code,
     '소니 게임 콘솔 차세대 엔진 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-04-15' as start_date,
     '2024-09-15' as end_date,
@@ -1633,7 +1633,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ095' as code,
     '닌텐도 모바일 게임 플랫폼 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-05-15' as start_date,
     '2024-08-15' as end_date,
@@ -1650,7 +1650,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ096' as code,
     'MS 게임 스튜디오 클라우드 게임 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-06-15' as start_date,
     '2024-07-15' as end_date,
@@ -1667,7 +1667,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ097' as code,
     'EA 스포츠 게임 AI 개선 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-07-15' as start_date,
     '2024-06-15' as end_date,
@@ -1684,7 +1684,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ098' as code,
     '유비소프트 오픈월드 게임 엔진 개발' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-08-15' as start_date,
     '2024-05-15' as end_date,
@@ -1701,7 +1701,7 @@ INSERT INTO projects (code, name, project_type, status, start_date, end_date, co
 SELECT 
     'PROJ099' as code,
     '블리자드 e스포츠 플랫폼 개발 프로젝트' as name,
-    'DEVELOPMENT' as project_type,
+    'SI' as project_type,
     'IN_PROGRESS' as status,
     '2024-01-20' as start_date,
     '2024-12-20' as end_date,
