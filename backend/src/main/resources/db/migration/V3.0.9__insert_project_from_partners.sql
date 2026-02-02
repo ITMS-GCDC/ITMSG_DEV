@@ -1744,10 +1744,10 @@ GROUP BY code
 HAVING COUNT(*) > 1;
 
 -- 파트너 존재 검증
-SELECT p.code, p.name, p.id, par.name as partner_name
+SELECT p.code, p.name, p.company_id, par.name as partner_name
 FROM projects p
-LEFT JOIN partners par ON p.id = par.company_id
-WHERE par.company_id IS NULL;
+LEFT JOIN partners par ON p.company_id = par.id
+WHERE par.id IS NULL;
 
 -- 프로젝트 등록 로직 분석 및 데이터 마이그레이션 완료
 -- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 각 파트너당 1개씩 총 83개의 프로젝트 데이터를 생성하였습니다.
