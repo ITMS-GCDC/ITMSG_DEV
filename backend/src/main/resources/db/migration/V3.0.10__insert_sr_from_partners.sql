@@ -634,8 +634,8 @@ SELECT
     pr.id as project_id,
     u.id as requester_id,
     d.id as requester_dept_id,
-    '2025-02-30' as request_date,
-    '2025-04-30' as due_date,
+    '2025-02-28' as request_date,
+    '2025-04-28' as due_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -682,8 +682,8 @@ SELECT
     pr.id as project_id,
     u.id as requester_id,
     d.id as requester_dept_id,
-    '2025-04-30' as request_date,
-    '2025-06-30' as due_date,
+    '2025-04-28' as request_date,
+    '2025-06-28' as due_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 

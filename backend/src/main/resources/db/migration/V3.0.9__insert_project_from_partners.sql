@@ -625,7 +625,7 @@ SELECT
     '롯데백화점 스마트 쇼핑 플랫폼 개발' as name,
     'SI' as project_type,
     'IN_PROGRESS' as status,
-    '2025-04-30' as start_date,
+    '2025-04-01' as start_date,
     '2025-09-30' as end_date,
     p.id as company_id,
     'system' as created_by,
