@@ -36,7 +36,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-electronics@partner.com'
 JOIN departments d ON d.name = 'IT운영팀'
 WHERE p.code = 'PAR002' AND pr.code = 'PROJ001'
@@ -60,7 +60,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-cnt@partner.com'
 JOIN departments d ON d.name = '시설관리팀'
 WHERE p.code = 'PAR003' AND pr.code = 'PROJ002'
@@ -84,7 +84,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-life@partner.com'
 JOIN departments d ON d.name = '디지털전략팀'
 WHERE p.code = 'PAR004' AND pr.code = 'PROJ003'
@@ -108,7 +108,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-fire@partner.com'
 JOIN departments d ON d.name = '손해사정팀'
 WHERE p.code = 'PAR005' AND pr.code = 'PROJ004'
@@ -132,7 +132,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-electro@partner.com'
 JOIN departments d ON d.name = '연구개발팀'
 WHERE p.code = 'PAR006' AND pr.code = 'PROJ005'
@@ -156,7 +156,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-sdi@partner.com'
 JOIN departments d ON d.name = '배터리연구팀'
 WHERE p.code = 'PAR007' AND pr.code = 'PROJ006'
@@ -180,7 +180,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-bio@partner.com'
 JOIN departments d ON d.name = '생물의약팀'
 WHERE p.code = 'PAR008' AND pr.code = 'PROJ007'
@@ -204,7 +204,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-engineering@partner.com'
 JOIN departments d ON d.name = '플랜트사업팀'
 WHERE p.code = 'PAR009' AND pr.code = 'PROJ008'
@@ -229,7 +229,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-motor@partner.com'
 JOIN departments d ON d.name = '전기차개발팀'
 WHERE p.code = 'PAR010' AND pr.code = 'PROJ009'
@@ -253,7 +253,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'kia@partner.com'
 JOIN departments d ON d.name = 'UX/UI팀'
 WHERE p.code = 'PAR011' AND pr.code = 'PROJ010'
@@ -277,7 +277,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-mobis@partner.com'
 JOIN departments d ON d.name = '소프트웨어팀'
 WHERE p.code = 'PAR012' AND pr.code = 'PROJ011'
@@ -301,7 +301,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-wia@partner.com'
 JOIN departments d ON d.name = '생산기술팀'
 WHERE p.code = 'PAR013' AND pr.code = 'PROJ012'
@@ -325,7 +325,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-glovis@partner.com'
 JOIN departments d ON d.name = '물류운영팀'
 WHERE p.code = 'PAR014' AND pr.code = 'PROJ013'
@@ -349,7 +349,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-construction@partner.com'
 JOIN departments d ON d.name = '도시개발팀'
 WHERE p.code = 'PAR015' AND pr.code = 'PROJ014'
@@ -373,7 +373,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-steel@partner.com'
 JOIN departments d ON d.name = '공정혁신팀'
 WHERE p.code = 'PAR016' AND pr.code = 'PROJ015'
@@ -397,7 +397,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hyundai-ever@partner.com'
 JOIN departments d ON d.name = '플랫폼개발팀'
 WHERE p.code = 'PAR017' AND pr.code = 'PROJ016'
@@ -422,7 +422,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-hynix@partner.com'
 JOIN departments d ON d.name = '반도체연구팀'
 WHERE p.code = 'PAR018' AND pr.code = 'PROJ017'
@@ -446,7 +446,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-innovation@partner.com'
 JOIN departments d ON d.name = '신사업개발팀'
 WHERE p.code = 'PAR019' AND pr.code = 'PROJ018'
@@ -470,7 +470,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-telecom@partner.com'
 JOIN departments d ON d.name = '네트워크팀'
 WHERE p.code = 'PAR020' AND pr.code = 'PROJ019'
@@ -494,7 +494,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-square@partner.com'
 JOIN departments d ON d.name = '투자전략팀'
 WHERE p.code = 'PAR021' AND pr.code = 'PROJ020'
@@ -518,7 +518,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-discovery@partner.com'
 JOIN departments d ON d.name = '신사업팀'
 WHERE p.code = 'PAR022' AND pr.code = 'PROJ021'
@@ -542,7 +542,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'skc@partner.com'
 JOIN departments d ON d.name = '소재연구팀'
 WHERE p.code = 'PAR023' AND pr.code = 'PROJ022'
@@ -566,7 +566,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-gas@partner.com'
 JOIN departments d ON d.name = '가스운영팀'
 WHERE p.code = 'PAR024' AND pr.code = 'PROJ023'
@@ -590,7 +590,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'sk-move@partner.com'
 JOIN departments d ON d.name = '모빌리티팀'
 WHERE p.code = 'PAR025' AND pr.code = 'PROJ024'
@@ -615,7 +615,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-electronics@partner.com'
 JOIN departments d ON d.name = 'AI연구팀'
 WHERE p.code = 'PAR026' AND pr.code = 'PROJ025'
@@ -639,7 +639,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-chemical@partner.com'
 JOIN departments d ON d.name = '바이오연구팀'
 WHERE p.code = 'PAR027' AND pr.code = 'PROJ026'
@@ -663,7 +663,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-display@partner.com'
 JOIN departments d ON d.name = '디스플레이연구팀'
 WHERE p.code = 'PAR028' AND pr.code = 'PROJ027'
@@ -687,7 +687,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-innotek@partner.com'
 JOIN departments d ON d.name = '센서연구팀'
 WHERE p.code = 'PAR029' AND pr.code = 'PROJ028'
@@ -711,7 +711,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-uplus@partner.com'
 JOIN departments d ON d.name = 'IoT사업팀'
 WHERE p.code = 'PAR030' AND pr.code = 'PROJ029'
@@ -735,7 +735,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-life@partner.com'
 JOIN departments d ON d.name = '코스메틱연구팀'
 WHERE p.code = 'PAR031' AND pr.code = 'PROJ030'
@@ -759,7 +759,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-cns@partner.com'
 JOIN departments d ON d.name = '보안연구팀'
 WHERE p.code = 'PAR032' AND pr.code = 'PROJ031'
@@ -783,7 +783,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lg-trading@partner.com'
 JOIN departments d ON d.name = '글로벌사업팀'
 WHERE p.code = 'PAR033' AND pr.code = 'PROJ032'
@@ -808,7 +808,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-confectionery@partner.com'
 JOIN departments d ON d.name = '생산관리팀'
 WHERE p.code = 'PAR034' AND pr.code = 'PROJ033'
@@ -832,7 +832,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-chilsung@partner.com'
 JOIN departments d ON d.name = '물류운영팀'
 WHERE p.code = 'PAR035' AND pr.code = 'PROJ034'
@@ -856,7 +856,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-mart@partner.com'
 JOIN departments d ON d.name = '점포운영팀'
 WHERE p.code = 'PAR036' AND pr.code = 'PROJ035'
@@ -880,7 +880,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-department@partner.com'
 JOIN departments d ON d.name = '디지털전략팀'
 WHERE p.code = 'PAR037' AND pr.code = 'PROJ036'
@@ -904,7 +904,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-hotel@partner.com'
 JOIN departments d ON d.name = '호텔운영팀'
 WHERE p.code = 'PAR038' AND pr.code = 'PROJ037'
@@ -928,7 +928,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-food@partner.com'
 JOIN departments d ON d.name = '생산기술팀'
 WHERE p.code = 'PAR039' AND pr.code = 'PROJ038'
@@ -952,7 +952,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-rental@partner.com'
 JOIN departments d ON d.name = '차량운영팀'
 WHERE p.code = 'PAR040' AND pr.code = 'PROJ039'
@@ -976,7 +976,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'lotte-insurance@partner.com'
 JOIN departments d ON d.name = '디지털전략팀'
 WHERE p.code = 'PAR041' AND pr.code = 'PROJ040'
@@ -1001,7 +1001,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-calnex@partner.com'
 JOIN departments d ON d.name = '에너지사업팀'
 WHERE p.code = 'PAR042' AND pr.code = 'PROJ041'
@@ -1025,7 +1025,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-retail@partner.com'
 JOIN departments d ON d.name = '디지털전환팀'
 WHERE p.code = 'PAR043' AND pr.code = 'PROJ042'
@@ -1049,7 +1049,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-construction@partner.com'
 JOIN departments d ON d.name = '스마트건설팀'
 WHERE p.code = 'PAR044' AND pr.code = 'PROJ043'
@@ -1073,7 +1073,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-global@partner.com'
 JOIN departments d ON d.name = '글로벌사업팀'
 WHERE p.code = 'PAR045' AND pr.code = 'PROJ044'
@@ -1097,7 +1097,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-eps@partner.com'
 JOIN departments d ON d.name = '에너지솔루션팀'
 WHERE p.code = 'PAR046' AND pr.code = 'PROJ045'
@@ -1121,7 +1121,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-neotech@partner.com'
 JOIN departments d ON d.name = '팩토리자동화팀'
 WHERE p.code = 'PAR047' AND pr.code = 'PROJ046'
@@ -1145,7 +1145,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-supermarket@partner.com'
 JOIN departments d ON d.name = '점포운영팀'
 WHERE p.code = 'PAR048' AND pr.code = 'PROJ047'
@@ -1169,7 +1169,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gs-homeshopping@partner.com'
 JOIN departments d ON d.name = '모바일사업팀'
 WHERE p.code = 'PAR049' AND pr.code = 'PROJ048'
@@ -1194,7 +1194,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-solution@partner.com'
 JOIN departments d ON d.name = '신재생에너지팀'
 WHERE p.code = 'PAR050' AND pr.code = 'PROJ049'
@@ -1218,7 +1218,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-aerospace@partner.com'
 JOIN departments d ON d.name = '소프트웨어개발팀'
 WHERE p.code = 'PAR051' AND pr.code = 'PROJ050'
@@ -1242,7 +1242,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-system@partner.com'
 JOIN departments d ON d.name = '방산사업팀'
 WHERE p.code = 'PAR052' AND pr.code = 'PROJ051'
@@ -1266,7 +1266,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-energy@partner.com'
 JOIN departments d ON d.name = '그리드사업팀'
 WHERE p.code = 'PAR053' AND pr.code = 'PROJ052'
@@ -1290,7 +1290,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-life@partner.com'
 JOIN departments d ON d.name = '디지털전략팀'
 WHERE p.code = 'PAR054' AND pr.code = 'PROJ053'
@@ -1314,7 +1314,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-insurance@partner.com'
 JOIN departments d ON d.name = '인슈어테크팀'
 WHERE p.code = 'PAR055' AND pr.code = 'PROJ054'
@@ -1338,7 +1338,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-securities@partner.com'
 JOIN departments d ON d.name = '플랫폼개발팀'
 WHERE p.code = 'PAR056' AND pr.code = 'PROJ055'
@@ -1362,7 +1362,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanwha-asset@partner.com'
 JOIN departments d ON d.name = '로보어드바이저팀'
 WHERE p.code = 'PAR057' AND pr.code = 'PROJ056'
@@ -1387,7 +1387,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-shipbuilding@partner.com'
 JOIN departments d ON d.name = '스마트조선팀'
 WHERE p.code = 'PAR058' AND pr.code = 'PROJ057'
@@ -1411,7 +1411,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-construction@partner.com'
 JOIN departments d ON d.name = '스마트건설팀'
 WHERE p.code = 'PAR059' AND pr.code = 'PROJ058'
@@ -1435,7 +1435,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-industry@partner.com'
 JOIN departments d ON d.name = '공장자동화팀'
 WHERE p.code = 'PAR060' AND pr.code = 'PROJ059'
@@ -1459,7 +1459,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-heavy@partner.com'
 JOIN departments d ON d.name = '설비제어팀'
 WHERE p.code = 'PAR061' AND pr.code = 'PROJ060'
@@ -1483,7 +1483,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-ship@partner.com'
 JOIN departments d ON d.name = '설계자동화팀'
 WHERE p.code = 'PAR062' AND pr.code = 'PROJ061'
@@ -1507,7 +1507,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'daewoo-ocean@partner.com'
 JOIN departments d ON d.name = '해양설계팀'
 WHERE p.code = 'PAR063' AND pr.code = 'PROJ062'
@@ -1532,7 +1532,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'korean-air@partner.com'
 JOIN departments d ON d.name = '항공기운영팀'
 WHERE p.code = 'PAR064' AND pr.code = 'PROJ063'
@@ -1556,7 +1556,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanjin@partner.com'
 JOIN departments d ON d.name = '물류네트워크팀'
 WHERE p.code = 'PAR065' AND pr.code = 'PROJ064'
@@ -1580,7 +1580,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanjin-kal@partner.com'
 JOIN departments d ON d.name = 'IT플랫폼팀'
 WHERE p.code = 'PAR066' AND pr.code = 'PROJ065'
@@ -1604,7 +1604,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'korean-express@partner.com'
 JOIN departments d ON d.name = '배송추적팀'
 WHERE p.code = 'PAR067' AND pr.code = 'PROJ066'
@@ -1628,7 +1628,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanjin-heavy@partner.com'
 JOIN departments d ON d.name = '크레인제어팀'
 WHERE p.code = 'PAR068' AND pr.code = 'PROJ067'
@@ -1652,7 +1652,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'hanjin-shipping@partner.com'
 JOIN departments d ON d.name = '선박운항팀'
 WHERE p.code = 'PAR069' AND pr.code = 'PROJ068'
@@ -1677,7 +1677,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'gcdc@partner.com'
 JOIN departments d ON d.name = '플랫폼개발팀'
 WHERE p.code = 'PAR070' AND pr.code = 'PROJ069'
@@ -1701,7 +1701,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'dflux@partner.com'
 JOIN departments d ON d.name = 'AI연구팀'
 WHERE p.code = 'PAR071' AND pr.code = 'PROJ070'
@@ -1725,7 +1725,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'jansoft@partner.com'
 JOIN departments d ON d.name = 'ERP개발팀'
 WHERE p.code = 'PAR072' AND pr.code = 'PROJ071'
@@ -1749,7 +1749,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'jinkomm@partner.com'
 JOIN departments d ON d.name = '통신인프라팀'
 WHERE p.code = 'PAR073' AND pr.code = 'PROJ072'
@@ -1774,7 +1774,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'naver@partner.com'
 JOIN departments d ON d.name = 'AI검색팀'
 WHERE p.code = 'PAR074' AND pr.code = 'PROJ073'
@@ -1798,7 +1798,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'kakao@partner.com'
 JOIN departments d ON d.name = '모빌리티팀'
 WHERE p.code = 'PAR075' AND pr.code = 'PROJ074'
@@ -1822,7 +1822,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'coupang@partner.com'
 JOIN departments d ON d.name = '물류자동화팀'
 WHERE p.code = 'PAR076' AND pr.code = 'PROJ075'
@@ -1846,7 +1846,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'baedal@partner.com'
 JOIN departments d ON d.name = '주문시스템팀'
 WHERE p.code = 'PAR077' AND pr.code = 'PROJ076'
@@ -1870,7 +1870,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yanolja@partner.com'
 JOIN departments d ON d.name = 'AI최적화팀'
 WHERE p.code = 'PAR078' AND pr.code = 'PROJ077'
@@ -1894,7 +1894,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'musinsa@partner.com'
 JOIN departments d ON d.name = '패션AI팀'
 WHERE p.code = 'PAR079' AND pr.code = 'PROJ078'
@@ -1918,7 +1918,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'danggeun@partner.com'
 JOIN departments d ON d.name = 'AI매칭팀'
 WHERE p.code = 'PAR080' AND pr.code = 'PROJ079'
@@ -1942,7 +1942,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yogiyo@partner.com'
 JOIN departments d ON d.name = '배달최적화팀'
 WHERE p.code = 'PAR081' AND pr.code = 'PROJ080'
@@ -1966,7 +1966,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'line@partner.com'
 JOIN departments d ON d.name = 'AI챗봇팀'
 WHERE p.code = 'PAR082' AND pr.code = 'PROJ081'
@@ -1990,7 +1990,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'toss@partner.com'
 JOIN departments d ON d.name = '보안시스템팀'
 WHERE p.code = 'PAR083' AND pr.code = 'PROJ082'
@@ -2014,7 +2014,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'naver@partner.com'
 JOIN departments d ON d.name = 'AI검색팀'
 WHERE p.code = 'PAR084' AND pr.code = 'PROJ083'
@@ -2038,7 +2038,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'kakao@partner.com'
 JOIN departments d ON d.name = '모빌리티팀'
 WHERE p.code = 'PAR085' AND pr.code = 'PROJ084'
@@ -2062,7 +2062,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'coupang@partner.com'
 JOIN departments d ON d.name = '물류자동화팀'
 WHERE p.code = 'PAR086' AND pr.code = 'PROJ085'
@@ -2086,7 +2086,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'baedal@partner.com'
 JOIN departments d ON d.name = '주문시스템팀'
 WHERE p.code = 'PAR087' AND pr.code = 'PROJ086'
@@ -2110,7 +2110,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yanolja@partner.com'
 JOIN departments d ON d.name = 'AI최적화팀'
 WHERE p.code = 'PAR088' AND pr.code = 'PROJ087'
@@ -2134,7 +2134,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'musinsa@partner.com'
 JOIN departments d ON d.name = '패션AI팀'
 WHERE p.code = 'PAR089' AND pr.code = 'PROJ088'
@@ -2158,7 +2158,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'danggeun@partner.com'
 JOIN departments d ON d.name = 'AI매칭팀'
 WHERE p.code = 'PAR090' AND pr.code = 'PROJ089'
@@ -2182,7 +2182,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yogiyo@partner.com'
 JOIN departments d ON d.name = '배달최적화팀'
 WHERE p.code = 'PAR091' AND pr.code = 'PROJ090'
@@ -2206,7 +2206,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'line@partner.com'
 JOIN departments d ON d.name = 'AI챗봇팀'
 WHERE p.code = 'PAR092' AND pr.code = 'PROJ091'
@@ -2230,7 +2230,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'toss@partner.com'
 JOIN departments d ON d.name = '보안시스템팀'
 WHERE p.code = 'PAR093' AND pr.code = 'PROJ092'
@@ -2254,7 +2254,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'naver@partner.com'
 JOIN departments d ON d.name = 'AI검색팀'
 WHERE p.code = 'PAR094' AND pr.code = 'PROJ093'
@@ -2278,7 +2278,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'kakao@partner.com'
 JOIN departments d ON d.name = '모빌리티팀'
 WHERE p.code = 'PAR095' AND pr.code = 'PROJ094'
@@ -2302,7 +2302,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'coupang@partner.com'
 JOIN departments d ON d.name = '물류자동화팀'
 WHERE p.code = 'PAR096' AND pr.code = 'PROJ095'
@@ -2326,7 +2326,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'baedal@partner.com'
 JOIN departments d ON d.name = '주문시스템팀'
 WHERE p.code = 'PAR097' AND pr.code = 'PROJ096'
@@ -2350,7 +2350,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yanolja@partner.com'
 JOIN departments d ON d.name = 'AI최적화팀'
 WHERE p.code = 'PAR098' AND pr.code = 'PROJ097'
@@ -2374,7 +2374,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'musinsa@partner.com'
 JOIN departments d ON d.name = '패션AI팀'
 WHERE p.code = 'PAR099' AND pr.code = 'PROJ098'
@@ -2398,7 +2398,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'danggeun@partner.com'
 JOIN departments d ON d.name = 'AI매칭팀'
 WHERE p.code = 'PAR100' AND pr.code = 'PROJ099'
@@ -2422,7 +2422,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'yogiyo@partner.com'
 JOIN departments d ON d.name = '배달최적화팀'
 WHERE p.code = 'PAR101' AND pr.code = 'PROJ100'
@@ -2446,7 +2446,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'line@partner.com'
 JOIN departments d ON d.name = 'AI챗봇팀'
 WHERE p.code = 'PAR102' AND pr.code = 'PROJ101'
@@ -2470,7 +2470,7 @@ SELECT
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
-JOIN projects pr ON p.id = pr.partner_id
+JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'toss@partner.com'
 JOIN departments d ON d.name = '보안시스템팀'
 WHERE p.code = 'PAR103' AND pr.code = 'PROJ102'
