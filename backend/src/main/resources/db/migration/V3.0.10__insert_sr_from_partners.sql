@@ -2507,13 +2507,10 @@ FROM service_requests
 GROUP BY sr_number 
 HAVING COUNT(*) > 1;
 
--- 파트너 존재 검증
-SELECT sr.sr_number, sr.title, sr.partner_id, p.name as partner_name
-FROM service_requests sr
-LEFT JOIN partners p ON sr.partner_id = p.id
-WHERE p.id IS NULL;
+-- 파트너 존재 검증 (수정됨)
+-- service_requests 테이블에는 partner_id 컬럼이 없으므로 제거
 
--- 프로젝트 존재 검증
+-- 프로젝트 존재 검증 (유지됨)
 SELECT sr.sr_number, sr.title, sr.project_id, pr.name as project_name
 FROM service_requests sr
 LEFT JOIN projects pr ON sr.project_id = pr.id
