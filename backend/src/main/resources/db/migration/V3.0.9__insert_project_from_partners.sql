@@ -44,7 +44,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-01' as start_date,
-    '2025-12-31' as end_date,
+    (DATE '2025-01-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -61,7 +61,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-01' as start_date,
-    '2025-10-31' as end_date,
+    (DATE '2025-03-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -78,7 +78,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-01' as start_date,
-    '2025-09-30' as end_date,
+    (DATE '2025-04-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -95,7 +95,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-01' as start_date,
-    '2025-08-31' as end_date,
+    (DATE '2025-05-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -112,7 +112,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-01' as start_date,
-    '2025-07-31' as end_date,
+    (DATE '2025-06-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -129,7 +129,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-01' as start_date,
-    '2025-06-30' as end_date,
+    (DATE '2025-07-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -146,7 +146,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-01' as start_date,
-    '2025-05-31' as end_date,
+    (DATE '2025-08-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -164,7 +164,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-15' as start_date,
-    '2025-12-15' as end_date,
+    (DATE '2025-01-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -181,7 +181,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-15' as start_date,
-    '2025-11-15' as end_date,
+    (DATE '2025-02-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -198,7 +198,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-15' as start_date,
-    '2025-10-15' as end_date,
+    (DATE '2025-03-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -215,7 +215,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-15' as start_date,
-    '2025-09-15' as end_date,
+    (DATE '2025-04-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -232,7 +232,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-15' as start_date,
-    '2025-08-15' as end_date,
+    (DATE '2025-05-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -249,7 +249,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-15' as start_date,
-    '2025-07-15' as end_date,
+    (DATE '2025-06-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -266,7 +266,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-15' as start_date,
-    '2025-06-15' as end_date,
+    (DATE '2025-07-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -283,7 +283,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-15' as start_date,
-    '2025-05-15' as end_date,
+    (DATE '2025-08-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -301,7 +301,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-20' as start_date,
-    '2025-12-20' as end_date,
+    (DATE '2025-01-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -318,7 +318,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-20' as start_date,
-    '2025-11-20' as end_date,
+    (DATE '2025-02-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -335,7 +335,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-20' as start_date,
-    '2025-10-20' as end_date,
+    (DATE '2025-03-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -352,7 +352,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-20' as start_date,
-    '2025-09-20' as end_date,
+    (DATE '2025-04-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -369,7 +369,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-20' as start_date,
-    '2025-08-20' as end_date,
+    (DATE '2025-05-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -386,7 +386,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-20' as start_date,
-    '2025-07-20' as end_date,
+    (DATE '2025-06-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -403,7 +403,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-20' as start_date,
-    '2025-06-20' as end_date,
+    (DATE '2025-07-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -420,7 +420,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-20' as start_date,
-    '2025-05-20' as end_date,
+    (DATE '2025-08-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -438,7 +438,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-25' as start_date,
-    '2025-12-25' as end_date,
+    (DATE '2025-01-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -455,7 +455,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-25' as start_date,
-    '2025-11-25' as end_date,
+    (DATE '2025-02-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -472,7 +472,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-25' as start_date,
-    '2025-10-25' as end_date,
+    (DATE '2025-03-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -489,7 +489,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-25' as start_date,
-    '2025-09-25' as end_date,
+    (DATE '2025-04-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -506,7 +506,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-25' as start_date,
-    '2025-08-25' as end_date,
+    (DATE '2025-05-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -523,7 +523,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-25' as start_date,
-    '2025-07-25' as end_date,
+    (DATE '2025-06-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -540,7 +540,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-25' as start_date,
-    '2025-06-25' as end_date,
+    (DATE '2025-07-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -557,7 +557,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-25' as start_date,
-    '2025-05-25' as end_date,
+    (DATE '2025-08-25' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -575,7 +575,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-30' as start_date,
-    '2025-12-30' as end_date,
+    (DATE '2025-01-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -592,7 +592,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-01' as start_date,
-    '2025-11-30' as end_date,
+    (DATE '2025-02-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -609,7 +609,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-30' as start_date,
-    '2025-10-30' as end_date,
+    (DATE '2025-03-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -626,7 +626,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-01' as start_date,
-    '2025-09-30' as end_date,
+    (DATE '2025-04-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -643,7 +643,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-30' as start_date,
-    '2025-08-30' as end_date,
+    (DATE '2025-05-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -660,7 +660,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-30' as start_date,
-    '2025-07-30' as end_date,
+    (DATE '2025-06-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -677,7 +677,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-30' as start_date,
-    '2025-06-30' as end_date,
+    (DATE '2025-07-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -694,7 +694,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-30' as start_date,
-    '2025-05-30' as end_date,
+    (DATE '2025-08-30' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -712,7 +712,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-10' as start_date,
-    '2025-12-10' as end_date,
+    (DATE '2025-01-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -729,7 +729,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-10' as start_date,
-    '2025-11-10' as end_date,
+    (DATE '2025-02-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -746,7 +746,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-10' as start_date,
-    '2025-10-10' as end_date,
+    (DATE '2025-03-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -763,7 +763,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-10' as start_date,
-    '2025-09-10' as end_date,
+    (DATE '2025-04-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -780,7 +780,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-10' as start_date,
-    '2025-08-10' as end_date,
+    (DATE '2025-05-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -797,7 +797,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-10' as start_date,
-    '2025-07-10' as end_date,
+    (DATE '2025-06-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -814,7 +814,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-10' as start_date,
-    '2025-06-10' as end_date,
+    (DATE '2025-07-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -831,7 +831,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-10' as start_date,
-    '2025-05-10' as end_date,
+    (DATE '2025-08-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -849,7 +849,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-05' as start_date,
-    '2025-12-05' as end_date,
+    (DATE '2025-01-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -866,7 +866,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-05' as start_date,
-    '2025-11-05' as end_date,
+    (DATE '2025-02-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -883,7 +883,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-05' as start_date,
-    '2025-10-05' as end_date,
+    (DATE '2025-03-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -900,7 +900,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-05' as start_date,
-    '2025-09-05' as end_date,
+    (DATE '2025-04-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -917,7 +917,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-05' as start_date,
-    '2025-08-05' as end_date,
+    (DATE '2025-05-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -934,7 +934,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-05' as start_date,
-    '2025-07-05' as end_date,
+    (DATE '2025-06-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -951,7 +951,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-05' as start_date,
-    '2025-06-05' as end_date,
+    (DATE '2025-07-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -968,7 +968,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-05' as start_date,
-    '2025-05-05' as end_date,
+    (DATE '2025-08-05' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -986,7 +986,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-12' as start_date,
-    '2025-12-12' as end_date,
+    (DATE '2025-01-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1003,7 +1003,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-12' as start_date,
-    '2025-11-12' as end_date,
+    (DATE '2025-02-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1020,7 +1020,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-12' as start_date,
-    '2025-10-12' as end_date,
+    (DATE '2025-03-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1037,7 +1037,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-12' as start_date,
-    '2025-09-12' as end_date,
+    (DATE '2025-04-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1054,7 +1054,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-12' as start_date,
-    '2025-08-12' as end_date,
+    (DATE '2025-05-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1071,7 +1071,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-12' as start_date,
-    '2025-07-12' as end_date,
+    (DATE '2025-06-12' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1089,7 +1089,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-08' as start_date,
-    '2025-12-08' as end_date,
+    (DATE '2025-01-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1106,7 +1106,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-08' as start_date,
-    '2025-11-08' as end_date,
+    (DATE '2025-02-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1123,7 +1123,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-08' as start_date,
-    '2025-10-08' as end_date,
+    (DATE '2025-03-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1140,7 +1140,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-08' as start_date,
-    '2025-09-08' as end_date,
+    (DATE '2025-04-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1157,7 +1157,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-08' as start_date,
-    '2025-08-08' as end_date,
+    (DATE '2025-05-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1174,7 +1174,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-08' as start_date,
-    '2025-07-08' as end_date,
+    (DATE '2025-06-08' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1192,7 +1192,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-01' as start_date,
-    '2025-12-31' as end_date,
+    (DATE '2025-01-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1209,7 +1209,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-01' as start_date,
-    '2025-11-30' as end_date,
+    (DATE '2025-02-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1226,7 +1226,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-01' as start_date,
-    '2025-10-31' as end_date,
+    (DATE '2025-03-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1243,7 +1243,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-01' as start_date,
-    '2025-09-30' as end_date,
+    (DATE '2025-04-01' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1261,7 +1261,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-15' as start_date,
-    '2025-12-15' as end_date,
+    (DATE '2025-01-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1278,7 +1278,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-15' as start_date,
-    '2025-11-15' as end_date,
+    (DATE '2025-02-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1295,7 +1295,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-15' as start_date,
-    '2025-10-15' as end_date,
+    (DATE '2025-03-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1312,7 +1312,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-15' as start_date,
-    '2025-09-15' as end_date,
+    (DATE '2025-04-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1329,7 +1329,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-15' as start_date,
-    '2025-08-15' as end_date,
+    (DATE '2025-05-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1346,7 +1346,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-15' as start_date,
-    '2025-07-15' as end_date,
+    (DATE '2025-06-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1363,7 +1363,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-15' as start_date,
-    '2025-06-15' as end_date,
+    (DATE '2025-07-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1380,7 +1380,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-15' as start_date,
-    '2025-05-15' as end_date,
+    (DATE '2025-08-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1397,7 +1397,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-20' as start_date,
-    '2025-12-20' as end_date,
+    (DATE '2025-01-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1414,7 +1414,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-20' as start_date,
-    '2025-11-20' as end_date,
+    (DATE '2025-02-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1432,7 +1432,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-10' as start_date,
-    '2025-12-10' as end_date,
+    (DATE '2025-01-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1449,7 +1449,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-10' as start_date,
-    '2025-11-10' as end_date,
+    (DATE '2025-02-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1466,7 +1466,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-10' as start_date,
-    '2025-10-10' as end_date,
+    (DATE '2025-03-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1483,7 +1483,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-10' as start_date,
-    '2025-09-10' as end_date,
+    (DATE '2025-04-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1500,7 +1500,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-10' as start_date,
-    '2025-08-10' as end_date,
+    (DATE '2025-05-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1517,7 +1517,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-10' as start_date,
-    '2025-07-10' as end_date,
+    (DATE '2025-06-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1534,7 +1534,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-10' as start_date,
-    '2025-06-10' as end_date,
+    (DATE '2025-07-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1551,7 +1551,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-10' as start_date,
-    '2025-05-10' as end_date,
+    (DATE '2025-08-10' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1568,7 +1568,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-15' as start_date,
-    '2025-12-15' as end_date,
+    (DATE '2025-01-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1585,7 +1585,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-02-15' as start_date,
-    '2025-11-15' as end_date,
+    (DATE '2025-02-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1602,7 +1602,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-03-15' as start_date,
-    '2025-10-15' as end_date,
+    (DATE '2025-03-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1619,7 +1619,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-04-15' as start_date,
-    '2025-09-15' as end_date,
+    (DATE '2025-04-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1636,7 +1636,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-05-15' as start_date,
-    '2025-08-15' as end_date,
+    (DATE '2025-05-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1653,7 +1653,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-06-15' as start_date,
-    '2025-07-15' as end_date,
+    (DATE '2025-06-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1670,7 +1670,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-07-15' as start_date,
-    '2025-06-15' as end_date,
+    (DATE '2025-07-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1687,7 +1687,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-08-15' as start_date,
-    '2025-05-15' as end_date,
+    (DATE '2025-08-15' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
@@ -1704,7 +1704,7 @@ SELECT
     'SI' as project_type,
     'IN_PROGRESS' as status,
     '2025-01-20' as start_date,
-    '2025-12-20' as end_date,
+    (DATE '2025-01-20' + INTERVAL '3 months' - INTERVAL '1 day')::date as end_date,
     p.id as company_id,
     'system' as created_by,
     'system' as updated_by
