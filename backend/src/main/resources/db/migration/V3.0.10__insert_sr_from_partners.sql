@@ -31,8 +31,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-15' as start_date,
-    '2024-03-15' as end_date,
+    '2025-01-15' as start_date,
+    '2025-03-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -54,8 +54,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-15' as start_date,
-    '2024-04-15' as end_date,
+    '2025-02-15' as start_date,
+    '2025-04-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -77,8 +77,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-15' as start_date,
-    '2024-05-15' as end_date,
+    '2025-03-15' as start_date,
+    '2025-05-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -100,8 +100,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-15' as start_date,
-    '2024-06-15' as end_date,
+    '2025-04-15' as start_date,
+    '2025-06-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -123,8 +123,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-15' as start_date,
-    '2024-07-15' as end_date,
+    '2025-05-15' as start_date,
+    '2025-07-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -146,8 +146,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-15' as start_date,
-    '2024-08-15' as end_date,
+    '2025-06-15' as start_date,
+    '2025-08-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -169,8 +169,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-15' as start_date,
-    '2024-09-15' as end_date,
+    '2025-07-15' as start_date,
+    '2025-09-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -192,8 +192,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-15' as start_date,
-    '2024-10-15' as end_date,
+    '2025-08-15' as start_date,
+    '2025-10-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -216,8 +216,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-20' as start_date,
-    '2024-03-20' as end_date,
+    '2025-01-20' as start_date,
+    '2025-03-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -239,8 +239,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-20' as start_date,
-    '2024-04-20' as end_date,
+    '2025-02-20' as start_date,
+    '2025-04-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -262,8 +262,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-20' as start_date,
-    '2024-05-20' as end_date,
+    '2025-03-20' as start_date,
+    '2025-05-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -285,8 +285,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-20' as start_date,
-    '2024-06-20' as end_date,
+    '2025-04-20' as start_date,
+    '2025-06-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -308,8 +308,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-20' as start_date,
-    '2024-07-20' as end_date,
+    '2025-05-20' as start_date,
+    '2025-07-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -331,8 +331,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-20' as start_date,
-    '2024-08-20' as end_date,
+    '2025-06-20' as start_date,
+    '2025-08-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -354,8 +354,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-20' as start_date,
-    '2024-09-20' as end_date,
+    '2025-07-20' as start_date,
+    '2025-09-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -377,8 +377,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-20' as start_date,
-    '2024-10-20' as end_date,
+    '2025-08-20' as start_date,
+    '2025-10-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -401,8 +401,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-25' as start_date,
-    '2024-03-25' as end_date,
+    '2025-01-25' as start_date,
+    '2025-03-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -424,8 +424,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-25' as start_date,
-    '2024-04-25' as end_date,
+    '2025-02-25' as start_date,
+    '2025-04-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -447,8 +447,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-25' as start_date,
-    '2024-05-25' as end_date,
+    '2025-03-25' as start_date,
+    '2025-05-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -470,8 +470,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-25' as start_date,
-    '2024-06-25' as end_date,
+    '2025-04-25' as start_date,
+    '2025-06-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -493,8 +493,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-25' as start_date,
-    '2024-07-25' as end_date,
+    '2025-05-25' as start_date,
+    '2025-07-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -516,8 +516,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-25' as start_date,
-    '2024-08-25' as end_date,
+    '2025-06-25' as start_date,
+    '2025-08-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -539,8 +539,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-25' as start_date,
-    '2024-09-25' as end_date,
+    '2025-07-25' as start_date,
+    '2025-09-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -562,8 +562,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-25' as start_date,
-    '2024-10-25' as end_date,
+    '2025-08-25' as start_date,
+    '2025-10-25' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -586,8 +586,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-30' as start_date,
-    '2024-03-30' as end_date,
+    '2025-01-30' as start_date,
+    '2025-03-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -609,8 +609,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-30' as start_date,
-    '2024-04-30' as end_date,
+    '2025-02-30' as start_date,
+    '2025-04-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -632,8 +632,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-30' as start_date,
-    '2024-05-30' as end_date,
+    '2025-03-30' as start_date,
+    '2025-05-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -655,8 +655,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-30' as start_date,
-    '2024-06-30' as end_date,
+    '2025-04-30' as start_date,
+    '2025-06-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -678,8 +678,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-30' as start_date,
-    '2024-07-30' as end_date,
+    '2025-05-30' as start_date,
+    '2025-07-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -701,8 +701,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-30' as start_date,
-    '2024-08-30' as end_date,
+    '2025-06-30' as start_date,
+    '2025-08-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -724,8 +724,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-30' as start_date,
-    '2024-09-30' as end_date,
+    '2025-07-30' as start_date,
+    '2025-09-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -747,8 +747,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-30' as start_date,
-    '2024-10-30' as end_date,
+    '2025-08-30' as start_date,
+    '2025-10-30' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -771,8 +771,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-10' as start_date,
-    '2024-03-10' as end_date,
+    '2025-01-10' as start_date,
+    '2025-03-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -794,8 +794,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-10' as start_date,
-    '2024-04-10' as end_date,
+    '2025-02-10' as start_date,
+    '2025-04-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -817,8 +817,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-10' as start_date,
-    '2024-05-10' as end_date,
+    '2025-03-10' as start_date,
+    '2025-05-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -840,8 +840,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-10' as start_date,
-    '2024-06-10' as end_date,
+    '2025-04-10' as start_date,
+    '2025-06-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -863,8 +863,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-10' as start_date,
-    '2024-07-10' as end_date,
+    '2025-05-10' as start_date,
+    '2025-07-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -886,8 +886,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-10' as start_date,
-    '2024-08-10' as end_date,
+    '2025-06-10' as start_date,
+    '2025-08-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -909,8 +909,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-10' as start_date,
-    '2024-09-10' as end_date,
+    '2025-07-10' as start_date,
+    '2025-09-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -932,8 +932,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-10' as start_date,
-    '2024-10-10' as end_date,
+    '2025-08-10' as start_date,
+    '2025-10-10' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -956,8 +956,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-12' as start_date,
-    '2024-03-12' as end_date,
+    '2025-01-12' as start_date,
+    '2025-03-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -979,8 +979,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-12' as start_date,
-    '2024-04-12' as end_date,
+    '2025-02-12' as start_date,
+    '2025-04-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1002,8 +1002,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-12' as start_date,
-    '2024-05-12' as end_date,
+    '2025-03-12' as start_date,
+    '2025-05-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1025,8 +1025,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-12' as start_date,
-    '2024-06-12' as end_date,
+    '2025-04-12' as start_date,
+    '2025-06-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1048,8 +1048,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-12' as start_date,
-    '2024-07-12' as end_date,
+    '2025-05-12' as start_date,
+    '2025-07-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1071,8 +1071,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-12' as start_date,
-    '2024-08-12' as end_date,
+    '2025-06-12' as start_date,
+    '2025-08-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1094,8 +1094,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-12' as start_date,
-    '2024-09-12' as end_date,
+    '2025-07-12' as start_date,
+    '2025-09-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1117,8 +1117,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-12' as start_date,
-    '2024-10-12' as end_date,
+    '2025-08-12' as start_date,
+    '2025-10-12' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1141,8 +1141,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-05' as start_date,
-    '2024-03-05' as end_date,
+    '2025-01-05' as start_date,
+    '2025-03-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1164,8 +1164,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-05' as start_date,
-    '2024-04-05' as end_date,
+    '2025-02-05' as start_date,
+    '2025-04-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1187,8 +1187,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-05' as start_date,
-    '2024-05-05' as end_date,
+    '2025-03-05' as start_date,
+    '2025-05-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1210,8 +1210,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-05' as start_date,
-    '2024-06-05' as end_date,
+    '2025-04-05' as start_date,
+    '2025-06-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1233,8 +1233,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-05' as start_date,
-    '2024-07-05' as end_date,
+    '2025-05-05' as start_date,
+    '2025-07-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1256,8 +1256,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-05' as start_date,
-    '2024-08-05' as end_date,
+    '2025-06-05' as start_date,
+    '2025-08-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1279,8 +1279,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-05' as start_date,
-    '2024-09-05' as end_date,
+    '2025-07-05' as start_date,
+    '2025-09-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1302,8 +1302,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-05' as start_date,
-    '2024-10-05' as end_date,
+    '2025-08-05' as start_date,
+    '2025-10-05' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1326,8 +1326,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-15' as start_date,
-    '2024-03-15' as end_date,
+    '2025-01-15' as start_date,
+    '2025-03-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1349,8 +1349,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-15' as start_date,
-    '2024-04-15' as end_date,
+    '2025-02-15' as start_date,
+    '2025-04-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1372,8 +1372,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-15' as start_date,
-    '2024-05-15' as end_date,
+    '2025-03-15' as start_date,
+    '2025-05-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1395,8 +1395,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-15' as start_date,
-    '2024-06-15' as end_date,
+    '2025-04-15' as start_date,
+    '2025-06-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1418,8 +1418,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-15' as start_date,
-    '2024-07-15' as end_date,
+    '2025-05-15' as start_date,
+    '2025-07-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1441,8 +1441,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-15' as start_date,
-    '2024-08-15' as end_date,
+    '2025-06-15' as start_date,
+    '2025-08-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1465,8 +1465,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-08' as start_date,
-    '2024-03-08' as end_date,
+    '2025-01-08' as start_date,
+    '2025-03-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1488,8 +1488,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-08' as start_date,
-    '2024-04-08' as end_date,
+    '2025-02-08' as start_date,
+    '2025-04-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1511,8 +1511,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-08' as start_date,
-    '2024-05-08' as end_date,
+    '2025-03-08' as start_date,
+    '2025-05-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1534,8 +1534,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-08' as start_date,
-    '2024-06-08' as end_date,
+    '2025-04-08' as start_date,
+    '2025-06-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1557,8 +1557,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-08' as start_date,
-    '2024-07-08' as end_date,
+    '2025-05-08' as start_date,
+    '2025-07-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1580,8 +1580,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-08' as start_date,
-    '2024-08-08' as end_date,
+    '2025-06-08' as start_date,
+    '2025-08-08' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1604,8 +1604,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-01' as start_date,
-    '2024-03-01' as end_date,
+    '2025-01-01' as start_date,
+    '2025-03-01' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1627,8 +1627,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-01' as start_date,
-    '2024-04-01' as end_date,
+    '2025-02-01' as start_date,
+    '2025-04-01' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1650,8 +1650,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-01' as start_date,
-    '2024-05-01' as end_date,
+    '2025-03-01' as start_date,
+    '2025-05-01' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1673,8 +1673,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-01' as start_date,
-    '2024-06-01' as end_date,
+    '2025-04-01' as start_date,
+    '2025-06-01' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1697,8 +1697,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-15' as start_date,
-    '2024-03-15' as end_date,
+    '2025-01-15' as start_date,
+    '2025-03-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1720,8 +1720,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-15' as start_date,
-    '2024-04-15' as end_date,
+    '2025-02-15' as start_date,
+    '2025-04-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1743,8 +1743,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-15' as start_date,
-    '2024-05-15' as end_date,
+    '2025-03-15' as start_date,
+    '2025-05-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1766,8 +1766,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-15' as start_date,
-    '2024-06-15' as end_date,
+    '2025-04-15' as start_date,
+    '2025-06-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1789,8 +1789,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-15' as start_date,
-    '2024-07-15' as end_date,
+    '2025-05-15' as start_date,
+    '2025-07-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1812,8 +1812,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-15' as start_date,
-    '2024-08-15' as end_date,
+    '2025-06-15' as start_date,
+    '2025-08-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1835,8 +1835,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-15' as start_date,
-    '2024-09-15' as end_date,
+    '2025-07-15' as start_date,
+    '2025-09-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1858,8 +1858,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-15' as start_date,
-    '2024-10-15' as end_date,
+    '2025-08-15' as start_date,
+    '2025-10-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1881,8 +1881,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-20' as start_date,
-    '2024-03-20' as end_date,
+    '2025-01-20' as start_date,
+    '2025-03-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1904,8 +1904,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-20' as start_date,
-    '2024-04-20' as end_date,
+    '2025-02-20' as start_date,
+    '2025-04-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1927,8 +1927,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-15' as start_date,
-    '2024-03-15' as end_date,
+    '2025-01-15' as start_date,
+    '2025-03-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1950,8 +1950,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-15' as start_date,
-    '2024-04-15' as end_date,
+    '2025-02-15' as start_date,
+    '2025-04-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1973,8 +1973,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-15' as start_date,
-    '2024-05-15' as end_date,
+    '2025-03-15' as start_date,
+    '2025-05-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -1996,8 +1996,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-15' as start_date,
-    '2024-06-15' as end_date,
+    '2025-04-15' as start_date,
+    '2025-06-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2019,8 +2019,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-15' as start_date,
-    '2024-07-15' as end_date,
+    '2025-05-15' as start_date,
+    '2025-07-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2042,8 +2042,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-15' as start_date,
-    '2024-08-15' as end_date,
+    '2025-06-15' as start_date,
+    '2025-08-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2065,8 +2065,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-15' as start_date,
-    '2024-09-15' as end_date,
+    '2025-07-15' as start_date,
+    '2025-09-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2088,8 +2088,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-15' as start_date,
-    '2024-10-15' as end_date,
+    '2025-08-15' as start_date,
+    '2025-10-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2111,8 +2111,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-20' as start_date,
-    '2024-03-20' as end_date,
+    '2025-01-20' as start_date,
+    '2025-03-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2134,8 +2134,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-20' as start_date,
-    '2024-04-20' as end_date,
+    '2025-02-20' as start_date,
+    '2025-04-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2157,8 +2157,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-15' as start_date,
-    '2024-03-15' as end_date,
+    '2025-01-15' as start_date,
+    '2025-03-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2180,8 +2180,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-15' as start_date,
-    '2024-04-15' as end_date,
+    '2025-02-15' as start_date,
+    '2025-04-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2203,8 +2203,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-03-15' as start_date,
-    '2024-05-15' as end_date,
+    '2025-03-15' as start_date,
+    '2025-05-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2226,8 +2226,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-04-15' as start_date,
-    '2024-06-15' as end_date,
+    '2025-04-15' as start_date,
+    '2025-06-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2249,8 +2249,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-05-15' as start_date,
-    '2024-07-15' as end_date,
+    '2025-05-15' as start_date,
+    '2025-07-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2272,8 +2272,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-06-15' as start_date,
-    '2024-08-15' as end_date,
+    '2025-06-15' as start_date,
+    '2025-08-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2295,8 +2295,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-07-15' as start_date,
-    '2024-09-15' as end_date,
+    '2025-07-15' as start_date,
+    '2025-09-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2318,8 +2318,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-08-15' as start_date,
-    '2024-10-15' as end_date,
+    '2025-08-15' as start_date,
+    '2025-10-15' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2341,8 +2341,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-01-20' as start_date,
-    '2024-03-20' as end_date,
+    '2025-01-20' as start_date,
+    '2025-03-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
@@ -2364,8 +2364,8 @@ SELECT
     u.id as assignee_id,
     'DEVELOPMENT' as type,
     'REQUESTED' as status,
-    '2024-02-20' as start_date,
-    '2024-04-20' as end_date,
+    '2025-02-20' as start_date,
+    '2025-04-20' as end_date,
     'system' as created_by,
     'system' as updated_by
 FROM partners p 
