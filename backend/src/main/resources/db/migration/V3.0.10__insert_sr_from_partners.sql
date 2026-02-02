@@ -18,6 +18,449 @@
 -- 3. 파트너 기준 SR 데이터 삽입 쿼리 (멱등성 보장)
 -- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 각 파트너당 1개 SR 생성
 
+-- 파트너별 부서 데이터 삽입 (필요한 부서가 없을 경우 자동 생성)
+-- 삼성그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'IT운영팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR002' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'IT운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '시설관리팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR003' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '시설관리팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디지털전략팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR004' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디지털전략팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '손해사정팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR005' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '손해사정팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '연구개발팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR006' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '연구개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '배터리연구팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR007' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '배터리연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '생물의약팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR008' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '생물의약팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '플랜트사업팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR009' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '플랜트사업팀'
+);
+
+-- 현대자동차그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '전기차개발팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR010' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '전기차개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'UX/UI팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR011' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'UX/UI팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '소프트웨어팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR012' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '소프트웨어팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '생산기술팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR013' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '생산기술팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '물류운영팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR014' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '물류운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '도시개발팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR015' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '도시개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '공정혁신팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR016' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '공정혁신팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '플랫폼개발팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR017' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '플랫폼개발팀'
+);
+
+-- SK그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '반도체연구팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR018' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '반도체연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '신사업개발팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR019' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '신사업개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '네트워크팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR020' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '네트워크팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '투자전략팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR021' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '투자전략팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '신사업팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR022' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '신사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '소재연구팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR023' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '소재연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '가스운영팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR024' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '가스운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '모빌리티팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR025' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '모빌리티팀'
+);
+
+-- LG그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'AI연구팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR026' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'AI연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '바이오연구팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR027' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '바이오연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디스플레이연구팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR028' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디스플레이연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '센서연구팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR029' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '센서연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'IoT사업팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR030' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'IoT사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '코스메틱연구팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR031' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '코스메틱연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '보안연구팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR032' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '보안연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '글로벌사업팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR033' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '글로벌사업팀'
+);
+
+-- 롯데그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '생산관리팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR034' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '생산관리팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '물류운영팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR035' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '물류운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '점포운영팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR036' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '점포운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디지털전략팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR037' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디지털전략팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '호텔운영팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR038' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '호텔운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '생산기술팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR039' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '생산기술팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '차량운영팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR040' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '차량운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디지털전략팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR041' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디지털전략팀'
+);
+
+-- GS그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '에너지사업팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR042' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '에너지사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디지털전환팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR043' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디지털전환팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '스마트건설팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR044' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '스마트건설팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '글로벌사업팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR045' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '글로벌사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '에너지솔루션팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR046' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '에너지솔루션팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '팩토리자동화팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR047' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '팩토리자동화팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '점포운영팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR048' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '점포운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '모바일사업팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR049' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '모바일사업팀'
+);
+
+-- 한화그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '신재생에너지팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR050' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '신재생에너지팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '소프트웨어개발팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR051' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '소프트웨어개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '방산사업팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR052' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '방산사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '그리드사업팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR053' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '그리드사업팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '디지털전략팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR054' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '디지털전략팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '인슈어테크팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR055' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '인슈어테크팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '플랫폼개발팀', 1, 7, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR056' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '플랫폼개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '로보어드바이저팀', 1, 8, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR057' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '로보어드바이저팀'
+);
+
+-- 대우그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '스마트조선팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR058' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '스마트조선팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '스마트건설팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR059' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '스마트건설팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '공장자동화팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR060' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '공장자동화팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '설비제어팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR061' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '설비제어팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '설계자동화팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR062' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '설계자동화팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '해양설계팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR063' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '해양설계팀'
+);
+
+-- 한진그룹 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '항공기운영팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR064' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '항공기운영팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '물류네트워크팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR065' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '물류네트워크팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'IT플랫폼팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR066' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'IT플랫폼팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '배송추적팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR067' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '배송추적팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '크레인제어팀', 1, 5, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR068' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '크레인제어팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '선박운항팀', 1, 6, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR069' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '선박운항팀'
+);
+
+-- 기타 파트너 부서 생성
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '플랫폼개발팀', 1, 1, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR070' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '플랫폼개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'AI연구팀', 1, 2, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR071' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'AI연구팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, 'ERP개발팀', 1, 3, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR072' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = 'ERP개발팀'
+);
+
+INSERT INTO departments (company_id, name, depth, sort_order, created_by, updated_by)
+SELECT p.id, '통신인프라팀', 1, 4, 'system', 'system'
+FROM partners p WHERE p.code = 'PAR073' AND NOT EXISTS (
+    SELECT 1 FROM departments d WHERE d.company_id = p.id AND d.name = '통신인프라팀'
+);
+
 -- 삼성그룹 파트너 기준 SR 생성
 -- PAR002: 삼성전자 파트너
 INSERT INTO service_requests (sr_number, title, sr_type, sr_category, status, business_requirement, project_id, requester_id, requester_dept_id, request_date, due_date, created_by, updated_by)
@@ -38,7 +481,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-electronics@partner.com'
-JOIN departments d ON d.name = 'IT운영팀'
+JOIN departments d ON d.company_id = p.id AND d.name = 'IT운영팀'
 WHERE p.code = 'PAR002' AND pr.code = 'PROJ001'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -62,7 +505,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-cnt@partner.com'
-JOIN departments d ON d.name = '시설관리팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '시설관리팀'
 WHERE p.code = 'PAR003' AND pr.code = 'PROJ002'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -86,7 +529,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-life@partner.com'
-JOIN departments d ON d.name = '디지털전략팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '디지털전략팀'
 WHERE p.code = 'PAR004' AND pr.code = 'PROJ003'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -110,7 +553,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-fire@partner.com'
-JOIN departments d ON d.name = '손해사정팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '손해사정팀'
 WHERE p.code = 'PAR005' AND pr.code = 'PROJ004'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -134,7 +577,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-electro@partner.com'
-JOIN departments d ON d.name = '연구개발팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '연구개발팀'
 WHERE p.code = 'PAR006' AND pr.code = 'PROJ005'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -158,7 +601,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-sdi@partner.com'
-JOIN departments d ON d.name = '배터리연구팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '배터리연구팀'
 WHERE p.code = 'PAR007' AND pr.code = 'PROJ006'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -182,7 +625,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-bio@partner.com'
-JOIN departments d ON d.name = '생물의약팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '생물의약팀'
 WHERE p.code = 'PAR008' AND pr.code = 'PROJ007'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
@@ -206,7 +649,7 @@ SELECT
 FROM partners p 
 JOIN projects pr ON p.id = pr.company_id
 JOIN users u ON u.email = 'samsung-engineering@partner.com'
-JOIN departments d ON d.name = '플랜트사업팀'
+JOIN departments d ON d.company_id = p.id AND d.name = '플랜트사업팀'
 WHERE p.code = 'PAR009' AND pr.code = 'PROJ008'
 LIMIT 1
 ON CONFLICT (sr_number) DO NOTHING;
