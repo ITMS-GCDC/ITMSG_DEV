@@ -2190,8 +2190,8 @@ FROM specifications
 GROUP BY spec_number 
 HAVING COUNT(*) > 1;
 
--- SR 존재 검증 (유지됨)
-SELECT sp.spec_number, sp.title, sp.sr_id, sr.sr_number as sr_number
+-- SR 존재 검증 (수정됨: title 컬럼 대신 spec_number 사용)
+SELECT sp.spec_number, sp.sr_id, sr.sr_number as sr_number
 FROM specifications sp
 LEFT JOIN service_requests sr ON sp.sr_id = sr.id
 WHERE sr.id IS NULL;
