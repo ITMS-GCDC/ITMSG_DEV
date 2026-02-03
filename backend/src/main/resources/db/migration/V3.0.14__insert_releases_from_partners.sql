@@ -62,12 +62,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -123,12 +123,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -185,12 +185,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -247,12 +247,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -309,12 +309,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -365,12 +365,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -423,12 +423,12 @@ SELECT
 FROM users u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 WHERE u.email IN (
@@ -512,12 +512,12 @@ FROM (
 ) u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
-    WHERE u2.email = 'admin@company.com'
+    WHERE u2.email = 'admin@aris.com'
     LIMIT 1
 ) approver
 ON CONFLICT (release_number) DO NOTHING;
@@ -570,7 +570,7 @@ FROM (
 ) u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 ON CONFLICT (release_number) DO NOTHING;
@@ -617,7 +617,7 @@ FROM (
 ) u
 CROSS JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = 'IT개발팀'
+    WHERE d.name = '개발팀'
     LIMIT 1
 ) d
 ON CONFLICT (release_number) DO NOTHING;
