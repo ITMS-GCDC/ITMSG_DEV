@@ -78,10 +78,9 @@ WHERE u.email IN (
     'samsung-electro@partner.com',
     'samsung-sdi@partner.com',
     'samsung-bio@partner.com',
-    'samsung-engineering@partner.com',
-    'samsung-heavy@partner.com',
-    'samsung-techwin@partner.com'
+    'samsung-engineering@partner.com'
 )
+LIMIT 10
 ON CONFLICT (release_number) DO NOTHING;
 
 -- 현대그룹 정기 배포 완료 릴리즈 (10개)
@@ -141,9 +140,9 @@ WHERE u.email IN (
     'hyundai-construction@partner.com',
     'hyundai-steel@partner.com',
     'hyundai-ever@partner.com',
-    'hyundai-merchant@partner.com',
-    'hyundai-marine@partner.com'
+    'hyundai-kefico@partner.com'
 )
+LIMIT 10
 ON CONFLICT (release_number) DO NOTHING;
 
 -- SK그룹 정기 배포 완료 릴리즈 (10개)
@@ -203,8 +202,8 @@ WHERE u.email IN (
     'skc@partner.com',
     'sk-gas@partner.com',
     'sk-move@partner.com',
-    'sk-bio@partner.com',
-    'sk-on@partner.com'
+    'sk-biopharm@partner.com',
+    'sk-shields@partner.com'
 )
 ON CONFLICT (release_number) DO NOTHING;
 
@@ -266,7 +265,7 @@ WHERE u.email IN (
     'lg-cns@partner.com',
     'lg-trading@partner.com',
     'lg-energy@partner.com',
-    'lg-household@partner.com'
+    'lg-house@partner.com'
 )
 ON CONFLICT (release_number) DO NOTHING;
 
@@ -376,13 +375,13 @@ CROSS JOIN LATERAL (
 ) approver
 WHERE u.email IN (
     'gs-construction@partner.com',
-    'gs-caltex@partner.com',
+    'gs-calnex@partner.com',
     'gs-retail@partner.com',
-    'gs-shop@partner.com',
+    'gs-global@partner.com',
     'gs-power@partner.com',
-    'gs-sports@partner.com',
-    'gs-home@partner.com',
-    'gs-global@partner.com'
+    'gs-eps@partner.com',
+    'gs-neotech@partner.com',
+    'gs-homeshopping@partner.com'
 )
 ON CONFLICT (release_number) DO NOTHING;
 
@@ -440,7 +439,7 @@ WHERE u.email IN (
     'yanolja@partner.com',
     'musinsa@partner.com',
     'danggeun@partner.com',
-    'classone@partner.com',
+    'yogiyo@partner.com',
     'toss@partner.com'
 )
 ON CONFLICT (release_number) DO NOTHING;
