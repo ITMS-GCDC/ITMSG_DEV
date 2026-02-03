@@ -705,8 +705,244 @@ SELECT
 FROM releases
 WHERE release_type = 'EMERGENCY' AND deployed_at IS NOT NULL;
 
+-- ========================================
+-- 추가 릴리즈 데이터 생성 (85개 추가)
+-- ========================================
+
+-- REGULAR 릴리즈 - DEPLOYED 추가 (30개)
+INSERT INTO releases (release_number, title, release_type, status, content, requester_id, requester_dept_id, approver_id, scheduled_at, deployed_at, created_by, updated_by)
+SELECT 
+    'REL2501-' || LPAD((101 + (row_number() OVER () - 1))::TEXT, 4, '0') as release_number,
+    CASE (row_number() OVER ()) % 15
+        WHEN 0 THEN '클라우드 마이그레이션 v2.0.0 정기 배포'
+        WHEN 1 THEN 'DevOps 파이프라인 개선 v1.5.0 정기 배포'
+        WHEN 2 THEN '데이터 웨어하우스 구축 v3.1.0 정기 배포'
+        WHEN 3 THEN 'AI/ML 모델 배포 시스템 v2.2.0 정기 배포'
+        WHEN 4 THEN '블록체인 통합 플랫폼 v1.8.0 정기 배포'
+        WHEN 5 THEN 'MSA 전환 프로젝트 v2.5.0 정기 배포'
+        WHEN 6 THEN '실시간 데이터 분석 플랫폼 v1.9.0 정기 배포'
+        WHEN 7 THEN '고객 여정 분석 시스템 v2.1.0 정기 배포'
+        WHEN 8 THEN '옴니채널 통합 플랫폼 v3.0.0 정기 배포'
+        WHEN 9 THEN 'BI 대시보드 고도화 v2.3.0 정기 배포'
+        WHEN 10 THEN 'API 게이트웨이 v1.7.0 정기 배포'
+        WHEN 11 THEN '로그 수집 및 분석 시스템 v2.0.0 정기 배포'
+        WHEN 12 THEN '모니터링 시스템 개선 v1.6.0 정기 배포'
+        WHEN 13 THEN 'CI/CD 자동화 v2.4.0 정기 배포'
+        ELSE '컨테이너 오케스트레이션 v1.5.0 정기 배포'
+    END as title,
+    'REGULAR' as release_type,
+    'DEPLOYED' as status,
+    CASE (row_number() OVER ()) % 15
+        WHEN 0 THEN '온프레미스에서 클라우드로 전환. AWS/Azure/GCP 하이브리드 클라우드 구축, 비용 30% 절감, 가용성 99.99% 달성'
+        WHEN 1 THEN 'Jenkins에서 GitLab CI/CD로 전환. 빌드 시간 50% 단축, 자동 테스트 커버리지 85% 달성'
+        WHEN 2 THEN '빅데이터 분석을 위한 데이터 웨어하우스 구축. Snowflake 기반, 일 처리량 10TB, 쿼리 성능 10배 향상'
+        WHEN 3 THEN 'MLOps 플랫폼 구축으로 모델 배포 자동화. A/B 테스트 지원, 모델 성능 실시간 모니터링'
+        WHEN 4 THEN 'Hyperledger Fabric 기반 블록체인 네트워크 구축. 공급망 투명성 확보, 위변조 방지'
+        WHEN 5 THEN '모놀리식 아키텍처에서 마이크로서비스로 전환. 배포 주기 주 1회 → 일 3회, 장애 격리 개선'
+        WHEN 6 THEN 'Apache Kafka + Flink 기반 실시간 스트리밍. 초당 10만 건 처리, 지연시간 100ms 이하'
+        WHEN 7 THEN '고객 터치포인트 통합 분석. 전환율 15% 향상, 이탈률 20% 감소, ROI 실시간 추적'
+        WHEN 8 THEN '온라인/오프라인 통합 플랫폼. 재고 실시간 동기화, 포인트 통합, 배송 추적 일원화'
+        WHEN 9 THEN 'Tableau/PowerBI 기반 경영진 대시보드. 실시간 KPI 모니터링, 드릴다운 분석, 예측 분석'
+        WHEN 10 THEN 'Kong/Apigee 기반 API 관리. Rate limiting, 인증/인가, API 버전 관리, 모니터링'
+        WHEN 11 THEN 'ELK Stack 기반 통합 로그 관리. 일 10억 건 로그 처리, 실시간 알림, 이상 탐지'
+        WHEN 12 THEN 'Prometheus + Grafana로 인프라 모니터링. 메트릭 수집, 알림 자동화, SLA 추적'
+        WHEN 13 THEN 'GitOps 기반 배포 자동화. ArgoCD 도입, 롤백 자동화, 배포 성공률 99% 달성'
+        ELSE 'Kubernetes 클러스터 구축. 자동 스케일링, 무중단 배포, 리소스 효율 50% 향상'
+    END as content,
+    u.id as requester_id,
+    dept.id as requester_dept_id,
+    approver.id as approver_id,
+    TIMESTAMP '2025-03-01 00:00:00' + (INTERVAL '1 day' * ((row_number() OVER () - 1))) as scheduled_at,
+    TIMESTAMP '2025-03-01 02:00:00' + (INTERVAL '1 day' * ((row_number() OVER () - 1))) as deployed_at,
+    'system' as created_by,
+    'system' as updated_by
+FROM (
+    SELECT u.* FROM users u 
+    WHERE u.email LIKE '%@partner.com'
+    ORDER BY u.id
+    LIMIT 30
+) u
+LEFT JOIN LATERAL (
+    SELECT d.* FROM departments d 
+    WHERE d.company_id = u.company_id
+    LIMIT 1
+) dept ON true
+CROSS JOIN LATERAL (
+    SELECT u2.* FROM users u2 
+    WHERE u2.email = 'admin@aris.com'
+    LIMIT 1
+) approver
+ON CONFLICT (release_number) DO NOTHING;
+
+-- REGULAR 릴리즈 - APPROVED 추가 (25개)
+INSERT INTO releases (release_number, title, release_type, status, content, requester_id, requester_dept_id, approver_id, scheduled_at, deployed_at, created_by, updated_by)
+SELECT 
+    'REL2501-' || LPAD((131 + (row_number() OVER () - 1))::TEXT, 4, '0') as release_number,
+    CASE (row_number() OVER ()) % 13
+        WHEN 0 THEN '모바일 앱 리뉴얼 v3.0.0 정기 배포'
+        WHEN 1 THEN '챗봇 서비스 고도화 v2.5.0 정기 배포'
+        WHEN 2 THEN '결제 시스템 개선 v1.9.0 정기 배포'
+        WHEN 3 THEN '추천 엔진 고도화 v2.2.0 정기 배포'
+        WHEN 4 THEN '검색 엔진 최적화 v3.1.0 정기 배포'
+        WHEN 5 THEN '멤버십 프로그램 개편 v2.0.0 정기 배포'
+        WHEN 6 THEN '배송 추적 시스템 v1.8.0 정기 배포'
+        WHEN 7 THEN '재고 관리 고도화 v2.3.0 정기 배포'
+        WHEN 8 THEN 'CMS 플랫폼 구축 v1.5.0 정기 배포'
+        WHEN 9 THEN '고객 센터 시스템 v2.1.0 정기 배포'
+        WHEN 10 THEN '프로모션 엔진 v1.7.0 정기 배포'
+        WHEN 11 THEN '리뷰 시스템 개선 v2.4.0 정기 배포'
+        ELSE '소셜 로그인 통합 v1.6.0 정기 배포'
+    END as title,
+    'REGULAR' as release_type,
+    'APPROVED' as status,
+    CASE (row_number() OVER ()) % 13
+        WHEN 0 THEN '모바일 UX 전면 개편 예정. 네이티브 앱 성능 개선, 다크모드 지원, 접근성 향상'
+        WHEN 1 THEN 'GPT-4 기반 지능형 챗봇 도입 예정. 자연어 이해 정확도 95%, 24시간 무인 상담'
+        WHEN 2 THEN '간편결제 추가 및 보안 강화 예정. PG사 연동 확대, 3D Secure 적용, 부정거래 탐지'
+        WHEN 3 THEN '협업 필터링 + 딥러닝 하이브리드 추천 예정. 클릭률 25% 향상, 구매 전환율 18% 증가'
+        WHEN 4 THEN 'Elasticsearch 8.0 업그레이드 예정. 검색 정확도 향상, 자동완성 개선, 동의어 확대'
+        WHEN 5 THEN '등급별 혜택 강화 및 포인트 통합 예정. 앱/웹/오프라인 통합, 유효기간 연장'
+        WHEN 6 THEN 'GPS 기반 실시간 배송 추적 예정. 예상 도착 시간 정확도 95%, 배송 지연 알림'
+        WHEN 7 THEN 'AI 기반 수요 예측 및 자동 발주 예정. 재고 회전율 30% 개선, 품절률 50% 감소'
+        WHEN 8 THEN '헤드리스 CMS 도입으로 콘텐츠 관리 효율화 예정. 다국어 지원, 버전 관리, 승인 프로세스'
+        WHEN 9 THEN '통합 상담 플랫폼 구축 예정. 옴니채널 지원, 상담 이력 통합, AI 추천 답변'
+        WHEN 10 THEN '동적 프로모션 엔진 구축 예정. 타겟팅 자동화, A/B 테스트, ROI 실시간 분석'
+        WHEN 11 THEN '리뷰 신뢰도 검증 및 포토 리뷰 강화 예정. 가짜 리뷰 탐지, 리워드 자동 지급'
+        ELSE 'Kakao/Naver/Apple/Google 로그인 통합 예정. 가입 전환율 40% 향상, 간편 인증'
+    END as content,
+    u.id as requester_id,
+    dept.id as requester_dept_id,
+    approver.id as approver_id,
+    TIMESTAMP '2025-04-01 00:00:00' + (INTERVAL '1 day' * ((row_number() OVER () - 1))) as scheduled_at,
+    NULL as deployed_at,
+    'system' as created_by,
+    'system' as updated_by
+FROM (
+    SELECT u.* FROM users u 
+    WHERE u.email LIKE '%@partner.com'
+    ORDER BY u.id DESC
+    LIMIT 25
+) u
+LEFT JOIN LATERAL (
+    SELECT d.* FROM departments d 
+    WHERE d.company_id = u.company_id
+    LIMIT 1
+) dept ON true
+CROSS JOIN LATERAL (
+    SELECT u2.* FROM users u2 
+    WHERE u2.email = 'admin@aris.com'
+    LIMIT 1
+) approver
+ON CONFLICT (release_number) DO NOTHING;
+
+-- EMERGENCY 릴리즈 - DEPLOYED 추가 (20개)
+INSERT INTO releases (release_number, title, release_type, status, content, requester_id, requester_dept_id, approver_id, scheduled_at, deployed_at, created_by, updated_by)
+SELECT 
+    'REL2501-' || LPAD((156 + (row_number() OVER () - 1))::TEXT, 4, '0') as release_number,
+    CASE (row_number() OVER ()) % 10
+        WHEN 0 THEN 'CSRF 취약점 긴급 패치 v1.2.5'
+        WHEN 1 THEN '세션 하이재킹 방어 긴급 적용 v2.1.3'
+        WHEN 2 THEN 'DDoS 공격 대응 긴급 배포 v1.8.2'
+        WHEN 3 THEN '개인정보 암호화 강화 긴급 v2.5.1'
+        WHEN 4 THEN 'API Rate Limiting 긴급 적용 v1.9.0'
+        WHEN 5 THEN '무한 루프 버그 긴급 수정 v2.3.4'
+        WHEN 6 THEN 'NPE 오류 긴급 패치 v1.7.2'
+        WHEN 7 THEN '동시성 이슈 긴급 해결 v2.0.6'
+        WHEN 8 THEN '데드락 방지 긴급 적용 v1.6.1'
+        ELSE '메모리 릭 긴급 수정 v2.2.3'
+    END as title,
+    'EMERGENCY' as release_type,
+    'DEPLOYED' as status,
+    CASE (row_number() OVER ()) % 10
+        WHEN 0 THEN 'CSRF 토큰 검증 누락 발견으로 긴급 패치. 모든 POST/PUT/DELETE 요청에 토큰 검증 추가'
+        WHEN 1 THEN '세션 하이재킹 시도 탐지로 긴급 대응. Secure/HttpOnly 쿠키 설정, 세션 타임아웃 강화'
+        WHEN 2 THEN 'DDoS 공격으로 서비스 지연 발생. Cloudflare 적용, Rate limiting, IP 차단 자동화'
+        WHEN 3 THEN '개인정보 평문 저장 발견으로 긴급 암호화. AES-256 적용, 키 관리 시스템 구축'
+        WHEN 4 THEN 'API 남용으로 서버 과부하 발생. 사용자별 요청 제한, 버스트 허용, 429 응답'
+        WHEN 5 THEN '배치 작업 무한 루프로 서버 다운. 루프 카운터 추가, 타임아웃 설정, 모니터링'
+        WHEN 6 THEN 'NullPointerException 빈번 발생으로 서비스 불안정. Optional 적용, Null 체크 강화'
+        WHEN 7 THEN '동시 요청 시 데이터 불일치 발생. 낙관적 락 적용, 버전 관리, 충돌 처리'
+        WHEN 8 THEN '데이터베이스 데드락 빈번 발생. 트랜잭션 순서 조정, 타임아웃 설정, 재시도 로직'
+        ELSE 'Java Heap 메모리 누수로 주기적 재기동 필요. MAT 분석, WeakReference 적용, 캐시 정리'
+    END as content,
+    u.id as requester_id,
+    dept.id as requester_dept_id,
+    approver.id as approver_id,
+    TIMESTAMP '2025-02-01 14:00:00' + (INTERVAL '12 hours' * ((row_number() OVER () - 1))) as scheduled_at,
+    TIMESTAMP '2025-02-01 15:00:00' + (INTERVAL '12 hours' * ((row_number() OVER () - 1))) as deployed_at,
+    'system' as created_by,
+    'system' as updated_by
+FROM (
+    SELECT u.* FROM users u 
+    WHERE u.email LIKE '%@partner.com'
+    ORDER BY RANDOM()
+    LIMIT 20
+) u
+LEFT JOIN LATERAL (
+    SELECT d.* FROM departments d 
+    WHERE d.company_id = u.company_id
+    LIMIT 1
+) dept ON true
+CROSS JOIN LATERAL (
+    SELECT u2.* FROM users u2 
+    WHERE u2.email = 'admin@aris.com'
+    LIMIT 1
+) approver
+ON CONFLICT (release_number) DO NOTHING;
+
+-- REGULAR 릴리즈 - REQUESTED 추가 (10개)
+INSERT INTO releases (release_number, title, release_type, status, content, requester_id, requester_dept_id, approver_id, scheduled_at, deployed_at, created_by, updated_by)
+SELECT 
+    'REL2501-' || LPAD((176 + (row_number() OVER () - 1))::TEXT, 4, '0') as release_number,
+    CASE (row_number() OVER ()) % 10
+        WHEN 0 THEN '음성 인식 서비스 v1.0.0 정기 배포'
+        WHEN 1 THEN 'AR/VR 콘텐츠 플랫폼 v2.0.0 정기 배포'
+        WHEN 2 THEN 'NFT 마켓플레이스 v1.5.0 정기 배포'
+        WHEN 3 THEN '메타버스 통합 플랫폼 v1.0.0 정기 배포'
+        WHEN 4 THEN '양자 암호화 적용 v2.1.0 정기 배포'
+        WHEN 5 THEN '엣지 컴퓨팅 플랫폼 v1.8.0 정기 배포'
+        WHEN 6 THEN '5G 네트워크 슬라이싱 v2.0.0 정기 배포'
+        WHEN 7 THEN 'IoT 디바이스 관리 v1.9.0 정기 배포'
+        WHEN 8 THEN '디지털 트윈 시스템 v2.5.0 정기 배포'
+        ELSE '자율주행 시뮬레이터 v1.7.0 정기 배포'
+    END as title,
+    'REGULAR' as release_type,
+    'REQUESTED' as status,
+    CASE (row_number() OVER ()) % 10
+        WHEN 0 THEN 'STT/TTS 기반 음성 인터페이스 구축 계획. 다국어 지원, 방언 인식, 음성 명령 처리'
+        WHEN 1 THEN '가상/증강 현실 콘텐츠 제작 및 배포 플랫폼 계획. Unity/Unreal 연동, 3D 에셋 관리'
+        WHEN 2 THEN '블록체인 기반 디지털 자산 거래 플랫폼 계획. 스마트 컨트랙트, 로열티 자동 분배'
+        WHEN 3 THEN '가상 세계 구축 및 아바타 커스터마이징 계획. 실시간 렌더링, 소셜 인터랙션'
+        WHEN 4 THEN '양자 키 분배 기반 보안 통신 계획. 도청 불가능, 미래 보안 대비'
+        WHEN 5 THEN 'CDN + 엣지 컴퓨팅으로 지연시간 최소화 계획. 5ms 이하 응답, 로컬 처리'
+        WHEN 6 THEN '네트워크 슬라이싱으로 서비스별 QoS 보장 계획. 초저지연, 대역폭 보장'
+        WHEN 7 THEN '수백만 IoT 디바이스 원격 관리 계획. OTA 업데이트, 상태 모니터링, 이상 탐지'
+        WHEN 8 THEN '물리 자산의 디지털 복제 및 시뮬레이션 계획. 예측 정비, 최적화 시뮬레이션'
+        ELSE '자율주행 알고리즘 검증 시뮬레이터 계획. 다양한 시나리오, 안전성 검증'
+    END as content,
+    u.id as requester_id,
+    dept.id as requester_dept_id,
+    NULL as approver_id,
+    TIMESTAMP '2025-06-01 00:00:00' + (INTERVAL '2 days' * ((row_number() OVER () - 1))) as scheduled_at,
+    NULL as deployed_at,
+    'system' as created_by,
+    'system' as updated_by
+FROM (
+    SELECT u.* FROM users u 
+    WHERE u.email LIKE '%@partner.com'
+    ORDER BY u.id
+    OFFSET 20
+    LIMIT 10
+) u
+LEFT JOIN LATERAL (
+    SELECT d.* FROM departments d 
+    WHERE d.company_id = u.company_id
+    LIMIT 1
+) dept ON true
+ON CONFLICT (release_number) DO NOTHING;
+
 -- RELEASE 등록 로직 분석 및 데이터 마이그레이션 완료
--- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 총 100개의 RELEASE 데이터를 생성하였습니다.
+-- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 총 185개의 RELEASE 데이터를 생성하였습니다.
 -- 모든 RELEASE는 파트너 사용자를 요청자로 연계되어 있으며, 다양한 유형과 상태로 구성되어 있습니다.
 -- RELEASE 번호 중복 검증 및 요청자/승인자 존재 검증을 통해 데이터 무결성을 보장합니다.
 -- 모든 RELEASE는 DB 스키마의 CHECK 제약 조건을 준수합니다:
@@ -714,11 +950,11 @@ WHERE release_type = 'EMERGENCY' AND deployed_at IS NOT NULL;
 --   - status: 'REQUESTED'(요청됨), 'APPROVED'(승인됨), 'DEPLOYED'(배포됨), 'CANCELLED'(취소됨)
 -- 
 -- 릴리즈 구성:
---   - REGULAR + DEPLOYED: 40개 (정기 배포 완료)
---   - REGULAR + APPROVED: 25개 (정기 배포 승인됨)
---   - EMERGENCY + DEPLOYED: 20개 (긴급 배포 완료)
---   - REGULAR + REQUESTED: 10개 (정기 배포 요청됨)
---   - EMERGENCY + CANCELLED: 5개 (긴급 배포 취소됨)
---   - 총 100개의 다양한 릴리즈로 실제 배포 관리 환경을 시뮬레이션
---   - 릴리즈 번호: REL2501-0001 ~ REL2501-0100
+--   - REGULAR + DEPLOYED: 70개 (40 + 30개 추가)
+--   - REGULAR + APPROVED: 50개 (25 + 25개 추가)
+--   - EMERGENCY + DEPLOYED: 40개 (20 + 20개 추가)
+--   - REGULAR + REQUESTED: 20개 (10 + 10개 추가)
+--   - EMERGENCY + CANCELLED: 5개
+--   - 총 185개의 다양한 릴리즈로 실제 배포 관리 환경을 시뮬레이션
+--   - 릴리즈 번호: REL2501-0001 ~ REL2501-0185
 --   - 배포 시간대, 승인 프로세스, 긴급/정기 구분 등 실제 운영 환경 반영
