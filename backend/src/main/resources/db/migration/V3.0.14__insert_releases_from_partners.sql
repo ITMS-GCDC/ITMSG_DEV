@@ -53,18 +53,18 @@ SELECT
         ELSE '인사평가 시스템 개편 및 피드백 강화. 주요 변경사항: 360도 평가 도입, 목표 관리 시스템 연동'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-01-01 00:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as scheduled_at,
     TIMESTAMP '2025-01-01 02:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -114,18 +114,18 @@ SELECT
         ELSE '조선 설계 3D 모델링 고도화. 주요 변경사항: 실시간 협업 기능, 자동 도면 생성, 설계 오류 검증'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-01-15 00:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as scheduled_at,
     TIMESTAMP '2025-01-15 02:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -176,18 +176,18 @@ SELECT
         ELSE '디지털 마케팅 캠페인 자동화. 주요 변경사항: A/B 테스트 자동화, ROI 실시간 분석, 타겟 고객 세분화'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-02-01 00:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as scheduled_at,
     TIMESTAMP '2025-02-01 02:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -238,18 +238,18 @@ SELECT
         ELSE '전자부품 재고 최적화 및 수요 예측. 주요 변경사항: AI 기반 수요 예측, 자동 발주, 재고 회전율 개선'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-02-15 00:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as scheduled_at,
     TIMESTAMP '2025-02-15 02:00:00' + (INTERVAL '1 week' * ((row_number() OVER () - 1))) as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -300,18 +300,18 @@ SELECT
         ELSE '식품 원산지 추적 및 품질 보증. 주요 변경사항: 블록체인 기반 추적, 품질 검사 이력 관리, 리콜 자동화'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-03-01 00:00:00' + (INTERVAL '3 days' * ((row_number() OVER () - 1))) as scheduled_at,
     NULL as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -356,18 +356,18 @@ SELECT
         ELSE '스포츠 마케팅 캠페인 관리 및 효과 측정. 주요 변경사항: 스폰서십 ROI 분석, 팬 참여도 측정, SNS 연동'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-03-15 00:00:00' + (INTERVAL '3 days' * ((row_number() OVER () - 1))) as scheduled_at,
     NULL as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -414,18 +414,18 @@ SELECT
         ELSE '핀테크 보안 강화 및 간편 인증. 주요 변경사항: 생체 인증 확대, 이상 거래 탐지 AI, 분산 원장 적용'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-04-01 00:00:00' + (INTERVAL '2 days' * ((row_number() OVER () - 1))) as scheduled_at,
     NULL as deployed_at,
     'system' as created_by,
     'system' as updated_by
 FROM users u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -498,7 +498,7 @@ SELECT
         ELSE '외부 결제 API 연동 장애 긴급 대응. API 엔드포인트 변경, 재시도 로직 추가, 장애 알림 설정'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     approver.id as approver_id,
     TIMESTAMP '2025-01-10 15:00:00' + (INTERVAL '2 days' * ((row_number() OVER () - 1))) as scheduled_at,
     TIMESTAMP '2025-01-10 16:30:00' + (INTERVAL '2 days' * ((row_number() OVER () - 1))) as deployed_at,
@@ -510,11 +510,11 @@ FROM (
     ORDER BY u.id
     LIMIT 20
 ) u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 CROSS JOIN LATERAL (
     SELECT u2.* FROM users u2 
     WHERE u2.email = 'admin@aris.com'
@@ -556,7 +556,7 @@ SELECT
         ELSE 'IT 자산 라이프사이클 관리 자동화 예정. 계획: 자산 취득부터 폐기까지 자동 추적, 감가상각 자동 계산, 정비 일정 관리'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     NULL as approver_id,
     TIMESTAMP '2025-05-01 00:00:00' + (INTERVAL '3 days' * ((row_number() OVER () - 1))) as scheduled_at,
     NULL as deployed_at,
@@ -568,11 +568,11 @@ FROM (
     ORDER BY u.id DESC
     LIMIT 10
 ) u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 ON CONFLICT (release_number) DO NOTHING;
 
 -- ========================================
@@ -599,7 +599,7 @@ SELECT
         ELSE '인증 시스템 긴급 패치 예정이었으나 기존 버전에서 정상 동작 확인되어 취소. 재현 불가 이슈로 판명'
     END as content,
     u.id as requester_id,
-    d.id as requester_dept_id,
+    dept.id as requester_dept_id,
     NULL as approver_id,
     TIMESTAMP '2025-01-20 14:00:00' + (INTERVAL '1 day' * ((row_number() OVER () - 1))) as scheduled_at,
     NULL as deployed_at,
@@ -615,11 +615,11 @@ FROM (
         'yanolja@partner.com'
     )
 ) u
-CROSS JOIN LATERAL (
+LEFT JOIN LATERAL (
     SELECT d.* FROM departments d 
-    WHERE d.name = '개발팀'
+    WHERE d.company_id = u.company_id
     LIMIT 1
-) d
+) dept ON true
 ON CONFLICT (release_number) DO NOTHING;
 
 -- 4. RELEASE 데이터 검증 쿼리
