@@ -30,7 +30,7 @@ DECLARE
     v_approver_id BIGINT;
     v_approver_email VARCHAR(100);
 BEGIN
-    -- 시스템관리담당자 조회 (admin@aris.com 우선, 없으면 첫 번째 활성 사용자)
+    -- 시스템관리담당자 조회 (admin@aris.com 우선)
     SELECT u.id, u.email INTO v_approver_id, v_approver_email
     FROM users u
     WHERE u.email = 'admin@aris.com' 
@@ -38,30 +38,20 @@ BEGIN
       AND u.deleted_at IS NULL
     LIMIT 1;
     
-    -- admin@aris.com이 없으면 파트너 사용자 중 첫 번째 사용자 선택
+    -- admin@aris.com이 없으면 ARIS 본사 직원 중 선택 (파트너 제외)
     IF v_approver_id IS NULL THEN
         SELECT u.id, u.email INTO v_approver_id, v_approver_email
         FROM users u
-        WHERE u.email LIKE '%@partner.com'
+        WHERE u.email NOT LIKE '%@partner.com'
           AND u.is_active = true
           AND u.deleted_at IS NULL
         ORDER BY u.id
         LIMIT 1;
     END IF;
     
-    -- 파트너 사용자도 없으면 아무 활성 사용자나 선택
+    -- ARIS 본사 직원도 없으면 명확한 오류 발생
     IF v_approver_id IS NULL THEN
-        SELECT u.id, u.email INTO v_approver_id, v_approver_email
-        FROM users u
-        WHERE u.is_active = true
-          AND u.deleted_at IS NULL
-        ORDER BY u.id
-        LIMIT 1;
-    END IF;
-    
-    -- 승인자가 없으면 오류 발생
-    IF v_approver_id IS NULL THEN
-        RAISE EXCEPTION 'No active user found for approver assignment';
+        RAISE EXCEPTION 'No system admin or ARIS employee found for approver assignment. Partner users cannot be approvers.';
     END IF;
     
     -- 임시 테이블에 승인자 정보 저장
@@ -434,8 +424,9 @@ DROP TABLE IF EXISTS temp_approval_config;
 -- 
 -- 승인 프로세스 정책:
 --   - 모든 승인은 2단계 승인 존재 (total_steps = 2)
---   - 1차 승인자: 시스템관리담당자 (우선순위: admin@aris.com > 파트너 사용자 > 활성 사용자)
+--   - 1차 승인자: 시스템관리담당자 (우선순위: admin@aris.com > ARIS 본사 직원)
 --   - 2차 승인자: 시스템관리담당자 (1차 승인자와 동일)
+--   - 파트너 사용자는 승인자로 선택되지 않음 (ARIS 본사 직원만 승인자 가능)
 --   - approver_id NOT NULL 제약 위반 방지를 위해 DO $$ 블록으로 승인자 사전 확보
 --   - 임시 테이블(temp_approval_config)을 통한 안전한 승인자 할당
 -- 
