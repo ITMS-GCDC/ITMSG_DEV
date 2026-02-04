@@ -1,4 +1,4 @@
--- APPROVAL 데이터 삽입 쿼리 (V99.5.0)
+-- APPROVAL 데이터 삽입 쿼리 (V99.5.0) 
 -- SR, SPEC, RELEASE에 대한 승인 요청 데이터 생성
 -- V99.0.0 이후 실행: admin@aris.com 계정 생성 후 실행되도록 버전 조정
 

@@ -1,4 +1,4 @@
--- RELEASE 데이터 삽입 쿼리 (V3.0.14)
+-- RELEASE 데이터 삽입 쿼리 (V3.0.14) 
 -- V3.0.8__partner_migration.sql에 있는 파트너 기준으로 릴리즈 관리 데이터 생성
 
 -- 1. [REPORT A] CRUD 및 데이터 흐름 분석
