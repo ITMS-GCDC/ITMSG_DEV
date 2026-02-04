@@ -19,10 +19,10 @@
 
 -- 3. SR, SPEC, RELEASE 기준 APPROVAL 데이터 삽입 쿼리 (멱등성 보장)
 -- SR 승인요청 30개, SPEC 승인요청 30개, 릴리즈 승인요청 40개 생성
--- 모든 승인은 1단계 승인만 존재 (시스템관리담당자: admin@aris.com)
+-- 모든 승인은 2단계 승인 존재 (1차, 2차 모두 시스템관리담당자: admin@aris.com)
 
 -- ========================================
--- SR 승인 요청 (30개) - PENDING 상태, 1단계 승인
+-- SR 승인 요청 (30개) - PENDING 상태, 2단계 승인
 -- ========================================
 
 -- SR 승인 요청 데이터 생성
@@ -33,7 +33,7 @@ SELECT
     sr.id as target_id,
     'PENDING' as status,
     1 as current_step,
-    1 as total_steps,
+    2 as total_steps,
     sr.requester_id,
     sr.created_at as requested_at,
     NULL as completed_at,
@@ -62,8 +62,22 @@ WHERE a.approval_type = 'SR'
   AND a.approval_number BETWEEN 'APP2501-0001' AND 'APP2501-0030'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
+-- SR 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
+INSERT INTO approval_lines (approval_id, step_order, approver_id, status, comment, approved_at)
+SELECT 
+    a.id as approval_id,
+    2 as step_order,
+    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    'PENDING' as status,
+    NULL as comment,
+    NULL as approved_at
+FROM approvals a
+WHERE a.approval_type = 'SR' 
+  AND a.approval_number BETWEEN 'APP2501-0001' AND 'APP2501-0030'
+ON CONFLICT (approval_id, step_order) DO NOTHING;
+
 -- ========================================
--- SPEC 승인 요청 (30개) - PENDING 상태, 1단계 승인
+-- SPEC 승인 요청 (30개) - PENDING 상태, 2단계 승인
 -- ========================================
 
 -- SPEC 승인 요청 데이터 생성
@@ -74,7 +88,7 @@ SELECT
     spec.id as target_id,
     'PENDING' as status,
     1 as current_step,
-    1 as total_steps,
+    2 as total_steps,
     sr.requester_id,
     spec.created_at as requested_at,
     NULL as completed_at,
@@ -104,8 +118,22 @@ WHERE a.approval_type = 'SPEC'
   AND a.approval_number BETWEEN 'APP2501-0031' AND 'APP2501-0060'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
+-- SPEC 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
+INSERT INTO approval_lines (approval_id, step_order, approver_id, status, comment, approved_at)
+SELECT 
+    a.id as approval_id,
+    2 as step_order,
+    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    'PENDING' as status,
+    NULL as comment,
+    NULL as approved_at
+FROM approvals a
+WHERE a.approval_type = 'SPEC' 
+  AND a.approval_number BETWEEN 'APP2501-0031' AND 'APP2501-0060'
+ON CONFLICT (approval_id, step_order) DO NOTHING;
+
 -- ========================================
--- RELEASE 승인 요청 (40개) - PENDING 상태, 1단계 승인
+-- RELEASE 승인 요청 (40개) - PENDING 상태, 2단계 승인
 -- ========================================
 
 -- RELEASE 승인 요청 데이터 생성
@@ -116,7 +144,7 @@ SELECT
     rel.id as target_id,
     'PENDING' as status,
     1 as current_step,
-    1 as total_steps,
+    2 as total_steps,
     rel.requester_id,
     rel.created_at as requested_at,
     NULL as completed_at,
@@ -146,6 +174,20 @@ WHERE a.approval_type = 'RELEASE'
   AND a.approval_number BETWEEN 'APP2501-0061' AND 'APP2501-0100'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
+-- RELEASE 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
+INSERT INTO approval_lines (approval_id, step_order, approver_id, status, comment, approved_at)
+SELECT 
+    a.id as approval_id,
+    2 as step_order,
+    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    'PENDING' as status,
+    NULL as comment,
+    NULL as approved_at
+FROM approvals a
+WHERE a.approval_type = 'RELEASE' 
+  AND a.approval_number BETWEEN 'APP2501-0061' AND 'APP2501-0100'
+ON CONFLICT (approval_id, step_order) DO NOTHING;
+
 -- ========================================
 -- 4. APPROVAL 데이터 검증 쿼리
 -- ========================================
@@ -165,7 +207,7 @@ FROM approvals a
 LEFT JOIN users u ON a.requester_id = u.id
 WHERE u.id IS NULL;
 
--- 승인 라인 건수 확인
+-- 승인 라인 건수 확인 (100개 승인 * 2단계 = 200개여야 함)
 SELECT COUNT(*) as approval_line_count FROM approval_lines;
 
 -- 승인 라인 approver_id NULL 검증
@@ -193,7 +235,7 @@ FROM approvals
 GROUP BY status
 ORDER BY count DESC;
 
--- 승인 단계별 통계 (모두 1단계여야 함)
+-- 승인 단계별 통계 (모두 2단계여야 함)
 SELECT 
     approval_type,
     total_steps,
@@ -207,14 +249,15 @@ ORDER BY approval_type, total_steps;
 SELECT 
     u.email as approver_email,
     u.name as approver_name,
+    al.step_order,
     COUNT(al.id) as pending_count,
     STRING_AGG(DISTINCT a.approval_type, ', ' ORDER BY a.approval_type) as approval_types
 FROM approval_lines al
 JOIN approvals a ON al.approval_id = a.id
 JOIN users u ON al.approver_id = u.id
 WHERE al.status = 'PENDING'
-GROUP BY u.email, u.name
-ORDER BY pending_count DESC;
+GROUP BY u.email, u.name, al.step_order
+ORDER BY al.step_order, pending_count DESC;
 
 -- 요청자별 승인 현황
 SELECT 
@@ -248,7 +291,7 @@ SELECT
     a.current_step,
     a.total_steps,
     u.email as requester,
-    approver.email as approver,
+    approver.email as current_approver,
     a.requested_at,
     EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - a.requested_at))/3600 as hours_waiting
 FROM approvals a
@@ -274,25 +317,40 @@ JOIN approvals a ON al.approval_id = a.id
 GROUP BY a.approval_type, al.step_order, al.status
 ORDER BY a.approval_type, al.step_order, al.status;
 
--- 승인 프로세스 개요 확인 (1단계 승인 확인)
+-- 승인 프로세스 개요 확인 (2단계 승인 확인)
 SELECT 
     a.approval_type,
     COUNT(DISTINCT a.id) as approval_count,
     MAX(a.total_steps) as max_steps,
     MIN(a.total_steps) as min_steps,
-    COUNT(DISTINCT al.id) as approval_line_count
+    COUNT(DISTINCT al.id) as approval_line_count,
+    COUNT(DISTINCT al.id) / COUNT(DISTINCT a.id) as lines_per_approval
 FROM approvals a
 LEFT JOIN approval_lines al ON a.id = al.approval_id
 GROUP BY a.approval_type
 ORDER BY a.approval_type;
 
+-- 승인 라인 단계별 승인자 현황 (1단계, 2단계 모두 admin@aris.com 확인)
+SELECT 
+    a.approval_type,
+    al.step_order,
+    u.email as approver_email,
+    u.name as approver_name,
+    COUNT(*) as assigned_count
+FROM approval_lines al
+JOIN approvals a ON al.approval_id = a.id
+JOIN users u ON al.approver_id = u.id
+GROUP BY a.approval_type, al.step_order, u.email, u.name
+ORDER BY a.approval_type, al.step_order;
+
 -- APPROVAL 등록 로직 분석 및 데이터 마이그레이션 완료
 -- V3.0.10(SR), V3.0.11(SPEC), V3.0.14(RELEASE)에서 생성된 데이터를 기반으로 승인 요청 데이터를 생성하였습니다.
 -- 
 -- 승인 프로세스 정책:
---   - 모든 승인은 1단계 승인만 존재 (total_steps = 1)
+--   - 모든 승인은 2단계 승인 존재 (total_steps = 2)
 --   - 1차 승인자: 시스템관리담당자 (admin@aris.com)
---   - 2차 승인자: 없음 (간소화된 승인 프로세스)
+--   - 2차 승인자: 시스템관리담당자 (admin@aris.com)
+--   - 동일한 승인자가 1차, 2차를 모두 처리하는 간소화된 프로세스
 -- 
 -- 모든 APPROVAL은 실제 SR/SPEC/RELEASE를 참조하며, 승인 라인(approval_lines)도 함께 생성됩니다.
 -- APPROVAL 번호 중복 검증 및 FK 존재 검증을 통해 데이터 무결성을 보장합니다.
@@ -303,10 +361,10 @@ ORDER BY a.approval_type;
 --   - status: 'PENDING'(승인대기), 'APPROVED'(승인완료), 'REJECTED'(반려), 'CANCELLED'(취소)
 -- 
 -- 승인 구성:
---   - SR 승인 요청: 30개 (APP2501-0001 ~ 0030) - PENDING, 1단계 승인
---   - SPEC 승인 요청: 30개 (APP2501-0031 ~ 0060) - PENDING, 1단계 승인
---   - RELEASE 승인 요청: 40개 (APP2501-0061 ~ 0100) - PENDING, 1단계 승인
+--   - SR 승인 요청: 30개 (APP2501-0001 ~ 0030) - PENDING, 2단계 승인
+--   - SPEC 승인 요청: 30개 (APP2501-0031 ~ 0060) - PENDING, 2단계 승인
+--   - RELEASE 승인 요청: 40개 (APP2501-0061 ~ 0100) - PENDING, 2단계 승인
 --   - 총 100개의 승인 요청 데이터
---   - 각 승인마다 승인 라인(approval_lines) 1개씩 생성 (시스템관리담당자만)
---   - 승인자는 시스템관리담당자(admin@aris.com)로 통일
---   - 간소화된 승인 프로세스 적용
+--   - 각 승인마다 승인 라인(approval_lines) 2개씩 생성 (1단계, 2단계 모두 시스템관리담당자)
+--   - 승인자는 1차, 2차 모두 시스템관리담당자(admin@aris.com)로 통일
+--   - 2단계 승인 프로세스 적용
