@@ -19,7 +19,66 @@
 
 -- 3. SR, SPEC, RELEASE 기준 APPROVAL 데이터 삽입 쿼리 (멱등성 보장)
 -- SR 승인요청 30개, SPEC 승인요청 30개, 릴리즈 승인요청 40개 생성
--- 모든 승인은 2단계 승인 존재 (1차, 2차 모두 시스템관리담당자: admin@aris.com)
+-- 모든 승인은 2단계 승인 존재 (1차, 2차 모두 시스템관리담당자)
+
+-- ========================================
+-- 사전 작업: 승인자 ID 확보 (approver_id NOT NULL 제약 위반 방지)
+-- ========================================
+
+DO $$
+DECLARE
+    v_approver_id BIGINT;
+    v_approver_email VARCHAR(100);
+BEGIN
+    -- 시스템관리담당자 조회 (admin@aris.com 우선, 없으면 첫 번째 활성 사용자)
+    SELECT u.id, u.email INTO v_approver_id, v_approver_email
+    FROM users u
+    WHERE u.email = 'admin@aris.com' 
+      AND u.is_active = true
+      AND u.deleted_at IS NULL
+    LIMIT 1;
+    
+    -- admin@aris.com이 없으면 파트너 사용자 중 첫 번째 사용자 선택
+    IF v_approver_id IS NULL THEN
+        SELECT u.id, u.email INTO v_approver_id, v_approver_email
+        FROM users u
+        WHERE u.email LIKE '%@partner.com'
+          AND u.is_active = true
+          AND u.deleted_at IS NULL
+        ORDER BY u.id
+        LIMIT 1;
+    END IF;
+    
+    -- 파트너 사용자도 없으면 아무 활성 사용자나 선택
+    IF v_approver_id IS NULL THEN
+        SELECT u.id, u.email INTO v_approver_id, v_approver_email
+        FROM users u
+        WHERE u.is_active = true
+          AND u.deleted_at IS NULL
+        ORDER BY u.id
+        LIMIT 1;
+    END IF;
+    
+    -- 승인자가 없으면 오류 발생
+    IF v_approver_id IS NULL THEN
+        RAISE EXCEPTION 'No active user found for approver assignment';
+    END IF;
+    
+    -- 임시 테이블에 승인자 정보 저장
+    CREATE TEMP TABLE IF NOT EXISTS temp_approval_config (
+        config_key VARCHAR(50) PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        user_email VARCHAR(100) NOT NULL
+    );
+    
+    -- 기존 데이터 삭제 후 삽입
+    DELETE FROM temp_approval_config WHERE config_key = 'system_approver';
+    
+    INSERT INTO temp_approval_config (config_key, user_id, user_email)
+    VALUES ('system_approver', v_approver_id, v_approver_email);
+    
+    RAISE NOTICE 'System approver set: ID=%, Email=%', v_approver_id, v_approver_email;
+END $$;
 
 -- ========================================
 -- SR 승인 요청 (30개) - PENDING 상태, 2단계 승인
@@ -53,13 +112,15 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     1 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'SR' 
   AND a.approval_number BETWEEN 'APP2501-0001' AND 'APP2501-0030'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- SR 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
@@ -67,13 +128,15 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     2 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'SR' 
   AND a.approval_number BETWEEN 'APP2501-0001' AND 'APP2501-0030'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- ========================================
@@ -109,13 +172,15 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     1 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'SPEC' 
   AND a.approval_number BETWEEN 'APP2501-0031' AND 'APP2501-0060'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- SPEC 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
@@ -123,13 +188,15 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     2 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'SPEC' 
   AND a.approval_number BETWEEN 'APP2501-0031' AND 'APP2501-0060'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- ========================================
@@ -165,13 +232,15 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     1 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'RELEASE' 
   AND a.approval_number BETWEEN 'APP2501-0061' AND 'APP2501-0100'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- RELEASE 승인 라인 2단계: 시스템관리담당자 승인 (PENDING)
@@ -179,18 +248,31 @@ INSERT INTO approval_lines (approval_id, step_order, approver_id, status, commen
 SELECT 
     a.id as approval_id,
     2 as step_order,
-    (SELECT u.id FROM users u WHERE u.email = 'admin@aris.com' LIMIT 1) as approver_id,
+    tac.user_id as approver_id,
     'PENDING' as status,
     NULL as comment,
     NULL as approved_at
 FROM approvals a
+CROSS JOIN temp_approval_config tac
 WHERE a.approval_type = 'RELEASE' 
   AND a.approval_number BETWEEN 'APP2501-0061' AND 'APP2501-0100'
+  AND tac.config_key = 'system_approver'
 ON CONFLICT (approval_id, step_order) DO NOTHING;
 
 -- ========================================
 -- 4. APPROVAL 데이터 검증 쿼리
 -- ========================================
+
+-- 사용된 승인자 정보 확인
+SELECT 
+    tac.config_key,
+    tac.user_id,
+    tac.user_email,
+    u.name as user_name,
+    u.is_active
+FROM temp_approval_config tac
+LEFT JOIN users u ON tac.user_id = u.id
+WHERE tac.config_key = 'system_approver';
 
 -- APPROVAL 데이터 건수 확인
 SELECT COUNT(*) as approval_count FROM approvals;
@@ -210,15 +292,16 @@ WHERE u.id IS NULL;
 -- 승인 라인 건수 확인 (100개 승인 * 2단계 = 200개여야 함)
 SELECT COUNT(*) as approval_line_count FROM approval_lines;
 
--- 승인 라인 approver_id NULL 검증
+-- 승인 라인 approver_id NULL 검증 (0건이어야 함)
 SELECT al.id, al.approval_id, al.step_order, al.approver_id
 FROM approval_lines al
 WHERE al.approver_id IS NULL;
 
--- 승인자 확인 (모두 admin@aris.com이어야 함)
-SELECT DISTINCT u.email as approver_email, u.name as approver_name
+-- 승인자 확인 (시스템관리담당자만 있어야 함)
+SELECT DISTINCT u.email as approver_email, u.name as approver_name, COUNT(*) as assigned_count
 FROM approval_lines al
-JOIN users u ON al.approver_id = u.id;
+JOIN users u ON al.approver_id = u.id
+GROUP BY u.email, u.name;
 
 -- 승인 유형별 통계
 SELECT approval_type, status, COUNT(*) as count
@@ -245,7 +328,7 @@ FROM approvals
 GROUP BY approval_type, total_steps
 ORDER BY approval_type, total_steps;
 
--- 승인자별 대기 건수 (admin@aris.com에게 모든 승인이 할당되어야 함)
+-- 승인자별 대기 건수 (단계별)
 SELECT 
     u.email as approver_email,
     u.name as approver_name,
@@ -324,13 +407,13 @@ SELECT
     MAX(a.total_steps) as max_steps,
     MIN(a.total_steps) as min_steps,
     COUNT(DISTINCT al.id) as approval_line_count,
-    COUNT(DISTINCT al.id) / COUNT(DISTINCT a.id) as lines_per_approval
+    COUNT(DISTINCT al.id) / NULLIF(COUNT(DISTINCT a.id), 0) as lines_per_approval
 FROM approvals a
 LEFT JOIN approval_lines al ON a.id = al.approval_id
 GROUP BY a.approval_type
 ORDER BY a.approval_type;
 
--- 승인 라인 단계별 승인자 현황 (1단계, 2단계 모두 admin@aris.com 확인)
+-- 승인 라인 단계별 승인자 현황 (1단계, 2단계 모두 동일 승인자 확인)
 SELECT 
     a.approval_type,
     al.step_order,
@@ -343,18 +426,21 @@ JOIN users u ON al.approver_id = u.id
 GROUP BY a.approval_type, al.step_order, u.email, u.name
 ORDER BY a.approval_type, al.step_order;
 
+-- 임시 테이블 정리
+DROP TABLE IF EXISTS temp_approval_config;
+
 -- APPROVAL 등록 로직 분석 및 데이터 마이그레이션 완료
 -- V3.0.10(SR), V3.0.11(SPEC), V3.0.14(RELEASE)에서 생성된 데이터를 기반으로 승인 요청 데이터를 생성하였습니다.
 -- 
 -- 승인 프로세스 정책:
 --   - 모든 승인은 2단계 승인 존재 (total_steps = 2)
---   - 1차 승인자: 시스템관리담당자 (admin@aris.com)
---   - 2차 승인자: 시스템관리담당자 (admin@aris.com)
---   - 동일한 승인자가 1차, 2차를 모두 처리하는 간소화된 프로세스
+--   - 1차 승인자: 시스템관리담당자 (우선순위: admin@aris.com > 파트너 사용자 > 활성 사용자)
+--   - 2차 승인자: 시스템관리담당자 (1차 승인자와 동일)
+--   - approver_id NOT NULL 제약 위반 방지를 위해 DO $$ 블록으로 승인자 사전 확보
+--   - 임시 테이블(temp_approval_config)을 통한 안전한 승인자 할당
 -- 
 -- 모든 APPROVAL은 실제 SR/SPEC/RELEASE를 참조하며, 승인 라인(approval_lines)도 함께 생성됩니다.
 -- APPROVAL 번호 중복 검증 및 FK 존재 검증을 통해 데이터 무결성을 보장합니다.
--- approver_id NOT NULL 제약조건 위반 방지를 위해 admin@aris.com 계정을 승인자로 고정합니다.
 -- 
 -- 모든 APPROVAL은 DB 스키마의 CHECK 제약 조건을 준수합니다:
 --   - approval_type: 'SR', 'SPEC', 'RELEASE', 'DATA_EXTRACTION'
@@ -366,5 +452,4 @@ ORDER BY a.approval_type, al.step_order;
 --   - RELEASE 승인 요청: 40개 (APP2501-0061 ~ 0100) - PENDING, 2단계 승인
 --   - 총 100개의 승인 요청 데이터
 --   - 각 승인마다 승인 라인(approval_lines) 2개씩 생성 (1단계, 2단계 모두 시스템관리담당자)
---   - 승인자는 1차, 2차 모두 시스템관리담당자(admin@aris.com)로 통일
 --   - 2단계 승인 프로세스 적용
