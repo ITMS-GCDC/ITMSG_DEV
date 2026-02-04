@@ -1,5 +1,6 @@
--- APPROVAL 데이터 삽입 쿼리 (V3.0.16)
+-- APPROVAL 데이터 삽입 쿼리 (V99.5.0)
 -- SR, SPEC, RELEASE에 대한 승인 요청 데이터 생성
+-- V99.0.0 이후 실행: admin@aris.com 계정 생성 후 실행되도록 버전 조정
 
 -- 1. [REPORT A] CRUD 및 데이터 흐름 분석
 -- APPROVAL 등록 화면 요소와 API 흐름 분석
@@ -19,7 +20,7 @@
 
 -- 3. SR, SPEC, RELEASE 기준 APPROVAL 데이터 삽입 쿼리 (멱등성 보장)
 -- SR 승인요청 30개, SPEC 승인요청 30개, 릴리즈 승인요청 40개 생성
--- 모든 승인은 2단계 승인 존재 (1차, 2차 모두 시스템관리담당자)
+-- 모든 승인은 2단계 승인 존재 (1차, 2차 모두 시스템관리담당자: admin@aris.com)
 
 -- ========================================
 -- 사전 작업: 승인자 ID 확보 (approver_id NOT NULL 제약 위반 방지)
@@ -30,7 +31,7 @@ DECLARE
     v_approver_id BIGINT;
     v_approver_email VARCHAR(100);
 BEGIN
-    -- 시스템관리담당자 조회 (admin@aris.com 우선)
+    -- 시스템관리담당자 조회 (admin@aris.com)
     SELECT u.id, u.email INTO v_approver_id, v_approver_email
     FROM users u
     WHERE u.email = 'admin@aris.com' 
@@ -422,10 +423,14 @@ DROP TABLE IF EXISTS temp_approval_config;
 -- APPROVAL 등록 로직 분석 및 데이터 마이그레이션 완료
 -- V3.0.10(SR), V3.0.11(SPEC), V3.0.14(RELEASE)에서 생성된 데이터를 기반으로 승인 요청 데이터를 생성하였습니다.
 -- 
+-- 마이그레이션 버전 조정:
+--   - V3.0.16 → V99.5.0으로 변경하여 V99.0.0(admin@aris.com 생성) 이후 실행되도록 함
+--   - 이를 통해 "No system admin or ARIS employee found" 오류 방지
+-- 
 -- 승인 프로세스 정책:
 --   - 모든 승인은 2단계 승인 존재 (total_steps = 2)
---   - 1차 승인자: 시스템관리담당자 (우선순위: admin@aris.com > ARIS 본사 직원)
---   - 2차 승인자: 시스템관리담당자 (1차 승인자와 동일)
+--   - 1차 승인자: 시스템관리담당자 admin@aris.com (우선순위: admin@aris.com > ARIS 본사 직원)
+--   - 2차 승인자: 시스템관리담당자 admin@aris.com (1차 승인자와 동일)
 --   - 파트너 사용자는 승인자로 선택되지 않음 (ARIS 본사 직원만 승인자 가능)
 --   - approver_id NOT NULL 제약 위반 방지를 위해 DO $$ 블록으로 승인자 사전 확보
 --   - 임시 테이블(temp_approval_config)을 통한 안전한 승인자 할당
