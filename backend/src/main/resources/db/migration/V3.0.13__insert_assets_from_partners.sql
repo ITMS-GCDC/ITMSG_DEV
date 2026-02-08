@@ -86,8 +86,8 @@ ON CONFLICT (email) DO UPDATE SET
     updated_by = EXCLUDED.updated_by,
     updated_at = NOW();
 
--- 5. 파트너 기준 ASSET 데이터 삽입 쿼리 (멱등성 보장)
--- GCDC 회사 자산 5개 우선 생성 후, 나머지 파트너 자산 95개 생성 (총 100개)
+-- 5. ASSET 데이터 삽입 쿼리 (멱등성 보장)
+-- GCDC 회사 자산 5개 우선 생성 후, 나머지 가상 담당자 자산 95개 생성 (총 100개)
 
 -- ========================================
 -- GCDC 자산 (5개) - 우선 생성
@@ -98,7 +98,7 @@ INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_exp
 SELECT 
     'AST2501-0001' as asset_number,
     'LAPTOP' as asset_type,
-    'LAPTOP-GCDC-000001' as serial_number,
+    'LAPTOP-000001' as serial_number,
     DATE '2024-01-15' as acquired_at,
     false as is_expired,
     NULL as expired_at,
@@ -114,7 +114,7 @@ INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_exp
 SELECT 
     'AST2501-0002' as asset_number,
     'TABLE' as asset_type,
-    'TABLE-조범구-000001' as serial_number,
+    'TABLE-000001' as serial_number,
     DATE '2024-01-20' as acquired_at,
     false as is_expired,
     NULL as expired_at,
@@ -146,7 +146,7 @@ INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_exp
 SELECT 
     'AST2501-0004' as asset_number,
     'PRINTER' as asset_type,
-    'PRINTER-GCDC-000001' as serial_number,
+    'PRINTER-000001' as serial_number,
     DATE '2024-02-01' as acquired_at,
     false as is_expired,
     NULL as expired_at,
@@ -162,7 +162,7 @@ INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_exp
 SELECT 
     'AST2501-0005' as asset_number,
     'DUPLICATOR' as asset_type,
-    'DUPLICATOR-조재혁-000001' as serial_number,
+    'DUPLICATOR-000001' as serial_number,
     DATE '2024-02-05' as acquired_at,
     false as is_expired,
     NULL as expired_at,
@@ -179,214 +179,89 @@ ON CONFLICT (asset_number) DO NOTHING;
 -- 담당자: 가상의 실명
 -- ========================================
 
--- 노트북 자산 (19개) - 가상 담당자 이름 포함
+-- 노트북 자산 (19개) - 가상 담당자
 INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_expired, expired_at, manager_id, created_by, updated_by)
 SELECT 
     'AST2501-' || LPAD((6 + (row_number() OVER (ORDER BY u.id) - 1))::TEXT, 4, '0') as asset_number,
     'LAPTOP' as asset_type,
-    'LAPTOP-' || 
-    CASE (row_number() OVER (ORDER BY u.id))
-        WHEN 1 THEN '이정훈'
-        WHEN 2 THEN '박서연'
-        WHEN 3 THEN '최민준'
-        WHEN 4 THEN '정수빈'
-        WHEN 5 THEN '강예은'
-        WHEN 6 THEN '조현우'
-        WHEN 7 THEN '윤지아'
-        WHEN 8 THEN '임도윤'
-        WHEN 9 THEN '한서준'
-        WHEN 10 THEN '오하은'
-        WHEN 11 THEN '신유진'
-        WHEN 12 THEN '배준호'
-        WHEN 13 THEN '송지우'
-        WHEN 14 THEN '홍시현'
-        WHEN 15 THEN '노은서'
-        WHEN 16 THEN '권민재'
-        WHEN 17 THEN '유채원'
-        WHEN 18 THEN '서동현'
-        ELSE '안수아'
-    END || '-' || LPAD((row_number() OVER (ORDER BY u.id))::TEXT, 6, '0') as serial_number,
+    'LAPTOP-' || LPAD((row_number() OVER (ORDER BY u.id) + 1)::TEXT, 6, '0') as serial_number,
     DATE '2023-03-01' + (INTERVAL '7 days' * (row_number() OVER (ORDER BY u.id) - 1)) as acquired_at,
     false as is_expired,
     NULL as expired_at,
     u.id as manager_id,
     'system' as created_by,
     'system' as updated_by
-FROM (
-    SELECT u.* FROM users u
-    WHERE u.email LIKE '%@partner.com' 
-      AND u.email NOT IN ('gcdc@partner.com', 'kim.changyeon@gcdc.com', 'jo.beomgu@gcdc.com', 'kim.cheonyong@gcdc.com', 'park.heeju@gcdc.com', 'jo.jaehyuk@gcdc.com')
-    ORDER BY u.id
-    LIMIT 19
-) u
+FROM users u
+WHERE u.email LIKE 'asset.laptop.%@virtual.com'
+ORDER BY u.email
 ON CONFLICT (asset_number) DO NOTHING;
 
--- 책상 자산 (19개) - 가상 담당자 이름 포함
+-- 책상 자산 (19개) - 가상 담당자
 INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_expired, expired_at, manager_id, created_by, updated_by)
 SELECT 
     'AST2501-' || LPAD((25 + (row_number() OVER (ORDER BY u.id) - 1))::TEXT, 4, '0') as asset_number,
     'TABLE' as asset_type,
-    'TABLE-' || 
-    CASE (row_number() OVER (ORDER BY u.id))
-        WHEN 1 THEN '장민서'
-        WHEN 2 THEN '고지훈'
-        WHEN 3 THEN '문다은'
-        WHEN 4 THEN '성준혁'
-        WHEN 5 THEN '변하린'
-        WHEN 6 THEN '표시우'
-        WHEN 7 THEN '남예준'
-        WHEN 8 THEN '복지안'
-        WHEN 9 THEN '도서윤'
-        WHEN 10 THEN '류민준'
-        WHEN 11 THEN '방채은'
-        WHEN 12 THEN '탁윤호'
-        WHEN 13 THEN '소아인'
-        WHEN 14 THEN '염준서'
-        WHEN 15 THEN '빈지유'
-        WHEN 16 THEN '하도현'
-        WHEN 17 THEN '석은우'
-        WHEN 18 THEN '설나은'
-        ELSE '옥시원'
-    END || '-' || LPAD((row_number() OVER (ORDER BY u.id))::TEXT, 6, '0') as serial_number,
+    'TABLE-' || LPAD((row_number() OVER (ORDER BY u.id) + 1)::TEXT, 6, '0') as serial_number,
     DATE '2023-04-01' + (INTERVAL '7 days' * (row_number() OVER (ORDER BY u.id) - 1)) as acquired_at,
     false as is_expired,
     NULL as expired_at,
     u.id as manager_id,
     'system' as created_by,
     'system' as updated_by
-FROM (
-    SELECT u.* FROM users u
-    WHERE u.email LIKE '%@partner.com' 
-      AND u.email NOT IN ('gcdc@partner.com', 'kim.changyeon@gcdc.com', 'jo.beomgu@gcdc.com', 'kim.cheonyong@gcdc.com', 'park.heeju@gcdc.com', 'jo.jaehyuk@gcdc.com')
-    ORDER BY u.id
-    OFFSET 19 LIMIT 19
-) u
+FROM users u
+WHERE u.email LIKE 'asset.table.%@virtual.com'
+ORDER BY u.email
 ON CONFLICT (asset_number) DO NOTHING;
 
--- 의자 자산 (19개) - 가상 담당자 이름 포함
+-- 의자 자산 (19개) - 가상 담당자
 INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_expired, expired_at, manager_id, created_by, updated_by)
 SELECT 
     'AST2501-' || LPAD((44 + (row_number() OVER (ORDER BY u.id) - 1))::TEXT, 4, '0') as asset_number,
     'CHAIR' as asset_type,
-    'CHAIR-' || 
-    CASE (row_number() OVER (ORDER BY u.id))
-        WHEN 1 THEN '진서현'
-        WHEN 2 THEN '추유나'
-        WHEN 3 THEN '맹건우'
-        WHEN 4 THEN '형지원'
-        WHEN 5 THEN '채민혁'
-        WHEN 6 THEN '제수민'
-        WHEN 7 THEN '편예진'
-        WHEN 8 THEN '궁우진'
-        WHEN 9 THEN '경소율'
-        WHEN 10 THEN '단지호'
-        WHEN 11 THEN '견하율'
-        WHEN 12 THEN '목서아'
-        WHEN 13 THEN '피지환'
-        WHEN 14 THEN '선수아'
-        WHEN 15 THEN '갈도훈'
-        WHEN 16 THEN '길예원'
-        WHEN 17 THEN '곽민서'
-        WHEN 18 THEN '판유빈'
-        ELSE '연준우'
-    END || '-' || LPAD((row_number() OVER (ORDER BY u.id))::TEXT, 6, '0') as serial_number,
+    'CHAIR-' || LPAD((row_number() OVER (ORDER BY u.id) + 1)::TEXT, 6, '0') as serial_number,
     DATE '2023-05-01' + (INTERVAL '7 days' * (row_number() OVER (ORDER BY u.id) - 1)) as acquired_at,
     false as is_expired,
     NULL as expired_at,
     u.id as manager_id,
     'system' as created_by,
     'system' as updated_by
-FROM (
-    SELECT u.* FROM users u
-    WHERE u.email LIKE '%@partner.com' 
-      AND u.email NOT IN ('gcdc@partner.com', 'kim.changyeon@gcdc.com', 'jo.beomgu@gcdc.com', 'kim.cheonyong@gcdc.com', 'park.heeju@gcdc.com', 'jo.jaehyuk@gcdc.com')
-    ORDER BY u.id
-    OFFSET 38 LIMIT 19
-) u
+FROM users u
+WHERE u.email LIKE 'asset.chair.%@virtual.com'
+ORDER BY u.email
 ON CONFLICT (asset_number) DO NOTHING;
 
--- 프린터 자산 (19개) - 가상 담당자 이름 포함
+-- 프린터 자산 (19개) - 가상 담당자
 INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_expired, expired_at, manager_id, created_by, updated_by)
 SELECT 
     'AST2501-' || LPAD((63 + (row_number() OVER (ORDER BY u.id) - 1))::TEXT, 4, '0') as asset_number,
     'PRINTER' as asset_type,
-    'PRINTER-' || 
-    CASE (row_number() OVER (ORDER BY u.id))
-        WHEN 1 THEN '엄서진'
-        WHEN 2 THEN '두예서'
-        WHEN 3 THEN '마시온'
-        WHEN 4 THEN '모유진'
-        WHEN 5 THEN '평지후'
-        WHEN 6 THEN '삼하준'
-        WHEN 7 THEN '기은채'
-        WHEN 8 THEN '작수현'
-        WHEN 9 THEN '원민재'
-        WHEN 10 THEN '대채린'
-        WHEN 11 THEN '갑준영'
-        WHEN 12 THEN '좌예나'
-        WHEN 13 THEN '우지은'
-        WHEN 14 THEN '저하윤'
-        WHEN 15 THEN '허태윤'
-        WHEN 16 THEN '정수인'
-        WHEN 17 THEN '구민석'
-        WHEN 18 THEN '국예림'
-        ELSE '공도경'
-    END || '-' || LPAD((row_number() OVER (ORDER BY u.id))::TEXT, 6, '0') as serial_number,
+    'PRINTER-' || LPAD((row_number() OVER (ORDER BY u.id) + 1)::TEXT, 6, '0') as serial_number,
     DATE '2023-06-01' + (INTERVAL '7 days' * (row_number() OVER (ORDER BY u.id) - 1)) as acquired_at,
     CASE WHEN (row_number() OVER (ORDER BY u.id)) % 10 = 0 THEN true ELSE false END as is_expired,
     CASE WHEN (row_number() OVER (ORDER BY u.id)) % 10 = 0 THEN DATE '2025-12-31' ELSE NULL END as expired_at,
     u.id as manager_id,
     'system' as created_by,
     'system' as updated_by
-FROM (
-    SELECT u.* FROM users u
-    WHERE u.email LIKE '%@partner.com' 
-      AND u.email NOT IN ('gcdc@partner.com', 'kim.changyeon@gcdc.com', 'jo.beomgu@gcdc.com', 'kim.cheonyong@gcdc.com', 'park.heeju@gcdc.com', 'jo.jaehyuk@gcdc.com')
-    ORDER BY u.id
-    OFFSET 57 LIMIT 19
-) u
+FROM users u
+WHERE u.email LIKE 'asset.printer.%@virtual.com'
+ORDER BY u.email
 ON CONFLICT (asset_number) DO NOTHING;
 
--- 복사기 자산 (19개) - 가상 담당자 이름 포함
+-- 복사기 자산 (19개) - 가상 담당자
 INSERT INTO assets (asset_number, asset_type, serial_number, acquired_at, is_expired, expired_at, manager_id, created_by, updated_by)
 SELECT 
     'AST2501-' || LPAD((82 + (row_number() OVER (ORDER BY u.id) - 1))::TEXT, 4, '0') as asset_number,
     'DUPLICATOR' as asset_type,
-    'DUPLICATOR-' || 
-    CASE (row_number() OVER (ORDER BY u.id))
-        WHEN 1 THEN '차지율'
-        WHEN 2 THEN '태서영'
-        WHEN 3 THEN '지예주'
-        WHEN 4 THEN '계민찬'
-        WHEN 5 THEN '화유하'
-        WHEN 6 THEN '견지훈'
-        WHEN 7 THEN '뇌서준'
-        WHEN 8 THEN '극다현'
-        WHEN 9 THEN '수아연'
-        WHEN 10 THEN '란준혁'
-        WHEN 11 THEN '간서연'
-        WHEN 12 THEN '검하은'
-        WHEN 13 THEN '창은지'
-        WHEN 14 THEN '운민우'
-        WHEN 15 THEN '부지안'
-        WHEN 16 THEN '여채윤'
-        WHEN 17 THEN '황시후'
-        WHEN 18 THEN '교수빈'
-        ELSE '반주희'
-    END || '-' || LPAD((row_number() OVER (ORDER BY u.id))::TEXT, 6, '0') as serial_number,
+    'DUPLICATOR-' || LPAD((row_number() OVER (ORDER BY u.id) + 1)::TEXT, 6, '0') as serial_number,
     DATE '2023-07-01' + (INTERVAL '7 days' * (row_number() OVER (ORDER BY u.id) - 1)) as acquired_at,
     CASE WHEN (row_number() OVER (ORDER BY u.id)) % 15 = 0 THEN true ELSE false END as is_expired,
     CASE WHEN (row_number() OVER (ORDER BY u.id)) % 15 = 0 THEN DATE '2025-12-31' ELSE NULL END as expired_at,
     u.id as manager_id,
     'system' as created_by,
     'system' as updated_by
-FROM (
-    SELECT u.* FROM users u
-    WHERE u.email LIKE '%@partner.com' 
-      AND u.email NOT IN ('gcdc@partner.com', 'kim.changyeon@gcdc.com', 'jo.beomgu@gcdc.com', 'kim.cheonyong@gcdc.com', 'park.heeju@gcdc.com', 'jo.jaehyuk@gcdc.com')
-    ORDER BY u.id
-    OFFSET 76 LIMIT 19
-) u
+FROM users u
+WHERE u.email LIKE 'asset.duplicator.%@virtual.com'
+ORDER BY u.email
 ON CONFLICT (asset_number) DO NOTHING;
 
 -- ========================================
@@ -504,21 +379,23 @@ ORDER BY a.expired_at DESC;
 -- 
 -- 자산 구성:
 --   - GCDC 자산 5개 (우선 생성):
---     1. AST2501-0001: 노트북(LAPTOP) - 담당자: 김창연 (kim.changyeon@gcdc.com)
---     2. AST2501-0002: 책상(TABLE) - 담당자: 조범구 (jo.beomgu@gcdc.com)
---     3. AST2501-0003: 의자(CHAIR) - 담당자: 김천용 (kim.cheonyong@gcdc.com)
---     4. AST2501-0004: 프린터(PRINTER) - 담당자: 박희주 (park.heeju@gcdc.com)
---     5. AST2501-0005: 복사기(DUPLICATOR) - 담당자: 조재혁 (jo.jaehyuk@gcdc.com)
---   - 나머지 파트너 자산 95개:
---     * 노트북(LAPTOP): 19개 (AST2501-0006 ~ 0024) - 가상 실명: 이정훈, 박서연, 최민준 등
---     * 책상(TABLE): 19개 (AST2501-0025 ~ 0043) - 가상 실명: 장민서, 고지훈, 문다은 등
---     * 의자(CHAIR): 19개 (AST2501-0044 ~ 0062) - 가상 실명: 진서현, 추유나, 맹건우 등
---     * 프린터(PRINTER): 19개 (AST2501-0063 ~ 0081) - 가상 실명: 엄서진, 두예서, 마시온 등
---     * 복사기(DUPLICATOR): 19개 (AST2501-0082 ~ 0100) - 가상 실명: 차지율, 태서영, 지예주 등
+--     1. AST2501-0001: 노트북(LAPTOP) - 시리얼: LAPTOP-000001, 담당자: 김창연
+--     2. AST2501-0002: 책상(TABLE) - 시리얼: TABLE-000001, 담당자: 조범구
+--     3. AST2501-0003: 의자(CHAIR) - 시리얼: CHAIR-000001, 담당자: 김천용
+--     4. AST2501-0004: 프린터(PRINTER) - 시리얼: PRINTER-000001, 담당자: 박희주
+--     5. AST2501-0005: 복사기(DUPLICATOR) - 시리얼: DUPLICATOR-000001, 담당자: 조재혁
+--   - 나머지 자산 95개:
+--     * 노트북(LAPTOP): 19개 (AST2501-0006 ~ 0024) - 시리얼: LAPTOP-000002 ~ 000020
+--     * 책상(TABLE): 19개 (AST2501-0025 ~ 0043) - 시리얼: TABLE-000002 ~ 000020
+--     * 의자(CHAIR): 19개 (AST2501-0044 ~ 0062) - 시리얼: CHAIR-000002 ~ 000020
+--     * 프린터(PRINTER): 19개 (AST2501-0063 ~ 0081) - 시리얼: PRINTER-000002 ~ 000020
+--     * 복사기(DUPLICATOR): 19개 (AST2501-0082 ~ 0100) - 시리얼: DUPLICATOR-000002 ~ 000020
 --   - 총 100개의 자산 데이터
 -- 
--- 모든 자산의 시리얼 번호에 담당자 가상 실명이 포함되어 있습니다.
--- 실제 manager_id는 파트너 사용자를 참조하지만, 시리얼 번호로 담당자를 식별할 수 있습니다.
+-- 시리얼 번호: 담당자명 제외, [자산유형]-[일련번호] 형태만 사용
+-- 담당자: manager_id FK로 users 테이블 참조
+-- - GCDC 5명: 김창연, 조범구, 김천용, 박희주, 조재혁 (실제 사용자)
+-- - 나머지 95명: 가상 실명 담당자 (이정훈, 박서연, 장민서, 진서현, 엄서진 등)
 -- 자산 번호 중복 검증 및 FK 존재 검증을 통해 데이터 무결성을 보장합니다.
 -- 
 -- 자산 유형별 분포:
