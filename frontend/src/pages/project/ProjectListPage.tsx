@@ -167,7 +167,7 @@ const ProjectListPage: React.FC = () => {
       {/* 검색 조건 */}
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth size="small">
               <InputLabel>회사</InputLabel>
               <Select
@@ -183,7 +183,7 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <TextField
               fullWidth
               size="small"
@@ -195,7 +195,7 @@ const ProjectListPage: React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid size={{ xs: 12, sm: 6, md: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>유형</InputLabel>
               <Select
@@ -210,7 +210,7 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth size="small">
               <InputLabel>PM</InputLabel>
               <Select
@@ -228,7 +228,7 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} md={1} sx={{ display: 'flex', gap: 1 }}>
+          <Grid size={{ xs: 12, md: 1 }} sx={{ display: 'flex', gap: 1 }}>
             <Button
               variant="contained"
               onClick={handleSearch}
