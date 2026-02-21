@@ -50,6 +50,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
            "AND (:projectType IS NULL OR p.projectType = :projectType) " +
            "AND (:status IS NULL OR p.status = :status) " +
            "AND (:companyId IS NULL OR p.company.id = :companyId) " +
+           "AND (:pmId IS NULL OR p.pm.id = :pmId) " +
            "AND (:startDate IS NULL OR p.startDate >= :startDate) " +
            "AND (:endDate IS NULL OR p.endDate <= :endDate) " +
            "AND p.deletedAt IS NULL")
@@ -57,6 +58,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                          @Param("projectType") ProjectType projectType,
                          @Param("status") ProjectStatus status,
                          @Param("companyId") Long companyId,
+                         @Param("pmId") Long pmId,
                          @Param("startDate") LocalDate startDate,
                          @Param("endDate") LocalDate endDate,
                          Pageable pageable);

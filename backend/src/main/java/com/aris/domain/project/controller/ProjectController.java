@@ -55,11 +55,12 @@ public class ProjectController {
             @RequestParam(required = false) ProjectType projectType,
             @RequestParam(required = false) ProjectStatus status,
             @RequestParam(required = false) Long companyId,
+            @RequestParam(required = false) Long pmId,
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<ProjectResponse> response = projectService.searchProjects(
-                name, projectType, status, companyId, startDate, endDate, pageable);
+                name, projectType, status, companyId, pmId, startDate, endDate, pageable);
         return ResponseEntity.ok(response);
     }
     

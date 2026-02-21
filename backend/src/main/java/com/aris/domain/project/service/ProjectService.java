@@ -103,6 +103,7 @@ public class ProjectService {
      */
     public Page<ProjectResponse> searchProjects(String name, ProjectType projectType,
                                                  ProjectStatus status, Long companyId,
+                                                 Long pmId,
                                                  LocalDate startDate, LocalDate endDate,
                                                  Pageable pageable) {
         // Admin이 아닌 경우 본인 회사 프로젝트만 조회
@@ -115,7 +116,7 @@ public class ProjectService {
         }
         
         Page<Project> projects = projectRepository.search(
-                name, projectType, status, effectiveCompanyId, startDate, endDate, pageable);
+                name, projectType, status, effectiveCompanyId, pmId, startDate, endDate, pageable);
         return projects.map(ProjectResponse::from);
     }
     
