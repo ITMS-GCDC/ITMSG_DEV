@@ -23,13 +23,21 @@ import {
   FormControl,
   InputLabel,
   Grid,
-  IconButton,
 } from '@mui/material';
-import { Add, Search, Clear } from '@mui/icons-material';
+import { Add, Search, Refresh } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getProjects, getCompanies, getPmCandidates } from '../../api/project';
-import type { Project, Company } from '../../types/project.types';
+import type { Project, Company, ProjectListParams } from '../../types/project.types';
 import type { PmCandidate } from '../../api/project';
+
+interface SearchForm {
+  companyId: string;
+  name: string;
+  projectType: string;
+  pmId: string;
+}
+
+const EMPTY_FORM: SearchForm = { companyId: '', name: '', projectType: '', pmId: '' };
 
 const ProjectListPage: React.FC = () => {
   const navigate = useNavigate();
@@ -46,18 +54,24 @@ const ProjectListPage: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [pmCandidates, setPmCandidates] = useState<PmCandidate[]>([]);
 
-  const [searchCompanyId, setSearchCompanyId] = useState<string>('');
-  const [searchName, setSearchName] = useState('');
-  const [searchProjectType, setSearchProjectType] = useState<string>('');
-  const [searchPmId, setSearchPmId] = useState<string>('');
+  // 폼 입력값 (사용자가 변경 중인 값)
+  const [form, setForm] = useState<SearchForm>(EMPTY_FORM);
+  // 실제 적용된 검색조건 (검색 버튼 클릭 시 커밋)
+  const [appliedSearch, setAppliedSearch] = useState<SearchForm>(EMPTY_FORM);
 
   useEffect(() => {
     loadFilterData();
   }, []);
 
+  // page, rowsPerPage, appliedSearch 변경 시 조회
   useEffect(() => {
-    fetchProjects();
-  }, [page, rowsPerPage]);
+    const params: ProjectListParams = { page, size: rowsPerPage };
+    if (appliedSearch.companyId) params.companyId = Number(appliedSearch.companyId);
+    if (appliedSearch.name.trim()) params.name = appliedSearch.name.trim();
+    if (appliedSearch.projectType) params.projectType = appliedSearch.projectType as any;
+    if (appliedSearch.pmId) params.pmId = Number(appliedSearch.pmId);
+    doFetch(params);
+  }, [page, rowsPerPage, appliedSearch]);
 
   const loadFilterData = async () => {
     try {
@@ -72,21 +86,13 @@ const ProjectListPage: React.FC = () => {
     }
   };
 
-  const fetchProjects = async (resetPage = false) => {
+  const doFetch = async (params: ProjectListParams) => {
     setLoading(true);
     setError('');
-    const currentPage = resetPage ? 0 : page;
     try {
-      const params: Record<string, unknown> = { page: currentPage, size: rowsPerPage };
-      if (searchCompanyId) params.companyId = Number(searchCompanyId);
-      if (searchName.trim()) params.name = searchName.trim();
-      if (searchProjectType) params.projectType = searchProjectType;
-      if (searchPmId) params.pmId = Number(searchPmId);
-
-      const response = await getProjects(params as any);
+      const response = await getProjects(params);
       setProjects(response.content);
       setTotalElements(response.totalElements);
-      if (resetPage) setPage(0);
     } catch (err: any) {
       console.error('Failed to fetch projects:', err);
       setError(err.response?.data?.message || '프로젝트 목록을 불러오는데 실패했습니다.');
@@ -96,17 +102,14 @@ const ProjectListPage: React.FC = () => {
   };
 
   const handleSearch = () => {
-    fetchProjects(true);
+    setPage(0);
+    setAppliedSearch({ ...form });
   };
 
   const handleReset = () => {
-    setSearchCompanyId('');
-    setSearchName('');
-    setSearchProjectType('');
-    setSearchPmId('');
+    setForm(EMPTY_FORM);
     setPage(0);
-    // 초기화 후 전체 조회
-    setTimeout(() => fetchProjects(true), 0);
+    setAppliedSearch(EMPTY_FORM);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -134,10 +137,7 @@ const ProjectListPage: React.FC = () => {
   };
 
   const getProjectTypeLabel = (type: string) => {
-    const labels: Record<string, string> = {
-      SI: 'SI',
-      SM: 'SM',
-    };
+    const labels: Record<string, string> = { SI: 'SI', SM: 'SM' };
     return labels[type] || type;
   };
 
@@ -166,14 +166,16 @@ const ProjectListPage: React.FC = () => {
 
       {/* 검색 조건 */}
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid container spacing={1.5} alignItems="center" wrap="nowrap"
+          sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>회사</InputLabel>
               <Select
-                value={searchCompanyId}
+                value={form.companyId}
                 label="회사"
-                onChange={(e) => setSearchCompanyId(e.target.value)}
+                onChange={(e) => setForm((f) => ({ ...f, companyId: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
                 {companies.map((c) => (
@@ -183,25 +185,25 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 180 }, flexGrow: { md: 1.5 } }}>
             <TextField
               fullWidth
               size="small"
               label="프로젝트명"
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
+              value={form.name}
+              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               onKeyDown={handleKeyDown}
               placeholder="프로젝트명 검색"
             />
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6, md: 2 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 150 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>유형</InputLabel>
               <Select
-                value={searchProjectType}
+                value={form.projectType}
                 label="유형"
-                onChange={(e) => setSearchProjectType(e.target.value)}
+                onChange={(e) => setForm((f) => ({ ...f, projectType: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
                 <MenuItem value="SI">SI (시스템 통합)</MenuItem>
@@ -210,13 +212,13 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>PM</InputLabel>
               <Select
-                value={searchPmId}
+                value={form.pmId}
                 label="PM"
-                onChange={(e) => setSearchPmId(e.target.value)}
+                onChange={(e) => setForm((f) => ({ ...f, pmId: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
                 {pmCandidates.map((pm) => (
@@ -228,19 +230,25 @@ const ProjectListPage: React.FC = () => {
             </FormControl>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 1 }} sx={{ display: 'flex', gap: 1 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ display: 'flex', gap: 1, flexShrink: 0 }}>
             <Button
               variant="contained"
               onClick={handleSearch}
               startIcon={<Search />}
-              fullWidth
               size="medium"
+              sx={{ whiteSpace: 'nowrap' }}
             >
               검색
             </Button>
-            <IconButton onClick={handleReset} size="medium" title="초기화">
-              <Clear />
-            </IconButton>
+            <Button
+              variant="outlined"
+              onClick={handleReset}
+              startIcon={<Refresh />}
+              size="medium"
+              sx={{ whiteSpace: 'nowrap' }}
+            >
+              초기화
+            </Button>
           </Grid>
         </Grid>
       </Paper>
@@ -270,9 +278,7 @@ const ProjectListPage: React.FC = () => {
             >
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1 }}>
-                  <Typography variant="h6" component="div">
-                    {project.name}
-                  </Typography>
+                  <Typography variant="h6" component="div">{project.name}</Typography>
                   <Chip
                     label={getStatusLabel(project.status)}
                     color={getStatusColor(project.status)}

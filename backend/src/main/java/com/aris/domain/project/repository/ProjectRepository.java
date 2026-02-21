@@ -44,13 +44,15 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     
     /**
      * 검색 및 필터링
+     * pm은 nullable이므로 LEFT JOIN으로 명시 처리 (묵시적 INNER JOIN 방지)
+     * LIKE는 CONCAT으로 처리 (Hibernate 6 호환성)
      */
-    @Query("SELECT p FROM Project p " +
-           "WHERE (:name IS NULL OR p.name LIKE %:name%) " +
+    @Query("SELECT p FROM Project p LEFT JOIN p.pm pm " +
+           "WHERE (:name IS NULL OR p.name LIKE CONCAT('%', :name, '%')) " +
            "AND (:projectType IS NULL OR p.projectType = :projectType) " +
            "AND (:status IS NULL OR p.status = :status) " +
            "AND (:companyId IS NULL OR p.company.id = :companyId) " +
-           "AND (:pmId IS NULL OR p.pm.id = :pmId) " +
+           "AND (:pmId IS NULL OR pm.id = :pmId) " +
            "AND (:startDate IS NULL OR p.startDate >= :startDate) " +
            "AND (:endDate IS NULL OR p.endDate <= :endDate) " +
            "AND p.deletedAt IS NULL")
