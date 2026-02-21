@@ -28,7 +28,7 @@ import {
 import { Add, Search, Clear } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getProjects, getCompanies, getPmCandidates } from '../../api/project';
-import type { Project, Company, ProjectType } from '../../types/project.types';
+import type { Project, Company } from '../../types/project.types';
 import type { PmCandidate } from '../../api/project';
 
 const ProjectListPage: React.FC = () => {
