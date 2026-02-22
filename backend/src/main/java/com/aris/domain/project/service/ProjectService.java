@@ -101,28 +101,35 @@ public class ProjectService {
     
     /**
      * 프로젝트 목록 조회 (검색 및 필터링)
-     * Admin은 모든 프로젝트 조회 가능, 일반 사용자는 본인 회사 프로젝트만 조회
-     * Specification + JpaSpecificationExecutor 사용 (Hibernate 6 호환)
-     * lazy loading은 @Transactional 범위 내에서 batch fetch로 처리
+     * - Admin: 모든 프로젝트 조회 가능 (companyId 지정 시 해당 회사 필터링)
+     * - 일반 사용자: 본인 회사 프로젝트만 조회 (companyId 파라미터 무시)
+     * - Specification + JpaSpecificationExecutor (Hibernate 6 호환, path navigation 방식)
+     * - lazy loading은 @Transactional(readOnly=true) 범위 내 map() 호출로 안전하게 처리
      */
     public Page<ProjectResponse> searchProjects(String name, ProjectType projectType,
                                                  ProjectStatus status, Long companyId,
                                                  Long pmId,
                                                  LocalDate startDate, LocalDate endDate,
                                                  Pageable pageable) {
-        // Admin이 아닌 경우 본인 회사 프로젝트만 조회
-        Long effectiveCompanyId = companyId;
-        if (!isAdmin() && companyId == null) {
+        Long effectiveCompanyId;
+
+        if (isAdmin()) {
+            // Admin: 파라미터로 넘어온 companyId 그대로 사용 (null이면 전체 조회)
+            effectiveCompanyId = companyId;
+        } else {
+            // 일반 사용자: 항상 본인 회사 ID로 고정
             User currentUser = getCurrentUser();
-            if (currentUser.getCompany() != null) {
-                effectiveCompanyId = currentUser.getCompany().getId();
-            }
+            Long userCompanyId = (currentUser.getCompany() != null)
+                    ? currentUser.getCompany().getId() : null;
+            effectiveCompanyId = userCompanyId;
         }
 
-        Specification<Project> spec = ProjectSpecification.search(
-                name, projectType, status, effectiveCompanyId, pmId, startDate, endDate);
+        // 이름 파라미터: 공백 문자열은 null 처리 (전체 조회)
+        String nameParam = (name != null && !name.isBlank()) ? name.trim() : null;
 
-        // @Transactional(readOnly = true) 범위 내에서 map() 호출 → lazy loading 정상 동작
+        Specification<Project> spec = ProjectSpecification.search(
+                nameParam, projectType, status, effectiveCompanyId, pmId, startDate, endDate);
+
         Page<Project> projects = projectRepository.findAll(spec, pageable);
         return projects.map(ProjectResponse::from);
     }

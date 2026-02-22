@@ -3,8 +3,6 @@ package com.aris.domain.project.repository;
 import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
 import com.aris.domain.project.entity.ProjectType;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -15,7 +13,9 @@ import java.util.List;
 /**
  * 프로젝트 동적 검색 조건 (JPA Criteria API)
  * Hibernate 6 + Spring Data JPA 3.x 호환
- * - FETCH JOIN 없이 단순 predicate만 구성 → 연관 엔티티 안전 접근은 ProjectResponse.from()에서 처리
+ * - 명시적 JOIN 대신 경로 탐색(path navigation) 사용: root.get("company").get("id")
+ *   → Hibernate 6가 FK 컬럼을 직접 참조하거나 INNER JOIN으로 최적화
+ *   → COUNT 쿼리 생성 시 JOIN 충돌 없음
  */
 public class ProjectSpecification {
 
@@ -31,6 +31,9 @@ public class ProjectSpecification {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            // Soft Delete 제외 (항상 적용)
+            predicates.add(cb.isNull(root.get("deletedAt")));
+
             if (name != null && !name.isBlank()) {
                 predicates.add(cb.like(root.get("name"), "%" + name + "%"));
             }
@@ -40,13 +43,13 @@ public class ProjectSpecification {
             if (status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
             }
+            // 경로 탐색 사용: root.get("company").get("id") → projects.company_id 직접 비교
             if (companyId != null) {
-                Join<?, ?> companyJoin = root.join("company", JoinType.LEFT);
-                predicates.add(cb.equal(companyJoin.get("id"), companyId));
+                predicates.add(cb.equal(root.get("company").get("id"), companyId));
             }
+            // pm은 nullable(@ManyToOne), pmId 지정 시 해당 PM의 프로젝트만 조회
             if (pmId != null) {
-                Join<?, ?> pmJoin = root.join("pm", JoinType.LEFT);
-                predicates.add(cb.equal(pmJoin.get("id"), pmId));
+                predicates.add(cb.equal(root.get("pm").get("id"), pmId));
             }
             if (startDate != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("startDate"), startDate));
@@ -54,9 +57,6 @@ public class ProjectSpecification {
             if (endDate != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("endDate"), endDate));
             }
-
-            // Soft Delete 제외
-            predicates.add(cb.isNull(root.get("deletedAt")));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };
