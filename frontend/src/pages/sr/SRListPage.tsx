@@ -31,7 +31,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText,
   Stack,
 } from '@mui/material';
 import { Add, Search, Clear, Edit, Delete } from '@mui/icons-material';
@@ -57,6 +56,11 @@ const SRListPage: React.FC = () => {
     status: undefined,
     priority: undefined,
     projectId: undefined,
+    companyName: undefined,
+    projectName: undefined,
+    requesterId: undefined,
+    startDate: undefined,
+    endDate: undefined,
   });
 
   // 선택된 SR ID 관리
@@ -78,8 +82,8 @@ const SRListPage: React.FC = () => {
         ...searchParams,
       };
       const response = await getSrs(params);
-      setSrs(response.content);
-      setTotalElements(response.totalElements);
+      setSrs(response.content || []);
+      setTotalElements(response.totalElements || 0);
     } catch (err: any) {
       console.error('Failed to fetch SRs:', err);
       setError(err.message || 'SR 목록을 불러오는데 실패했습니다.');
@@ -110,6 +114,11 @@ const SRListPage: React.FC = () => {
       status: undefined,
       priority: undefined,
       projectId: undefined,
+      companyName: undefined,
+      projectName: undefined,
+      requesterId: undefined,
+      startDate: undefined,
+      endDate: undefined,
     });
     setPage(0);
     fetchSrs();
