@@ -61,8 +61,6 @@ interface EditFormData {
 
 const EMPTY_FORM: SearchForm = { companyId: '', name: '', projectType: '', pmId: '' };
 
-const hasCondition = (s: SearchForm): boolean =>
-  !!(s.companyId || s.name.trim() || s.projectType || s.pmId);
 
 const ProjectListPage: React.FC = () => {
   const navigate = useNavigate();
@@ -100,25 +98,23 @@ const ProjectListPage: React.FC = () => {
   const [pmCandidates, setPmCandidates] = useState<PmCandidate[]>([]);
   const [form, setForm] = useState<SearchForm>(EMPTY_FORM);
   const [appliedSearch, setAppliedSearch] = useState<SearchForm>(EMPTY_FORM);
+  // 검색 버튼을 눌렀는지 여부 (자동조회 방지)
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     loadFilterData();
   }, []);
 
   useEffect(() => {
-    if (!hasCondition(appliedSearch)) {
-      setProjects([]);
-      setTotalElements(0);
-      setSelectedProject(null);
-      return;
-    }
+    // 검색 버튼을 누르기 전에는 조회하지 않음
+    if (!hasSearched) return;
     const params: ProjectListParams = { page, size: rowsPerPage };
     if (appliedSearch.companyId) params.companyId = Number(appliedSearch.companyId);
     if (appliedSearch.name.trim()) params.name = appliedSearch.name.trim();
     if (appliedSearch.projectType) params.projectType = appliedSearch.projectType as any;
     if (appliedSearch.pmId) params.pmId = Number(appliedSearch.pmId);
     doFetch(params);
-  }, [page, rowsPerPage, appliedSearch]);
+  }, [page, rowsPerPage, appliedSearch, hasSearched]);
 
   const loadFilterData = async () => {
     try {
@@ -146,7 +142,7 @@ const ProjectListPage: React.FC = () => {
   };
 
   const refreshList = () => {
-    if (!hasCondition(appliedSearch)) return;
+    if (!hasSearched) return;
     const params: ProjectListParams = { page, size: rowsPerPage };
     if (appliedSearch.companyId) params.companyId = Number(appliedSearch.companyId);
     if (appliedSearch.name.trim()) params.name = appliedSearch.name.trim();
@@ -155,8 +151,16 @@ const ProjectListPage: React.FC = () => {
     doFetch(params);
   };
 
-  const handleSearch = () => { setPage(0); setAppliedSearch({ ...form }); };
-  const handleReset = () => { setForm(EMPTY_FORM); setPage(0); setAppliedSearch(EMPTY_FORM); };
+  const handleSearch = () => { setHasSearched(true); setPage(0); setAppliedSearch({ ...form }); };
+  const handleReset = () => {
+    setHasSearched(false);
+    setForm(EMPTY_FORM);
+    setPage(0);
+    setAppliedSearch(EMPTY_FORM);
+    setProjects([]);
+    setTotalElements(0);
+    setSelectedProject(null);
+  };
   const handleKeyDown = (e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSearch(); };
 
   // 체크박스 토글
@@ -334,8 +338,8 @@ const ProjectListPage: React.FC = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
           {loading ? (
             <Paper sx={{ p: 3, textAlign: 'center' }}><Typography>로딩 중...</Typography></Paper>
-          ) : !hasCondition(appliedSearch) ? (
-            <Paper sx={{ p: 4, textAlign: 'center' }}><Typography color="text.secondary">검색조건을 입력 후 검색 버튼을 눌러주세요.</Typography></Paper>
+          ) : !hasSearched ? (
+            <Paper sx={{ p: 4, textAlign: 'center' }}><Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography></Paper>
           ) : projects.length === 0 ? (
             <Paper sx={{ p: 3, textAlign: 'center' }}><Typography color="text.secondary">검색 결과가 없습니다.</Typography></Paper>
           ) : projects.map((project) => (
@@ -383,21 +387,21 @@ const ProjectListPage: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox" />
-                <TableCell>프로젝트 코드</TableCell>
-                <TableCell>프로젝트명</TableCell>
-                <TableCell>회사</TableCell>
-                <TableCell>유형</TableCell>
-                <TableCell>상태</TableCell>
-                <TableCell>시작일</TableCell>
-                <TableCell>종료일</TableCell>
-                <TableCell>PM</TableCell>
+                <TableCell align="center">프로젝트 코드</TableCell>
+                <TableCell align="center">프로젝트명</TableCell>
+                <TableCell align="center">회사</TableCell>
+                <TableCell align="center">유형</TableCell>
+                <TableCell align="center">상태</TableCell>
+                <TableCell align="center">시작일</TableCell>
+                <TableCell align="center">종료일</TableCell>
+                <TableCell align="center">PM</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {loading ? (
                 <TableRow><TableCell colSpan={9} align="center"><Typography>로딩 중...</Typography></TableCell></TableRow>
-              ) : !hasCondition(appliedSearch) ? (
-                <TableRow><TableCell colSpan={9} align="center"><Typography color="text.secondary">검색조건을 입력 후 검색 버튼을 눌러주세요.</Typography></TableCell></TableRow>
+              ) : !hasSearched ? (
+                <TableRow><TableCell colSpan={9} align="center"><Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography></TableCell></TableRow>
               ) : projects.length === 0 ? (
                 <TableRow><TableCell colSpan={9} align="center"><Typography color="text.secondary">검색 결과가 없습니다.</Typography></TableCell></TableRow>
               ) : projects.map((project) => (
