@@ -2,10 +2,6 @@ package com.aris.domain.project.repository;
 
 import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -21,13 +17,6 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project> {
 
-    /**
-     * company, pm을 LEFT JOIN FETCH로 즉시 로딩 — EntityNotFoundException 방지
-     */
-    @EntityGraph(attributePaths = {"company", "pm"})
-    @Override
-    Page<Project> findAll(Specification<Project> spec, Pageable pageable);
-    
     /**
      * 프로젝트 코드로 조회
      */
