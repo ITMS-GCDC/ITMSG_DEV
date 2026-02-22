@@ -52,8 +52,10 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 401 에러 (인증 실패) - 토큰 갱신 시도
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // 401 에러 (인증 실패) 또는 403 에러 (Spring Security STATELESS 환경에서 만료 토큰 처리)
+    // → 토큰 갱신 시도
+    const status = error.response?.status;
+    if ((status === 401 || status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -79,16 +81,10 @@ apiClient.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-    
-    // 403 에러 (토큰 만료로 인한 권한 없음) - accessToken이 없거나 만료된 경우
-    if (error.response?.status === 403) {
-      const accessToken = localStorage.getItem('accessToken');
-      const refreshToken = localStorage.getItem('refreshToken');
-      
-      // 토큰이 없거나 갱신 시도 후에도 403이면 로그아웃
-      if (!accessToken || !refreshToken || originalRequest._retry) {
-        handleLogout();
-      }
+
+    // 갱신 재시도 후에도 401/403이면 로그아웃
+    if ((status === 401 || status === 403) && originalRequest._retry) {
+      handleLogout();
     }
 
     // API 에러 응답 처리

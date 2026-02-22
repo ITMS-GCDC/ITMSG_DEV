@@ -135,10 +135,12 @@ const ProjectListPage: React.FC = () => {
       setTotalElements(response.totalElements);
       setSelectedProject(null);
     } catch (err: any) {
-      const msg = err?.message || err?.code
-        ? `프로젝트 목록을 불러오는데 실패했습니다. (${err.message || err.code})`
-        : '프로젝트 목록을 불러오는데 실패했습니다.';
-      setError(msg);
+      // err.message / err.code: 백엔드 GlobalExceptionHandler 응답
+      // err.error: Spring Boot 기본 에러 형식 (status, error, path)
+      const detail = err?.message || err?.code || err?.error;
+      setError(detail
+        ? `프로젝트 목록을 불러오는데 실패했습니다. (${detail})`
+        : '프로젝트 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
     }
