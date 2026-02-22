@@ -2,15 +2,14 @@ package com.aris.domain.project.repository;
 
 import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
-import com.aris.domain.project.entity.ProjectType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,7 @@ import java.util.Optional;
  * 프로젝트 Repository
  */
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project> {
     
     /**
      * 프로젝트 코드로 조회
@@ -41,29 +40,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
      */
     @Query("SELECT p FROM Project p WHERE p.status = :status AND p.deletedAt IS NULL")
     List<Project> findByStatus(@Param("status") ProjectStatus status);
-    
-    /**
-     * 검색 및 필터링
-     * pm은 nullable이므로 LEFT JOIN으로 명시 처리 (묵시적 INNER JOIN 방지)
-     * LIKE는 CONCAT으로 처리 (Hibernate 6 호환성)
-     */
-    @Query("SELECT p FROM Project p LEFT JOIN p.pm pm " +
-           "WHERE (:name IS NULL OR p.name LIKE CONCAT('%', :name, '%')) " +
-           "AND (:projectType IS NULL OR p.projectType = :projectType) " +
-           "AND (:status IS NULL OR p.status = :status) " +
-           "AND (:companyId IS NULL OR p.company.id = :companyId) " +
-           "AND (:pmId IS NULL OR pm.id = :pmId) " +
-           "AND (:startDate IS NULL OR p.startDate >= :startDate) " +
-           "AND (:endDate IS NULL OR p.endDate <= :endDate) " +
-           "AND p.deletedAt IS NULL")
-    Page<Project> search(@Param("name") String name,
-                         @Param("projectType") ProjectType projectType,
-                         @Param("status") ProjectStatus status,
-                         @Param("companyId") Long companyId,
-                         @Param("pmId") Long pmId,
-                         @Param("startDate") LocalDate startDate,
-                         @Param("endDate") LocalDate endDate,
-                         Pageable pageable);
     
     /**
      * PM이 관리하는 프로젝트 목록

@@ -1,0 +1,60 @@
+package com.aris.domain.project.repository;
+
+import com.aris.domain.project.entity.Project;
+import com.aris.domain.project.entity.ProjectStatus;
+import com.aris.domain.project.entity.ProjectType;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import org.springframework.data.jpa.domain.Specification;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 프로젝트 동적 검색 조건 (JPA Criteria API)
+ * Hibernate 6 호환 방식 - JPQL IS NULL 파라미터 바인딩 문제를 Java 레벨에서 처리
+ */
+public class ProjectSpecification {
+
+    public static Specification<Project> search(
+            String name,
+            ProjectType projectType,
+            ProjectStatus status,
+            Long companyId,
+            Long pmId,
+            LocalDate startDate,
+            LocalDate endDate) {
+
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (name != null && !name.isBlank()) {
+                predicates.add(cb.like(root.get("name"), "%" + name + "%"));
+            }
+            if (projectType != null) {
+                predicates.add(cb.equal(root.get("projectType"), projectType));
+            }
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+            if (companyId != null) {
+                predicates.add(cb.equal(root.get("company").get("id"), companyId));
+            }
+            if (pmId != null) {
+                predicates.add(cb.equal(root.join("pm", JoinType.LEFT).get("id"), pmId));
+            }
+            if (startDate != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("startDate"), startDate));
+            }
+            if (endDate != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("endDate"), endDate));
+            }
+
+            // Soft Delete 제외
+            predicates.add(cb.isNull(root.get("deletedAt")));
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+}

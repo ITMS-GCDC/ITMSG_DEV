@@ -8,6 +8,7 @@ import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
 import com.aris.domain.project.entity.ProjectType;
 import com.aris.domain.project.repository.ProjectRepository;
+import com.aris.domain.project.repository.ProjectSpecification;
 import com.aris.domain.user.entity.User;
 import com.aris.domain.user.repository.UserRepository;
 import com.aris.global.exception.BusinessException;
@@ -114,9 +115,10 @@ public class ProjectService {
                 effectiveCompanyId = currentUser.getCompany().getId();
             }
         }
-        
-        Page<Project> projects = projectRepository.search(
-                name, projectType, status, effectiveCompanyId, pmId, startDate, endDate, pageable);
+
+        var spec = ProjectSpecification.search(
+                name, projectType, status, effectiveCompanyId, pmId, startDate, endDate);
+        Page<Project> projects = projectRepository.findAll(spec, pageable);
         return projects.map(ProjectResponse::from);
     }
     
