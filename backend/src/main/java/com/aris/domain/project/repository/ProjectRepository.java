@@ -2,6 +2,10 @@ package com.aris.domain.project.repository;
 
 import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +20,14 @@ import java.util.Optional;
  */
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project> {
+
+    /**
+     * 프로젝트 목록 조회 (Specification + EntityGraph로 연관 엔티티 즉시 로딩)
+     * Spring Data JPA 3.2.x: count 쿼리에는 EntityGraph가 적용되지 않아 pagination 안전
+     */
+    @EntityGraph(value = "Project.withCompanyAndPm")
+    @Override
+    Page<Project> findAll(Specification<Project> spec, Pageable pageable);
 
     /**
      * 프로젝트 코드로 조회

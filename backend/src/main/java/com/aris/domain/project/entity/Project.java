@@ -18,6 +18,13 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "projects")
+@NamedEntityGraph(
+        name = "Project.withCompanyAndPm",
+        attributeNodes = {
+                @NamedAttributeNode("company"),
+                @NamedAttributeNode("pm")
+        }
+)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
