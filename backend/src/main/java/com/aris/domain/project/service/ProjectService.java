@@ -8,7 +8,6 @@ import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
 import com.aris.domain.project.entity.ProjectType;
 import com.aris.domain.project.repository.ProjectRepository;
-import com.aris.domain.project.repository.ProjectSpecification;
 import com.aris.domain.user.entity.User;
 import com.aris.domain.user.repository.UserRepository;
 import com.aris.global.exception.BusinessException;
@@ -101,6 +100,7 @@ public class ProjectService {
     /**
      * 프로젝트 목록 조회 (검색 및 필터링)
      * Admin은 모든 프로젝트 조회 가능, 일반 사용자는 본인 회사 프로젝트만 조회
+     * LEFT JOIN FETCH로 company/pm을 즉시 로딩하여 lazy loading 예외 방지
      */
     public Page<ProjectResponse> searchProjects(String name, ProjectType projectType,
                                                  ProjectStatus status, Long companyId,
@@ -116,9 +116,11 @@ public class ProjectService {
             }
         }
 
-        var spec = ProjectSpecification.search(
-                name, projectType, status, effectiveCompanyId, pmId, startDate, endDate);
-        Page<Project> projects = projectRepository.findAll(spec, pageable);
+        // 빈 문자열은 null로 처리 (전체 조회)
+        String nameParam = (name != null && !name.isBlank()) ? name : null;
+
+        Page<Project> projects = projectRepository.searchProjectsList(
+                nameParam, projectType, status, effectiveCompanyId, pmId, startDate, endDate, pageable);
         return projects.map(ProjectResponse::from);
     }
     
