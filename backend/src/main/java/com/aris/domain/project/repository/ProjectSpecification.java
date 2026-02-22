@@ -14,11 +14,8 @@ import java.util.List;
 
 /**
  * 프로젝트 동적 검색 조건 (JPA Criteria API)
- *
- * Hibernate 6 + Spring Data JPA 3.x 호환:
- * - COUNT 쿼리와 SELECT 쿼리를 query.getResultType()으로 구분
- * - SELECT 쿼리: LEFT JOIN FETCH(즉시 로딩) → EntityNotFoundException 방지
- * - COUNT 쿼리: 일반 LEFT JOIN → FETCH 없이 카운트만 처리
+ * Hibernate 6 + Spring Data JPA 3.x 호환
+ * - FETCH JOIN 없이 단순 predicate만 구성 → 연관 엔티티 안전 접근은 ProjectResponse.from()에서 처리
  */
 public class ProjectSpecification {
 
@@ -34,34 +31,6 @@ public class ProjectSpecification {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // 페이지네이션 COUNT 쿼리 여부 — COUNT 쿼리에 FETCH JOIN 적용 시 오류 발생
-            final boolean isCountQuery = Long.class.equals(query.getResultType());
-
-            if (!isCountQuery) {
-                // 데이터 조회 쿼리: LEFT JOIN FETCH로 연관 엔티티 즉시 로딩
-                // root.fetch()는 Fetch<Object,Object>를 반환하므로 raw 타입을 경유해 캐스트
-                @SuppressWarnings({"rawtypes", "unchecked"})
-                Join<?, ?> companyFetch = (Join) root.fetch("company", JoinType.LEFT);
-                @SuppressWarnings({"rawtypes", "unchecked"})
-                Join<?, ?> pmFetch = (Join) root.fetch("pm", JoinType.LEFT);
-                query.distinct(true);
-
-                if (companyId != null) {
-                    predicates.add(cb.equal(companyFetch.get("id"), companyId));
-                }
-                if (pmId != null) {
-                    predicates.add(cb.equal(pmFetch.get("id"), pmId));
-                }
-            } else {
-                // COUNT 쿼리: 일반 LEFT JOIN으로 필터 처리
-                if (companyId != null) {
-                    predicates.add(cb.equal(root.join("company", JoinType.LEFT).get("id"), companyId));
-                }
-                if (pmId != null) {
-                    predicates.add(cb.equal(root.join("pm", JoinType.LEFT).get("id"), pmId));
-                }
-            }
-
             if (name != null && !name.isBlank()) {
                 predicates.add(cb.like(root.get("name"), "%" + name + "%"));
             }
@@ -70,6 +39,14 @@ public class ProjectSpecification {
             }
             if (status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
+            }
+            if (companyId != null) {
+                Join<?, ?> companyJoin = root.join("company", JoinType.LEFT);
+                predicates.add(cb.equal(companyJoin.get("id"), companyId));
+            }
+            if (pmId != null) {
+                Join<?, ?> pmJoin = root.join("pm", JoinType.LEFT);
+                predicates.add(cb.equal(pmJoin.get("id"), pmId));
             }
             if (startDate != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("startDate"), startDate));

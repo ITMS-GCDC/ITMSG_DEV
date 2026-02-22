@@ -35,6 +35,25 @@ public class ProjectResponse {
     private LocalDateTime updatedAt;
     
     public static ProjectResponse from(Project project) {
+        // 연관 엔티티는 Lazy 로딩 — FK 불일치(ObjectNotFoundException) 등 예외 발생 시 null 처리
+        Long companyId = null;
+        String companyName = null;
+        try {
+            if (project.getCompany() != null) {
+                companyId = project.getCompany().getId();
+                companyName = project.getCompany().getName();
+            }
+        } catch (Exception ignored) { /* FK 참조 대상 없음 — null로 처리 */ }
+
+        Long pmId = null;
+        String pmName = null;
+        try {
+            if (project.getPm() != null) {
+                pmId = project.getPm().getId();
+                pmName = project.getPm().getName();
+            }
+        } catch (Exception ignored) { /* FK 참조 대상 없음 — null로 처리 */ }
+
         return ProjectResponse.builder()
                 .id(project.getId())
                 .code(project.getCode())
@@ -43,12 +62,12 @@ public class ProjectResponse {
                 .status(project.getStatus())
                 .startDate(project.getStartDate())
                 .endDate(project.getEndDate())
-                .companyId(project.getCompany() != null ? project.getCompany().getId() : null)
-                .companyName(project.getCompany() != null ? project.getCompany().getName() : null)
+                .companyId(companyId)
+                .companyName(companyName)
                 .description(project.getDescription())
                 .budget(project.getBudget())
-                .pmId(project.getPm() != null ? project.getPm().getId() : null)
-                .pmName(project.getPm() != null ? project.getPm().getName() : null)
+                .pmId(pmId)
+                .pmName(pmName)
                 .createdAt(project.getCreatedAt())
                 .createdBy(project.getCreatedBy())
                 .updatedAt(project.getUpdatedAt())

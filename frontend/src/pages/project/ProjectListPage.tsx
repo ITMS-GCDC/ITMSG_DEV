@@ -116,14 +116,14 @@ const ProjectListPage: React.FC = () => {
     doFetch(params);
   }, [page, rowsPerPage, appliedSearch, hasSearched]);
 
-  const loadFilterData = async () => {
-    try {
-      const [companiesData, pmData] = await Promise.all([getCompanies(), getPmCandidates()]);
-      setCompanies(companiesData);
-      setPmCandidates(pmData.content);
-    } catch (err) {
-      console.error('Failed to load filter data:', err);
-    }
+  const loadFilterData = () => {
+    // 회사/PM 목록은 독립적으로 로딩 — 한쪽 실패가 다른 쪽에 영향 없도록 분리
+    getCompanies()
+      .then(setCompanies)
+      .catch((err) => console.error('Failed to load companies:', err));
+    getPmCandidates()
+      .then((data) => setPmCandidates(data.content))
+      .catch((err) => console.error('Failed to load PM candidates:', err));
   };
 
   const doFetch = async (params: ProjectListParams) => {
