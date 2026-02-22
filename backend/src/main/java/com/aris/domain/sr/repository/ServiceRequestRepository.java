@@ -50,17 +50,25 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
      * 검색 및 필터링
      */
     @Query("SELECT sr FROM ServiceRequest sr " +
+           "LEFT JOIN FETCH sr.project p " +
+           "LEFT JOIN FETCH p.company c " +
            "WHERE (:title IS NULL OR sr.title LIKE %:title%) " +
+           "AND (:companyName IS NULL OR c.name LIKE %:companyName%) " +
+           "AND (:projectName IS NULL OR p.name LIKE %:projectName%) " +
            "AND (:srType IS NULL OR sr.srType = :srType) " +
            "AND (:status IS NULL OR sr.status = :status) " +
+           "AND (:priority IS NULL OR sr.priority = :priority) " +
            "AND (:projectId IS NULL OR sr.project.id = :projectId) " +
            "AND (:requesterId IS NULL OR sr.requester.id = :requesterId) " +
            "AND (:startDate IS NULL OR sr.requestDate >= :startDate) " +
            "AND (:endDate IS NULL OR sr.requestDate <= :endDate) " +
            "AND sr.deletedAt IS NULL")
     Page<ServiceRequest> search(@Param("title") String title,
+                                 @Param("companyName") String companyName,
+                                 @Param("projectName") String projectName,
                                  @Param("srType") SrType srType,
                                  @Param("status") SrStatus status,
+                                 @Param("priority") String priority,
                                  @Param("projectId") Long projectId,
                                  @Param("requesterId") Long requesterId,
                                  @Param("startDate") LocalDate startDate,

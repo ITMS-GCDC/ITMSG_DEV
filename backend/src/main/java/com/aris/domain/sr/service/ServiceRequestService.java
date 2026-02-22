@@ -110,10 +110,12 @@ public class ServiceRequestService {
      * SR 목록 조회 (검색 및 필터링)
      * Admin은 모든 SR 조회 가능, 일반 사용자는 본인이 등록한 SR만 조회
      */
-    public Page<SrResponse> searchServiceRequests(String title, SrType srType,
-                                                   SrStatus status, Long projectId,
-                                                   Long requesterId, LocalDate startDate,
-                                                   LocalDate endDate, Pageable pageable) {
+    public Page<SrResponse> searchServiceRequests(String title, String companyName,
+                                                   String projectName, SrType srType,
+                                                   SrStatus status, String priority,
+                                                   Long projectId, Long requesterId,
+                                                   LocalDate startDate, LocalDate endDate,
+                                                   Pageable pageable) {
         // Admin이 아닌 경우 본인 SR만 조회
         Long effectiveRequesterId = requesterId;
         if (!isAdmin()) {
@@ -122,7 +124,8 @@ public class ServiceRequestService {
         }
         
         Page<ServiceRequest> srs = serviceRequestRepository.search(
-                title, srType, status, projectId, effectiveRequesterId, startDate, endDate, pageable);
+                title, companyName, projectName, srType, status, priority, projectId,
+                effectiveRequesterId, startDate, endDate, pageable);
         return srs.map(SrResponse::from);
     }
     

@@ -150,26 +150,7 @@ const SRDetailPage: React.FC = () => {
         >
           목록으로
         </Button>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          <Button
-            variant="outlined"
-            startIcon={isMobile ? null : <Edit />}
-            onClick={() => navigate(`/srs/${sr.id}/edit`)}
-            size={isMobile ? 'small' : 'medium'}
-          >
-            수정
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={isMobile ? null : <Delete />}
-            onClick={handleDelete}
-            disabled={deleting}
-            size={isMobile ? 'small' : 'medium'}
-          >
-            {deleting ? '삭제 중...' : '삭제'}
-          </Button>
-        </Box>
+        {/* 수정 및 삭제 버튼 기능 제거 */}
       </Box>
 
       <Paper sx={{ p: { xs: 2, sm: 3 }, width: '100%' }}>
