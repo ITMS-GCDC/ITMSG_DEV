@@ -31,6 +31,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  DialogContentText,
   Stack,
 } from '@mui/material';
 import { Add, Search, Clear, Edit, Delete } from '@mui/icons-material';
@@ -455,14 +456,14 @@ const SRListPage: React.FC = () => {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={8} align="center">
+                  <TableCell colSpan={9} align="center">
                     <CircularProgress size={24} />
                     <Typography sx={{ mt: 1 }}>로딩 중...</Typography>
                   </TableCell>
                 </TableRow>
               ) : srs.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} align="center">
+                  <TableCell colSpan={9} align="center">
                     <Typography>데이터가 없습니다.</Typography>
                   </TableCell>
                 </TableRow>
