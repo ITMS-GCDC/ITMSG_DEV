@@ -39,11 +39,11 @@ public class ProjectSpecification {
 
             if (!isCountQuery) {
                 // 데이터 조회 쿼리: LEFT JOIN FETCH로 연관 엔티티 즉시 로딩
-                // Hibernate 구현체에서 Fetch<X,Y>는 Join<X,Y>를 상속하므로 캐스트 가능
-                @SuppressWarnings("unchecked")
-                Join<Project, ?> companyFetch = (Join<Project, ?>) root.fetch("company", JoinType.LEFT);
-                @SuppressWarnings("unchecked")
-                Join<Project, ?> pmFetch = (Join<Project, ?>) root.fetch("pm", JoinType.LEFT);
+                // root.fetch()는 Fetch<Object,Object>를 반환하므로 raw 타입을 경유해 캐스트
+                @SuppressWarnings({"rawtypes", "unchecked"})
+                Join<?, ?> companyFetch = (Join) root.fetch("company", JoinType.LEFT);
+                @SuppressWarnings({"rawtypes", "unchecked"})
+                Join<?, ?> pmFetch = (Join) root.fetch("pm", JoinType.LEFT);
                 query.distinct(true);
 
                 if (companyId != null) {
