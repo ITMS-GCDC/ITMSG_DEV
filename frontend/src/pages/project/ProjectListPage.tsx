@@ -135,7 +135,10 @@ const ProjectListPage: React.FC = () => {
       setTotalElements(response.totalElements);
       setSelectedProject(null);
     } catch (err: any) {
-      setError(err.message || err.response?.data?.message || '프로젝트 목록을 불러오는데 실패했습니다.');
+      const msg = err?.message || err?.code
+        ? `프로젝트 목록을 불러오는데 실패했습니다. (${err.message || err.code})`
+        : '프로젝트 목록을 불러오는데 실패했습니다.';
+      setError(msg);
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,7 @@ package com.aris.domain.project.repository;
 import com.aris.domain.project.entity.Project;
 import com.aris.domain.project.entity.ProjectStatus;
 import com.aris.domain.project.entity.ProjectType;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -39,10 +40,12 @@ public class ProjectSpecification {
                 predicates.add(cb.equal(root.get("status"), status));
             }
             if (companyId != null) {
-                predicates.add(cb.equal(root.get("company").get("id"), companyId));
+                Join<?, ?> companyJoin = root.join("company", JoinType.LEFT);
+                predicates.add(cb.equal(companyJoin.get("id"), companyId));
             }
             if (pmId != null) {
-                predicates.add(cb.equal(root.join("pm", JoinType.LEFT).get("id"), pmId));
+                Join<?, ?> pmJoin = root.join("pm", JoinType.LEFT);
+                predicates.add(cb.equal(pmJoin.get("id"), pmId));
             }
             if (startDate != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("startDate"), startDate));

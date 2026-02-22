@@ -24,9 +24,11 @@ public class ProjectResponse {
     private ProjectStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long companyId;
     private String companyName;
     private String description;
     private BigDecimal budget;
+    private Long pmId;
     private String pmName;
     private LocalDateTime createdAt;
     private String createdBy;
@@ -41,9 +43,11 @@ public class ProjectResponse {
                 .status(project.getStatus())
                 .startDate(project.getStartDate())
                 .endDate(project.getEndDate())
+                .companyId(project.getCompany() != null ? project.getCompany().getId() : null)
                 .companyName(project.getCompany() != null ? project.getCompany().getName() : null)
                 .description(project.getDescription())
                 .budget(project.getBudget())
+                .pmId(project.getPm() != null ? project.getPm().getId() : null)
                 .pmName(project.getPm() != null ? project.getPm().getName() : null)
                 .createdAt(project.getCreatedAt())
                 .createdBy(project.getCreatedBy())
