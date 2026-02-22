@@ -110,7 +110,6 @@ const SRListPage: React.FC = () => {
       status: undefined,
       priority: undefined,
       projectId: undefined,
-      companyId: undefined,
     });
     setPage(0);
     fetchSrs();
@@ -121,11 +120,11 @@ const SRListPage: React.FC = () => {
     const conditions: string[] = [];
     
     if (searchParams.title) conditions.push(`제목: ${searchParams.title}`);
+    if (searchParams.companyName) conditions.push(`회사: ${searchParams.companyName}`);
+    if (searchParams.projectName) conditions.push(`프로젝트: ${searchParams.projectName}`);
     if (searchParams.srType) conditions.push(`유형: ${searchParams.srType === 'DEVELOPMENT' ? '개발' : '운영'}`);
     if (searchParams.status) conditions.push(`상태: ${getStatusLabel(searchParams.status)}`);
     if (searchParams.priority) conditions.push(`우선순위: ${getPriorityLabel(searchParams.priority)}`);
-    if (searchParams.projectId) conditions.push(`프로젝트 ID: ${searchParams.projectId}`);
-    if (searchParams.companyId) conditions.push(`회사 ID: ${searchParams.companyId}`);
     
     return conditions.length > 0 ? `검색조건: ${conditions.join(', ')}` : '';
   };
@@ -255,7 +254,7 @@ const SRListPage: React.FC = () => {
           <Grid item xs={12} sm={2}>
             <TextField
               fullWidth
-              label="회사명"
+              label="회사"
               value={searchParams.companyName || ''}
               onChange={(e) => handleSearchChange('companyName', e.target.value)}
               size="small"
@@ -264,7 +263,7 @@ const SRListPage: React.FC = () => {
           <Grid item xs={12} sm={2}>
             <TextField
               fullWidth
-              label="프로젝트명"
+              label="프로젝트"
               value={searchParams.projectName || ''}
               onChange={(e) => handleSearchChange('projectName', e.target.value)}
               size="small"
