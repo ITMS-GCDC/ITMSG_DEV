@@ -106,12 +106,6 @@ const SRListPage: React.FC = () => {
     fetchSrs();
   };
 
-  // 전체 조회 (검색 조건 없이 전체 리스트 조회)
-  const handleSearchAll = () => {
-    setPage(0);
-    fetchSrs();
-  };
-
   // 검색 조건 초기화
   const handleClearSearch = () => {
     setSearchParams({
