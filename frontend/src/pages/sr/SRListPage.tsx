@@ -36,7 +36,7 @@ import {
 } from '@mui/material';
 import { Add, Search, Clear, Edit, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { getSrs } from '../../api/sr';
+import { getSrs, deleteSr } from '../../api/sr';
 import type { ServiceRequest, SrListParams } from '../../types/sr.types';
 
 const SRListPage: React.FC = () => {
@@ -226,8 +226,7 @@ const SRListPage: React.FC = () => {
               }
               const selectedSr = srs.find(sr => sr.id === selectedSrs[0]);
               if (selectedSr) {
-                setSelectedSrData(selectedSr);
-                setOpenEditDialog(true);
+                navigate(`/srs/${selectedSr.id}/edit`);
               }
             }}
             disabled={selectedSrs.length !== 1}
@@ -239,7 +238,7 @@ const SRListPage: React.FC = () => {
             variant="outlined" 
             color="error"
             startIcon={<Delete />} 
-            onClick={() => {
+            onClick={async () => {
               if (selectedSrs.length === 0) {
                 alert('삭제할 SR을 선택해주세요.');
                 return;
@@ -247,8 +246,19 @@ const SRListPage: React.FC = () => {
               if (!window.confirm(`${selectedSrs.length}개의 SR을 삭제하시겠습니까?`)) {
                 return;
               }
-              // TODO: 삭제 API 호출 구현
-              console.log('삭제할 SR ID:', selectedSrs);
+              
+              try {
+                // 선택된 SR들 삭제
+                for (const srId of selectedSrs) {
+                  await deleteSr(srId);
+                }
+                alert(`${selectedSrs.length}개의 SR이 삭제되었습니다.`);
+                setSelectedSrs([]);
+                fetchSrs();
+              } catch (err: any) {
+                console.error('Failed to delete SRs:', err);
+                setError(err.message || 'SR 삭제에 실패했습니다.');
+              }
             }}
             disabled={selectedSrs.length === 0}
             size={isMobile ? 'small' : 'medium'}
@@ -436,6 +446,7 @@ const SRListPage: React.FC = () => {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell align="center">SR번호</TableCell>
                 <TableCell padding="checkbox">
                   <Checkbox
                     indeterminate={selectedSrs.length > 0 && selectedSrs.length < srs.length}
@@ -449,7 +460,6 @@ const SRListPage: React.FC = () => {
                     }}
                   />
                 </TableCell>
-                <TableCell align="center">SR번호</TableCell>
                 <TableCell align="center">제목</TableCell>
                 <TableCell align="center">유형</TableCell>
                 <TableCell align="center">프로젝트</TableCell>
@@ -481,6 +491,7 @@ const SRListPage: React.FC = () => {
                     onClick={() => navigate(`/srs/${sr.id}`)}
                     sx={{ cursor: 'pointer' }}
                   >
+                    <TableCell align="center">{sr.srNumber}</TableCell>
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={selectedSrs.includes(sr.id)}
@@ -494,7 +505,6 @@ const SRListPage: React.FC = () => {
                         onClick={(e) => e.stopPropagation()}
                       />
                     </TableCell>
-                    <TableCell align="center">{sr.srNumber}</TableCell>
                     <TableCell align="center">{sr.title}</TableCell>
                     <TableCell align="center">
                       <Chip

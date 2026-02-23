@@ -135,7 +135,7 @@ const SRDetailPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
-      <Box sx={{ 
+        <Box sx={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         mb: 3,
@@ -150,7 +150,6 @@ const SRDetailPage: React.FC = () => {
         >
           목록으로
         </Button>
-        {/* 수정 및 삭제 버튼 기능 제거 */}
       </Box>
 
       <Paper sx={{ p: { xs: 2, sm: 3 }, width: '100%' }}>
