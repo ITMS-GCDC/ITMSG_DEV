@@ -226,7 +226,8 @@ const SRListPage: React.FC = () => {
               }
               const selectedSr = srs.find(sr => sr.id === selectedSrs[0]);
               if (selectedSr) {
-                navigate(`/srs/${selectedSr.id}/edit`);
+                setSelectedSrData(selectedSr);
+                setOpenEditDialog(true);
               }
             }}
             disabled={selectedSrs.length !== 1}
@@ -549,107 +550,107 @@ const SRListPage: React.FC = () => {
           />
         </TableContainer>
       )}
-    </Box>
 
-    {/* SR 수정 팝업 */}
-    <Dialog 
-      open={openEditDialog} 
-      onClose={() => setOpenEditDialog(false)}
-      maxWidth="md"
-      fullWidth
-    >
-      <DialogTitle>SR 수정</DialogTitle>
-      <DialogContent>
-        {selectedSrData && (
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 2 }}>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                SR 번호
-              </Typography>
-              <Typography variant="body1">{selectedSrData.srNumber}</Typography>
+      {/* SR 수정 팝업 */}
+      <Dialog 
+        open={openEditDialog} 
+        onClose={() => setOpenEditDialog(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>SR 수정</DialogTitle>
+        <DialogContent>
+          {selectedSrData && (
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  SR 번호
+                </Typography>
+                <Typography variant="body1">{selectedSrData.srNumber}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  제목
+                </Typography>
+                <Typography variant="body1">{selectedSrData.title}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  유형
+                </Typography>
+                <Typography variant="body1">
+                  {selectedSrData.srType === 'DEVELOPMENT' ? '개발' : '운영'}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  프로젝트
+                </Typography>
+                <Typography variant="body1">{selectedSrData.projectName}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  요청자
+                </Typography>
+                <Typography variant="body1">{selectedSrData.requesterName}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  상태
+                </Typography>
+                <Chip
+                  label={getStatusLabel(selectedSrData.status)}
+                  color={getStatusColor(selectedSrData.status)}
+                  size="small"
+                />
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  우선순위
+                </Typography>
+                <Chip
+                  label={getPriorityLabel(selectedSrData.priority)}
+                  color={getPriorityColor(selectedSrData.priority)}
+                  size="small"
+                />
+              </Box>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  요청일
+                </Typography>
+                <Typography variant="body1">
+                  {selectedSrData.requestDate || new Date(selectedSrData.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
+              <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' } }}>
+                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                  비즈니스 요구사항
+                </Typography>
+                <Paper
+                  variant="outlined"
+                  sx={{ p: 2, bgcolor: 'rgba(255,255,255,0.03)', whiteSpace: 'pre-wrap' }}
+                >
+                  <Typography variant="body1">{selectedSrData.businessRequirement}</Typography>
+                </Paper>
+              </Box>
             </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                제목
-              </Typography>
-              <Typography variant="body1">{selectedSrData.title}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                유형
-              </Typography>
-              <Typography variant="body1">
-                {selectedSrData.srType === 'DEVELOPMENT' ? '개발' : '운영'}
-              </Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                프로젝트
-              </Typography>
-              <Typography variant="body1">{selectedSrData.projectName}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                요청자
-              </Typography>
-              <Typography variant="body1">{selectedSrData.requesterName}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                상태
-              </Typography>
-              <Chip
-                label={getStatusLabel(selectedSrData.status)}
-                color={getStatusColor(selectedSrData.status)}
-                size="small"
-              />
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                우선순위
-              </Typography>
-              <Chip
-                label={getPriorityLabel(selectedSrData.priority)}
-                color={getPriorityColor(selectedSrData.priority)}
-                size="small"
-              />
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                요청일
-              </Typography>
-              <Typography variant="body1">
-                {selectedSrData.requestDate || new Date(selectedSrData.createdAt).toLocaleDateString()}
-              </Typography>
-            </Box>
-            <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' } }}>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                비즈니스 요구사항
-              </Typography>
-              <Paper
-                variant="outlined"
-                sx={{ p: 2, bgcolor: 'rgba(255,255,255,0.03)', whiteSpace: 'pre-wrap' }}
-              >
-                <Typography variant="body1">{selectedSrData.businessRequirement}</Typography>
-              </Paper>
-            </Box>
-          </Box>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setOpenEditDialog(false)}>닫기</Button>
-        <Button 
-          variant="contained" 
-          onClick={() => {
-            if (selectedSrData) {
-              navigate(`/srs/${selectedSrData.id}/edit`);
-            }
-          }}
-        >
-          상세 수정 페이지로 이동
-        </Button>
-      </DialogActions>
-    </Dialog>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenEditDialog(false)}>닫기</Button>
+          <Button 
+            variant="contained" 
+            onClick={() => {
+              if (selectedSrData) {
+                navigate(`/srs/${selectedSrData.id}/edit`);
+              }
+            }}
+          >
+            상세 수정 페이지로 이동
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 
