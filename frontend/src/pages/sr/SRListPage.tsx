@@ -24,8 +24,6 @@ import {
   FormControl,
   InputLabel,
   Grid,
-  IconButton,
-  Tooltip,
   Checkbox,
   Dialog,
   DialogTitle,
@@ -33,7 +31,7 @@ import {
   DialogActions,
   Stack,
 } from '@mui/material';
-import { Add, Search, Clear, Edit, Delete } from '@mui/icons-material';
+import { Add, Search, Refresh, Edit, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getSrs, deleteSr, updateSr } from '../../api/sr';
 import type { ServiceRequest, SrListParams, SrUpdateRequest } from '../../types/sr.types';
@@ -283,8 +281,8 @@ const SRListPage: React.FC = () => {
 
       {/* 검색 영역: 회사명 → 프로젝트명 → 유형 → 상태 → 우선순위 */}
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid size={{ xs: 12, sm: 2 }}>
+        <Grid container spacing={1.5} alignItems="center" sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
             <TextField
               fullWidth
               label="회사명"
@@ -294,7 +292,7 @@ const SRListPage: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 180 }, flexGrow: { md: 1.5 } }}>
             <TextField
               fullWidth
               label="프로젝트명"
@@ -304,7 +302,7 @@ const SRListPage: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 150 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>유형</InputLabel>
               <Select
@@ -318,7 +316,7 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>상태</InputLabel>
               <Select
@@ -337,7 +335,7 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 150 }, flexGrow: { md: 1 } }}>
             <FormControl fullWidth size="small">
               <InputLabel>우선순위</InputLabel>
               <Select
@@ -353,19 +351,9 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Tooltip title="검색">
-                <IconButton onClick={handleSearch} color="primary">
-                  <Search />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="초기화">
-                <IconButton onClick={handleClearSearch}>
-                  <Clear />
-                </IconButton>
-              </Tooltip>
-            </Box>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ display: 'flex', gap: 1, flexShrink: 0 }}>
+            <Button variant="contained" onClick={handleSearch} startIcon={<Search />} size="medium" sx={{ whiteSpace: 'nowrap' }}>검색</Button>
+            <Button variant="outlined" onClick={handleClearSearch} startIcon={<Refresh />} size="medium" sx={{ whiteSpace: 'nowrap' }}>초기화</Button>
           </Grid>
         </Grid>
       </Paper>
