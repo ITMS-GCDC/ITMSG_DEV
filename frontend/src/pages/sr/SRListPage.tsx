@@ -284,7 +284,7 @@ const SRListPage: React.FC = () => {
       {/* 검색 영역: 회사명 → 프로젝트명 → 유형 → 상태 → 우선순위 */}
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <TextField
               fullWidth
               label="회사명"
@@ -294,7 +294,7 @@ const SRListPage: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <TextField
               fullWidth
               label="프로젝트명"
@@ -304,7 +304,7 @@ const SRListPage: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>유형</InputLabel>
               <Select
@@ -318,7 +318,7 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>상태</InputLabel>
               <Select
@@ -337,7 +337,7 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>우선순위</InputLabel>
               <Select
@@ -353,7 +353,7 @@ const SRListPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Tooltip title="검색">
                 <IconButton onClick={handleSearch} color="primary">
