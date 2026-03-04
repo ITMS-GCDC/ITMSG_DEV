@@ -70,6 +70,9 @@ const SRListPage: React.FC = () => {
   // 실제 API 호출에 사용되는 검색 파라미터 (검색 버튼 클릭 시에만 업데이트)
   const [activeParams, setActiveParams] = useState<SrListParams>({});
 
+  // 검색 버튼을 눌렀는지 여부 (자동조회 방지)
+  const [hasSearched, setHasSearched] = useState(false);
+
   // 선택된 SR 관리
   const [selectedSrs, setSelectedSrs] = useState<number[]>([]);
 
@@ -86,6 +89,7 @@ const SRListPage: React.FC = () => {
 
   // activeParams 또는 페이지 변경 시에만 조회 (검색 버튼 클릭 or 페이지 이동)
   useEffect(() => {
+    if (!hasSearched) return;
     const doFetch = async () => {
       setLoading(true);
       setError('');
@@ -106,7 +110,7 @@ const SRListPage: React.FC = () => {
       }
     };
     doFetch();
-  }, [page, rowsPerPage, activeParams]);
+  }, [page, rowsPerPage, activeParams, hasSearched]);
 
   // 검색 버튼 클릭: 폼 값을 activeParams로 반영 후 첫 페이지로
   const handleSearch = () => {
@@ -117,6 +121,7 @@ const SRListPage: React.FC = () => {
     if (searchForm.status) params.status = searchForm.status as any;
     if (searchForm.priority) params.priority = searchForm.priority as any;
 
+    setHasSearched(true);
     setSelectedSrs([]);
     setPage(0);
     setActiveParams(params);
@@ -124,10 +129,13 @@ const SRListPage: React.FC = () => {
 
   // 초기화 버튼 클릭
   const handleClearSearch = () => {
+    setHasSearched(false);
     setSearchForm(EMPTY_SEARCH_FORM);
     setSelectedSrs([]);
     setPage(0);
     setActiveParams({});
+    setSrs([]);
+    setTotalElements(0);
   };
 
   // 수정 버튼 클릭: 선택된 SR 데이터로 편집 폼 초기화 후 다이얼로그 오픈
@@ -366,9 +374,13 @@ const SRListPage: React.FC = () => {
               <CircularProgress size={24} />
               <Typography sx={{ mt: 1 }}>로딩 중...</Typography>
             </Paper>
+          ) : !hasSearched ? (
+            <Paper sx={{ p: 4, textAlign: 'center' }}>
+              <Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography>
+            </Paper>
           ) : srs.length === 0 ? (
             <Paper sx={{ p: 3, textAlign: 'center' }}>
-              <Typography>데이터가 없습니다.</Typography>
+              <Typography color="text.secondary">검색 결과가 없습니다.</Typography>
             </Paper>
           ) : (
             srs.map((sr) => (
@@ -466,10 +478,16 @@ const SRListPage: React.FC = () => {
                     <Typography sx={{ mt: 1 }}>로딩 중...</Typography>
                   </TableCell>
                 </TableRow>
+              ) : !hasSearched ? (
+                <TableRow>
+                  <TableCell colSpan={9} align="center">
+                    <Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography>
+                  </TableCell>
+                </TableRow>
               ) : srs.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center">
-                    <Typography>데이터가 없습니다.</Typography>
+                    <Typography color="text.secondary">검색 결과가 없습니다.</Typography>
                   </TableCell>
                 </TableRow>
               ) : (
