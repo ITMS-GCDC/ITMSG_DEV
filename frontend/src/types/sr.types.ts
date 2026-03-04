@@ -62,6 +62,20 @@ export interface SrListParams {
   endDate?: string;
 }
 
+export interface SrSearchCondition {
+  companyName: string;
+  projectName: string;
+  type: string;
+  status: string;
+  priority: string;
+}
+
+export interface SrGridState {
+  selectedRows: string[];
+  isEditEnabled: boolean;
+  isDeleteEnabled: boolean;
+}
+
 
 
 

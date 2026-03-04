@@ -11,6 +11,7 @@ import com.aris.domain.sr.entity.ServiceRequest;
 import com.aris.domain.sr.entity.SrStatus;
 import com.aris.domain.sr.entity.SrType;
 import com.aris.domain.sr.repository.ServiceRequestRepository;
+import com.aris.domain.sr.vo.ServiceRequestSearchVO;
 import com.aris.domain.user.entity.User;
 import com.aris.domain.user.repository.UserRepository;
 import com.aris.global.common.service.NumberingService;
