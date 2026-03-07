@@ -1,6 +1,7 @@
 package com.aris.domain.spec.repository;
 
 import com.aris.domain.spec.entity.Specification;
+import com.aris.domain.spec.entity.SpecCategory;
 import com.aris.domain.spec.entity.SpecStatus;
 import com.aris.domain.spec.entity.SpecType;
 import org.springframework.data.domain.Page;
@@ -47,20 +48,25 @@ public interface SpecificationRepository extends JpaRepository<Specification, Lo
     List<Specification> findByAssigneeId(@Param("assigneeId") Long assigneeId);
     
     /**
-     * 검색 및 필터링
+     * 검색 및 필터링 (회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
      */
     @Query("SELECT s FROM Specification s " +
-           "WHERE (:specType IS NULL OR s.specType = :specType) " +
+           "LEFT JOIN s.serviceRequest sr " +
+           "LEFT JOIN sr.project p " +
+           "LEFT JOIN p.company c " +
+           "WHERE (:companyName IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :companyName, '%'))) " +
+           "AND (:projectName IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :projectName, '%'))) " +
+           "AND (:srNumber IS NULL OR LOWER(sr.srNumber) LIKE LOWER(CONCAT('%', :srNumber, '%'))) " +
+           "AND (:specType IS NULL OR s.specType = :specType) " +
+           "AND (:specCategory IS NULL OR s.specCategory = :specCategory) " +
            "AND (:status IS NULL OR s.status = :status) " +
-           "AND (:assigneeId IS NULL OR s.assignee.id = :assigneeId) " +
-           "AND (:startDate IS NULL OR s.createdAt >= :startDate) " +
-           "AND (:endDate IS NULL OR s.createdAt <= :endDate) " +
            "AND s.deletedAt IS NULL")
-    Page<Specification> search(@Param("specType") SpecType specType,
+    Page<Specification> search(@Param("companyName") String companyName,
+                                @Param("projectName") String projectName,
+                                @Param("srNumber") String srNumber,
+                                @Param("specType") SpecType specType,
+                                @Param("specCategory") SpecCategory specCategory,
                                 @Param("status") SpecStatus status,
-                                @Param("assigneeId") Long assigneeId,
-                                @Param("startDate") LocalDateTime startDate,
-                                @Param("endDate") LocalDateTime endDate,
                                 Pageable pageable);
     
     /**

@@ -3,6 +3,7 @@ package com.aris.domain.spec.service;
 import com.aris.domain.spec.dto.SpecRequest;
 import com.aris.domain.spec.dto.SpecResponse;
 import com.aris.domain.spec.entity.Specification;
+import com.aris.domain.spec.entity.SpecCategory;
 import com.aris.domain.spec.entity.SpecStatus;
 import com.aris.domain.spec.entity.SpecType;
 import com.aris.domain.spec.repository.SpecificationRepository;
@@ -22,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -108,19 +108,14 @@ public class SpecificationService {
     }
     
     /**
-     * SPEC 목록 조회 (검색 및 필터링)
+     * SPEC 목록 조회 (검색 및 필터링: 회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
      */
-    public Page<SpecResponse> searchSpecifications(SpecType specType, SpecStatus status,
-                                                    Long assigneeId, LocalDateTime startDate,
-                                                    LocalDateTime endDate, Pageable pageable) {
-        // 모든 필터가 null이면 기본 findAll 사용 (PostgreSQL Enum 타입 이슈 우회)
-        if (specType == null && status == null && assigneeId == null && startDate == null && endDate == null) {
-            Page<Specification> specs = specificationRepository.findAll(pageable);
-            return specs.map(SpecResponse::from);
-        }
-        
+    public Page<SpecResponse> searchSpecifications(String companyName, String projectName,
+                                                    String srNumber, SpecType specType,
+                                                    SpecCategory specCategory, SpecStatus status,
+                                                    Pageable pageable) {
         Page<Specification> specs = specificationRepository.search(
-                specType, status, assigneeId, startDate, endDate, pageable);
+                companyName, projectName, srNumber, specType, specCategory, status, pageable);
         return specs.map(SpecResponse::from);
     }
     
