@@ -109,13 +109,18 @@ public class SpecificationService {
     
     /**
      * SPEC 목록 조회 (검색 및 필터링: 회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
+     * enum → String 변환: null enum을 JPQL에 그대로 전달 시 PostgreSQL 타입 오류 방지
      */
     public Page<SpecResponse> searchSpecifications(String companyName, String projectName,
                                                     String srNumber, SpecType specType,
                                                     SpecCategory specCategory, SpecStatus status,
                                                     Pageable pageable) {
+        String specTypeStr = specType != null ? specType.name() : null;
+        String specCategoryStr = specCategory != null ? specCategory.name() : null;
+        String statusStr = status != null ? status.name() : null;
+
         Page<Specification> specs = specificationRepository.search(
-                companyName, projectName, srNumber, specType, specCategory, status, pageable);
+                companyName, projectName, srNumber, specTypeStr, specCategoryStr, statusStr, pageable);
         return specs.map(SpecResponse::from);
     }
     
