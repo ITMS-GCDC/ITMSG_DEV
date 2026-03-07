@@ -4,6 +4,7 @@ import com.aris.domain.spec.entity.Specification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ import java.util.Optional;
  * SPEC Repository
  */
 @Repository
-public interface SpecificationRepository extends JpaRepository<Specification, Long> {
+public interface SpecificationRepository extends JpaRepository<Specification, Long>, JpaSpecificationExecutor<Specification> {
     
     /**
      * SPEC 번호로 조회
@@ -42,30 +43,6 @@ public interface SpecificationRepository extends JpaRepository<Specification, Lo
      */
     @Query("SELECT s FROM Specification s WHERE s.assignee.id = :assigneeId AND s.deletedAt IS NULL")
     List<Specification> findByAssigneeId(@Param("assigneeId") Long assigneeId);
-    
-    /**
-     * 검색 및 필터링 (회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
-     * COALESCE: null 파라미터를 LOWER()에 전달 시 PostgreSQL이 bytea로 추론하는 문제 방지
-     * CAST AS string: null enum 파라미터와 VARCHAR 컬럼 비교 시 타입 불일치 방지
-     */
-    @Query("SELECT s FROM Specification s " +
-           "LEFT JOIN s.serviceRequest sr " +
-           "LEFT JOIN sr.project p " +
-           "LEFT JOIN p.company c " +
-           "WHERE (:companyName IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', COALESCE(:companyName, ''), '%'))) " +
-           "AND (:projectName IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', COALESCE(:projectName, ''), '%'))) " +
-           "AND (:srNumber IS NULL OR LOWER(sr.srNumber) LIKE LOWER(CONCAT('%', COALESCE(:srNumber, ''), '%'))) " +
-           "AND (:specType IS NULL OR CAST(s.specType AS string) = :specType) " +
-           "AND (:specCategory IS NULL OR CAST(s.specCategory AS string) = :specCategory) " +
-           "AND (:status IS NULL OR CAST(s.status AS string) = :status) " +
-           "AND s.deletedAt IS NULL")
-    Page<Specification> search(@Param("companyName") String companyName,
-                                @Param("projectName") String projectName,
-                                @Param("srNumber") String srNumber,
-                                @Param("specType") String specType,
-                                @Param("specCategory") String specCategory,
-                                @Param("status") String status,
-                                Pageable pageable);
     
     /**
      * 연도/월별 SPEC 개수 조회 (자동 채번용) - 삭제된 것 포함

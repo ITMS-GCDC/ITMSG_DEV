@@ -14,6 +14,9 @@ import com.aris.domain.user.repository.UserRepository;
 import com.aris.global.common.service.NumberingService;
 import com.aris.global.exception.BusinessException;
 import com.aris.global.exception.ErrorCode;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +26,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+
+// org.springframework.data.jpa.domain.Specification은 엔티티 Specification과 이름 충돌로
+// searchSpecifications 메서드 내부에서 fully qualified name으로 사용
 
 /**
  * SPEC Service
@@ -109,19 +116,61 @@ public class SpecificationService {
     
     /**
      * SPEC 목록 조회 (검색 및 필터링: 회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
-     * enum → String 변환: null enum을 JPQL에 그대로 전달 시 PostgreSQL 타입 오류 방지
+     * JPA Criteria API: JPQL null 파라미터 타입 추론(bytea 오류) 및 Hibernate 6 CAST 이슈 근본 해결
      */
     public Page<SpecResponse> searchSpecifications(String companyName, String projectName,
                                                     String srNumber, SpecType specType,
                                                     SpecCategory specCategory, SpecStatus status,
                                                     Pageable pageable) {
-        String specTypeStr = specType != null ? specType.name() : null;
-        String specCategoryStr = specCategory != null ? specCategory.name() : null;
-        String statusStr = status != null ? status.name() : null;
+        org.springframework.data.jpa.domain.Specification<Specification> searchSpec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
 
-        Page<Specification> specs = specificationRepository.search(
-                companyName, projectName, srNumber, specTypeStr, specCategoryStr, statusStr, pageable);
-        return specs.map(SpecResponse::from);
+            predicates.add(cb.isNull(root.get("deletedAt")));
+
+            boolean needsSrJoin = hasText(srNumber) || hasText(projectName) || hasText(companyName);
+            if (needsSrJoin) {
+                Join<Specification, ServiceRequest> srJoin = root.join("serviceRequest", JoinType.LEFT);
+
+                if (hasText(srNumber)) {
+                    predicates.add(cb.like(cb.lower(srJoin.get("srNumber")),
+                            "%" + srNumber.toLowerCase() + "%"));
+                }
+
+                boolean needsProjectJoin = hasText(projectName) || hasText(companyName);
+                if (needsProjectJoin) {
+                    Join<Object, Object> projectJoin = srJoin.join("project", JoinType.LEFT);
+
+                    if (hasText(projectName)) {
+                        predicates.add(cb.like(cb.lower(projectJoin.get("name")),
+                                "%" + projectName.toLowerCase() + "%"));
+                    }
+
+                    if (hasText(companyName)) {
+                        Join<Object, Object> companyJoin = projectJoin.join("company", JoinType.LEFT);
+                        predicates.add(cb.like(cb.lower(companyJoin.get("name")),
+                                "%" + companyName.toLowerCase() + "%"));
+                    }
+                }
+            }
+
+            if (specType != null) {
+                predicates.add(cb.equal(root.get("specType"), specType));
+            }
+            if (specCategory != null) {
+                predicates.add(cb.equal(root.get("specCategory"), specCategory));
+            }
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        return specificationRepository.findAll(searchSpec, pageable).map(SpecResponse::from);
+    }
+
+    private boolean hasText(String value) {
+        return value != null && !value.isBlank();
     }
     
     /**
