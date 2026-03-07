@@ -115,10 +115,11 @@ public class SpecificationService {
     }
     
     /**
-     * SPEC 목록 조회 (검색 및 필터링: 회사명, 프로젝트명, SR번호, 유형, 분류, 상태)
+     * SPEC 목록 조회 (검색 및 필터링: 회사ID, 프로젝트명, SR번호, 유형, 분류, 상태)
      * JPA Criteria API: JPQL null 파라미터 타입 추론(bytea 오류) 및 Hibernate 6 CAST 이슈 근본 해결
+     * 회사 검색: SR 관리화면과 동일하게 companyId(정확 일치)로 처리
      */
-    public Page<SpecResponse> searchSpecifications(String companyName, String projectName,
+    public Page<SpecResponse> searchSpecifications(Long companyId, String projectName,
                                                     String srNumber, SpecType specType,
                                                     SpecCategory specCategory, SpecStatus status,
                                                     Pageable pageable) {
@@ -127,7 +128,7 @@ public class SpecificationService {
 
             predicates.add(cb.isNull(root.get("deletedAt")));
 
-            boolean needsSrJoin = hasText(srNumber) || hasText(projectName) || hasText(companyName);
+            boolean needsSrJoin = hasText(srNumber) || hasText(projectName) || companyId != null;
             if (needsSrJoin) {
                 Join<Specification, ServiceRequest> srJoin = root.join("serviceRequest", JoinType.LEFT);
 
@@ -136,7 +137,7 @@ public class SpecificationService {
                             "%" + srNumber.toLowerCase() + "%"));
                 }
 
-                boolean needsProjectJoin = hasText(projectName) || hasText(companyName);
+                boolean needsProjectJoin = hasText(projectName) || companyId != null;
                 if (needsProjectJoin) {
                     Join<Object, Object> projectJoin = srJoin.join("project", JoinType.LEFT);
 
@@ -145,10 +146,9 @@ public class SpecificationService {
                                 "%" + projectName.toLowerCase() + "%"));
                     }
 
-                    if (hasText(companyName)) {
+                    if (companyId != null) {
                         Join<Object, Object> companyJoin = projectJoin.join("company", JoinType.LEFT);
-                        predicates.add(cb.like(cb.lower(companyJoin.get("name")),
-                                "%" + companyName.toLowerCase() + "%"));
+                        predicates.add(cb.equal(companyJoin.get("id"), companyId));
                     }
                 }
             }

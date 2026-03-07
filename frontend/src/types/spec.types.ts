@@ -56,7 +56,7 @@ export interface SpecUpdateRequest {
 export interface SpecListParams {
   page?: number;
   size?: number;
-  companyName?: string;
+  companyId?: number;
   projectName?: string;
   srNumber?: string;
   specType?: string;

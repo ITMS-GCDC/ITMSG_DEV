@@ -54,7 +54,7 @@ public class SpecificationController {
     @GetMapping
     @Operation(summary = "SPEC 목록 조회", description = "SPEC 목록을 검색 및 필터링하여 조회합니다.")
     public ResponseEntity<Page<SpecResponse>> searchSpecifications(
-            @RequestParam(required = false) String companyName,
+            @RequestParam(required = false) Long companyId,
             @RequestParam(required = false) String projectName,
             @RequestParam(required = false) String srNumber,
             @RequestParam(required = false) SpecType specType,
@@ -62,7 +62,7 @@ public class SpecificationController {
             @RequestParam(required = false) SpecStatus status,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<SpecResponse> response = specificationService.searchSpecifications(
-                companyName, projectName, srNumber, specType, specCategory, status, pageable);
+                companyId, projectName, srNumber, specType, specCategory, status, pageable);
         return ResponseEntity.ok(response);
     }
     

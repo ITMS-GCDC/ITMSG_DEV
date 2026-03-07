@@ -9,10 +9,12 @@ import {
 import { Add, Search, Refresh, Edit, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getSpecs, updateSpec } from '../../api/spec';
+import { getCompanies } from '../../api/project';
 import type { Specification, SpecListParams, SpecUpdateRequest } from '../../types/spec.types';
+import type { Company } from '../../types/project.types';
 
 interface SpecSearchForm {
-  companyName: string;
+  companyId: string;
   projectName: string;
   srNumber: string;
   specType: string;
@@ -21,7 +23,7 @@ interface SpecSearchForm {
 }
 
 const EMPTY_SEARCH_FORM: SpecSearchForm = {
-  companyName: '',
+  companyId: '',
   projectName: '',
   srNumber: '',
   specType: '',
@@ -41,6 +43,8 @@ const SpecListPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const [companies, setCompanies] = useState<Company[]>([]);
+
   // 검색 폼 입력 상태 (회사, 프로젝트명, SR ID, 유형, 분류, 상태)
   const [searchForm, setSearchForm] = useState<SpecSearchForm>(EMPTY_SEARCH_FORM);
 
@@ -58,6 +62,12 @@ const SpecListPage: React.FC = () => {
   const [selectedSpecData, setSelectedSpecData] = useState<Specification | null>(null);
   const [editForm, setEditForm] = useState<Partial<SpecUpdateRequest>>({});
   const [editLoading, setEditLoading] = useState(false);
+
+  useEffect(() => {
+    getCompanies()
+      .then(setCompanies)
+      .catch((err) => console.error('Failed to load companies:', err));
+  }, []);
 
   // activeParams 또는 페이지 변경 시에만 조회 (검색 버튼 클릭 or 페이지 이동)
   useEffect(() => {
@@ -83,7 +93,7 @@ const SpecListPage: React.FC = () => {
   // 검색 버튼 클릭: 폼 값을 activeParams로 반영 후 첫 페이지로
   const handleSearch = () => {
     const params: SpecListParams = {};
-    if (searchForm.companyName) params.companyName = searchForm.companyName;
+    if (searchForm.companyId) params.companyId = Number(searchForm.companyId);
     if (searchForm.projectName) params.projectName = searchForm.projectName;
     if (searchForm.srNumber) params.srNumber = searchForm.srNumber;
     if (searchForm.specType) params.specType = searchForm.specType;
@@ -227,14 +237,19 @@ const SpecListPage: React.FC = () => {
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={1.5} alignItems="center" sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 140 }, flexGrow: { md: 1 } }}>
-            <TextField
-              fullWidth
-              label="회사"
-              value={searchForm.companyName}
-              onChange={(e) => setSearchForm((prev) => ({ ...prev, companyName: e.target.value }))}
-              size="small"
-              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
-            />
+            <FormControl fullWidth size="small">
+              <InputLabel>회사</InputLabel>
+              <Select
+                value={searchForm.companyId}
+                label="회사"
+                onChange={(e) => setSearchForm((prev) => ({ ...prev, companyId: e.target.value }))}
+              >
+                <MenuItem value="">전체</MenuItem>
+                {companies.map((c) => (
+                  <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1.5 } }}>
             <TextField
