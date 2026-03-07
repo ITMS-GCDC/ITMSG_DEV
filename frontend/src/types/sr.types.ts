@@ -55,7 +55,7 @@ export interface SrListParams {
   status?: SrStatus;
   priority?: Priority;
   projectId?: number;
-  companyName?: string;
+  companyId?: number;
   projectName?: string;
   requesterId?: number;
   startDate?: string;

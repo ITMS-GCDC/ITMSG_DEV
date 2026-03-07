@@ -53,7 +53,7 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
            "LEFT JOIN FETCH sr.project p " +
            "LEFT JOIN FETCH p.company c " +
            "WHERE (:title IS NULL OR sr.title LIKE %:title%) " +
-           "AND (:companyName IS NULL OR c.name LIKE %:companyName%) " +
+           "AND (:companyId IS NULL OR c.id = :companyId) " +
            "AND (:projectName IS NULL OR p.name LIKE %:projectName%) " +
            "AND (:srType IS NULL OR sr.srType = :srType) " +
            "AND (:status IS NULL OR sr.status = :status) " +
@@ -64,7 +64,7 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
            "AND (:endDate IS NULL OR sr.requestDate <= :endDate) " +
            "AND sr.deletedAt IS NULL")
     Page<ServiceRequest> search(@Param("title") String title,
-                                 @Param("companyName") String companyName,
+                                 @Param("companyId") Long companyId,
                                  @Param("projectName") String projectName,
                                  @Param("srType") SrType srType,
                                  @Param("status") SrStatus status,

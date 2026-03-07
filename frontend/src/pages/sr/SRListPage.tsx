@@ -34,11 +34,13 @@ import {
 import { Add, Search, Refresh, Edit, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getSrs, deleteSr, updateSr } from '../../api/sr';
+import { getCompanies } from '../../api/project';
 import type { ServiceRequest, SrListParams, SrUpdateRequest } from '../../types/sr.types';
+import type { Company } from '../../types/project.types';
 
 // 검색 폼 전용 타입 (5개 조건만 사용)
 interface SrSearchForm {
-  companyName: string;
+  companyId: string;
   projectName: string;
   srType: string;
   status: string;
@@ -46,7 +48,7 @@ interface SrSearchForm {
 }
 
 const EMPTY_SEARCH_FORM: SrSearchForm = {
-  companyName: '',
+  companyId: '',
   projectName: '',
   srType: '',
   status: '',
@@ -64,7 +66,9 @@ const SRListPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // 검색 폼 입력 상태 (회사명, 프로젝트명, 유형, 상태, 우선순위)
+  const [companies, setCompanies] = useState<Company[]>([]);
+
+  // 검색 폼 입력 상태 (회사, 프로젝트명, 유형, 상태, 우선순위)
   const [searchForm, setSearchForm] = useState<SrSearchForm>(EMPTY_SEARCH_FORM);
 
   // 실제 API 호출에 사용되는 검색 파라미터 (검색 버튼 클릭 시에만 업데이트)
@@ -86,6 +90,12 @@ const SRListPage: React.FC = () => {
     priority: undefined,
   });
   const [editLoading, setEditLoading] = useState(false);
+
+  useEffect(() => {
+    getCompanies()
+      .then(setCompanies)
+      .catch((err) => console.error('Failed to load companies:', err));
+  }, []);
 
   // activeParams 또는 페이지 변경 시에만 조회 (검색 버튼 클릭 or 페이지 이동)
   useEffect(() => {
@@ -115,7 +125,7 @@ const SRListPage: React.FC = () => {
   // 검색 버튼 클릭: 폼 값을 activeParams로 반영 후 첫 페이지로
   const handleSearch = () => {
     const params: SrListParams = {};
-    if (searchForm.companyName) params.companyName = searchForm.companyName;
+    if (searchForm.companyId) params.companyId = Number(searchForm.companyId);
     if (searchForm.projectName) params.projectName = searchForm.projectName;
     if (searchForm.srType) params.srType = searchForm.srType as any;
     if (searchForm.status) params.status = searchForm.status as any;
@@ -291,14 +301,17 @@ const SRListPage: React.FC = () => {
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={1.5} alignItems="center" sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
-            <TextField
-              fullWidth
-              label="회사명"
-              value={searchForm.companyName}
-              onChange={(e) => setSearchForm((prev) => ({ ...prev, companyName: e.target.value }))}
-              size="small"
-              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
-            />
+            <FormControl fullWidth size="small">
+              <InputLabel>회사</InputLabel>
+              <Select
+                value={searchForm.companyId}
+                label="회사"
+                onChange={(e) => setSearchForm((prev) => ({ ...prev, companyId: e.target.value }))}
+              >
+                <MenuItem value="">전체</MenuItem>
+                {companies.map((c) => <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>)}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 180 }, flexGrow: { md: 1.5 } }}>
             <TextField

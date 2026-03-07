@@ -57,7 +57,7 @@ public class ServiceRequestController {
     @Operation(summary = "SR 목록 조회", description = "SR 목록을 검색 및 필터링하여 조회합니다.")
     public ResponseEntity<Page<SrResponse>> searchServiceRequests(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String companyName,
+            @RequestParam(required = false) Long companyId,
             @RequestParam(required = false) String projectName,
             @RequestParam(required = false) SrType srType,
             @RequestParam(required = false) SrStatus status,
@@ -68,7 +68,7 @@ public class ServiceRequestController {
             @RequestParam(required = false) LocalDate endDate,
             @PageableDefault(size = 20, sort = "requestDate", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<SrResponse> response = serviceRequestService.searchServiceRequests(
-                title, companyName, projectName, srType, status, priority, projectId, requesterId, startDate, endDate, pageable);
+                title, companyId, projectName, srType, status, priority, projectId, requesterId, startDate, endDate, pageable);
         return ResponseEntity.ok(response);
     }
     

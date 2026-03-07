@@ -110,7 +110,7 @@ public class ServiceRequestService {
      * SR 목록 조회 (검색 및 필터링)
      * Admin은 모든 SR 조회 가능, 일반 사용자는 본인이 등록한 SR만 조회
      */
-    public Page<SrResponse> searchServiceRequests(String title, String companyName,
+    public Page<SrResponse> searchServiceRequests(String title, Long companyId,
                                                    String projectName, SrType srType,
                                                    SrStatus status, String priority,
                                                    Long projectId, Long requesterId,
@@ -124,7 +124,7 @@ public class ServiceRequestService {
         }
         
         Page<ServiceRequest> srs = serviceRequestRepository.search(
-                title, companyName, projectName, srType, status, priority, projectId,
+                title, companyId, projectName, srType, status, priority, projectId,
                 effectiveRequesterId, startDate, endDate, pageable);
         return srs.map(SrResponse::from);
     }
