@@ -14,12 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/incidents")
@@ -58,10 +55,8 @@ public class IncidentController {
             @Parameter(description = "심각도") @RequestParam(required = false) Severity severity,
             @Parameter(description = "담당자 ID") @RequestParam(required = false) Long assigneeId,
             @Parameter(description = "회사 ID") @RequestParam(required = false) Long companyId,
-            @Parameter(description = "발생 시작 시간") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime occurredStart,
-            @Parameter(description = "발생 종료 시간") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime occurredEnd,
             @PageableDefault(size = 20, sort = "occurredAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<IncidentResponse> response = incidentService.getIncidents(incidentNumber, status, severity, assigneeId, companyId, occurredStart, occurredEnd, pageable);
+        Page<IncidentResponse> response = incidentService.getIncidents(incidentNumber, status, severity, assigneeId, companyId, pageable);
         return ResponseEntity.ok(response);
     }
     

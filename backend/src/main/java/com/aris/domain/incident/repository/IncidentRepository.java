@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -39,16 +38,12 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
            "AND (:severity IS NULL OR i.severity = :severity) " +
            "AND (:assigneeId IS NULL OR a.id = :assigneeId) " +
            "AND (:companyId IS NULL OR c.id = :companyId) " +
-           "AND (:occurredStart IS NULL OR i.occurredAt >= :occurredStart) " +
-           "AND (:occurredEnd IS NULL OR i.occurredAt <= :occurredEnd) " +
            "AND i.deletedAt IS NULL")
     Page<Incident> search(@Param("incidentNumber") String incidentNumber,
                          @Param("status") IncidentStatus status,
                          @Param("severity") Severity severity,
                          @Param("assigneeId") Long assigneeId,
                          @Param("companyId") Long companyId,
-                         @Param("occurredStart") LocalDateTime occurredStart,
-                         @Param("occurredEnd") LocalDateTime occurredEnd,
                          Pageable pageable);
 }
 

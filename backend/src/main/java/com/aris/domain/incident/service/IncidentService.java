@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -68,9 +67,8 @@ public class IncidentService {
     }
     
     public Page<IncidentResponse> getIncidents(String incidentNumber, IncidentStatus status, Severity severity,
-                                               Long assigneeId, Long companyId,
-                                               LocalDateTime occurredStart, LocalDateTime occurredEnd, Pageable pageable) {
-        return incidentRepository.search(incidentNumber, status, severity, assigneeId, companyId, occurredStart, occurredEnd, pageable)
+                                               Long assigneeId, Long companyId, Pageable pageable) {
+        return incidentRepository.search(incidentNumber, status, severity, assigneeId, companyId, pageable)
                 .map(IncidentResponse::from);
     }
     
