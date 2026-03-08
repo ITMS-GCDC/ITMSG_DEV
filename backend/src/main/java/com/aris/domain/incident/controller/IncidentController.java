@@ -53,14 +53,15 @@ public class IncidentController {
     @GetMapping
     @Operation(summary = "장애 목록 조회", description = "장애 목록을 페이징하여 조회합니다.")
     public ResponseEntity<Page<IncidentResponse>> getIncidents(
-            @Parameter(description = "장애 제목") @RequestParam(required = false) String title,
+            @Parameter(description = "장애 번호") @RequestParam(required = false) String incidentNumber,
             @Parameter(description = "장애 상태") @RequestParam(required = false) IncidentStatus status,
             @Parameter(description = "심각도") @RequestParam(required = false) Severity severity,
             @Parameter(description = "담당자 ID") @RequestParam(required = false) Long assigneeId,
+            @Parameter(description = "회사 ID") @RequestParam(required = false) Long companyId,
             @Parameter(description = "발생 시작 시간") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime occurredStart,
             @Parameter(description = "발생 종료 시간") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime occurredEnd,
             @PageableDefault(size = 20, sort = "occurredAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<IncidentResponse> response = incidentService.getIncidents(title, status, severity, assigneeId, occurredStart, occurredEnd, pageable);
+        Page<IncidentResponse> response = incidentService.getIncidents(incidentNumber, status, severity, assigneeId, companyId, occurredStart, occurredEnd, pageable);
         return ResponseEntity.ok(response);
     }
     

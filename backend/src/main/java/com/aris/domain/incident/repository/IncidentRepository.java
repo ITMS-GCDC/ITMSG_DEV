@@ -32,17 +32,20 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
     String findMaxIncidentNumberByPrefix(@Param("prefix") String prefix);
     
     @Query("SELECT i FROM Incident i " +
-           "WHERE (:title IS NULL OR i.title LIKE %:title%) " +
+           "LEFT JOIN i.assignee a " +
+           "WHERE (:incidentNumber IS NULL OR i.incidentNumber LIKE %:incidentNumber%) " +
            "AND (:status IS NULL OR i.status = :status) " +
            "AND (:severity IS NULL OR i.severity = :severity) " +
-           "AND (:assigneeId IS NULL OR i.assignee.id = :assigneeId) " +
+           "AND (:assigneeId IS NULL OR a.id = :assigneeId) " +
+           "AND (:companyId IS NULL OR a.company.id = :companyId) " +
            "AND (:occurredStart IS NULL OR i.occurredAt >= :occurredStart) " +
            "AND (:occurredEnd IS NULL OR i.occurredAt <= :occurredEnd) " +
            "AND i.deletedAt IS NULL")
-    Page<Incident> search(@Param("title") String title,
+    Page<Incident> search(@Param("incidentNumber") String incidentNumber,
                          @Param("status") IncidentStatus status,
                          @Param("severity") Severity severity,
                          @Param("assigneeId") Long assigneeId,
+                         @Param("companyId") Long companyId,
                          @Param("occurredStart") LocalDateTime occurredStart,
                          @Param("occurredEnd") LocalDateTime occurredEnd,
                          Pageable pageable);
