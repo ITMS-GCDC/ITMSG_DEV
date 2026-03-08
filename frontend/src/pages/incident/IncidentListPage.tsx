@@ -30,12 +30,13 @@ import {
   DialogContent,
   DialogActions,
   Stack,
+  type SelectChangeEvent,
 } from '@mui/material';
 import { Add, Search, Refresh, Edit, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getIncidents, deleteIncident, updateIncident } from '../../api/incident';
 import { getCompanies } from '../../api/project';
-import type { Incident, IncidentListParams, IncidentUpdateRequest } from '../../types/incident.types';
+import type { Incident, IncidentListParams, IncidentUpdateRequest, IncidentSeverity, IncidentType, SystemType } from '../../types/incident.types';
 import type { Company } from '../../types/project.types';
 
 interface IncidentSearchForm {
@@ -140,7 +141,7 @@ const IncidentListPage: React.FC = () => {
 
   const handleOpenEdit = () => {
     if (selectedIncidents.length !== 1) return;
-    const incident = incidents.find((i) => i.id === selectedIncidents[0]);
+    const incident = incidents.find((i: Incident) => i.id === selectedIncidents[0]);
     if (!incident) return;
     setSelectedIncidentData(incident);
     setEditForm({
@@ -162,7 +163,7 @@ const IncidentListPage: React.FC = () => {
       await updateIncident(selectedIncidentData.id, editForm);
       setOpenEditDialog(false);
       setSelectedIncidents([]);
-      setActiveParams((prev) => ({ ...prev }));
+      setActiveParams((prev: IncidentListParams) => ({ ...prev }));
     } catch (err: any) {
       console.error('Failed to update incident:', err);
       setError(err.message || '장애 수정에 실패했습니다.');
@@ -180,7 +181,7 @@ const IncidentListPage: React.FC = () => {
       }
       alert(`${selectedIncidents.length}개의 장애가 삭제되었습니다.`);
       setSelectedIncidents([]);
-      setActiveParams((prev) => ({ ...prev }));
+      setActiveParams((prev: IncidentListParams) => ({ ...prev }));
     } catch (err: any) {
       console.error('Failed to delete incidents:', err);
       setError(err.message || '장애 삭제에 실패했습니다.');
@@ -295,10 +296,10 @@ const IncidentListPage: React.FC = () => {
               <Select
                 value={searchForm.companyId}
                 label="회사"
-                onChange={(e) => setSearchForm((prev) => ({ ...prev, companyId: e.target.value }))}
+                onChange={(e: SelectChangeEvent<string>) => setSearchForm((prev: IncidentSearchForm) => ({ ...prev, companyId: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
-                {companies.map((c) => (
+                {companies.map((c: Company) => (
                   <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
                 ))}
               </Select>
@@ -309,9 +310,9 @@ const IncidentListPage: React.FC = () => {
               fullWidth
               label="프로젝트명"
               value={searchForm.projectName}
-              onChange={(e) => setSearchForm((prev) => ({ ...prev, projectName: e.target.value }))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchForm((prev: IncidentSearchForm) => ({ ...prev, projectName: e.target.value }))}
               size="small"
-              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+              onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 140 }, flexGrow: { md: 1 } }}>
@@ -319,9 +320,9 @@ const IncidentListPage: React.FC = () => {
               fullWidth
               label="장애번호"
               value={searchForm.incidentNumber}
-              onChange={(e) => setSearchForm((prev) => ({ ...prev, incidentNumber: e.target.value }))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchForm((prev: IncidentSearchForm) => ({ ...prev, incidentNumber: e.target.value }))}
               size="small"
-              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+              onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSearch(); }}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 130 }, flexGrow: { md: 1 } }}>
@@ -330,7 +331,7 @@ const IncidentListPage: React.FC = () => {
               <Select
                 value={searchForm.severity}
                 label="심각도"
-                onChange={(e) => setSearchForm((prev) => ({ ...prev, severity: e.target.value }))}
+                onChange={(e: SelectChangeEvent<string>) => setSearchForm((prev: IncidentSearchForm) => ({ ...prev, severity: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
                 <MenuItem value="HIGH">높음</MenuItem>
@@ -345,7 +346,7 @@ const IncidentListPage: React.FC = () => {
               <Select
                 value={searchForm.status}
                 label="상태"
-                onChange={(e) => setSearchForm((prev) => ({ ...prev, status: e.target.value }))}
+                onChange={(e: SelectChangeEvent<string>) => setSearchForm((prev: IncidentSearchForm) => ({ ...prev, status: e.target.value }))}
               >
                 <MenuItem value="">전체</MenuItem>
                 <MenuItem value="OPEN">발생</MenuItem>
@@ -395,7 +396,7 @@ const IncidentListPage: React.FC = () => {
               <Typography color="text.secondary">검색 결과가 없습니다.</Typography>
             </Paper>
           ) : (
-            incidents.map((incident) => (
+            incidents.map((incident: Incident) => (
               <Card
                 key={incident.id}
                 sx={{ cursor: 'pointer', width: '100%' }}
@@ -424,9 +425,9 @@ const IncidentListPage: React.FC = () => {
               component="div"
               count={totalElements}
               page={page}
-              onPageChange={(_, newPage) => setPage(newPage)}
+              onPageChange={(_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage)}
               rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={(e) => {
+              onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
                 setRowsPerPage(parseInt(e.target.value, 10));
                 setPage(0);
               }}
@@ -444,9 +445,9 @@ const IncidentListPage: React.FC = () => {
                   <Checkbox
                     indeterminate={selectedIncidents.length > 0 && selectedIncidents.length < incidents.length}
                     checked={incidents.length > 0 && selectedIncidents.length === incidents.length}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (e.target.checked) {
-                        setSelectedIncidents(incidents.map((i) => i.id));
+                        setSelectedIncidents(incidents.map((i: Incident) => i.id));
                       } else {
                         setSelectedIncidents([]);
                       }
@@ -484,7 +485,7 @@ const IncidentListPage: React.FC = () => {
                   </TableCell>
                 </TableRow>
               ) : (
-                incidents.map((incident) => (
+                incidents.map((incident: Incident) => (
                   <TableRow
                     key={incident.id}
                     hover
@@ -495,14 +496,14 @@ const IncidentListPage: React.FC = () => {
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={selectedIncidents.includes(incident.id)}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           if (e.target.checked) {
-                            setSelectedIncidents((prev) => [...prev, incident.id]);
+                            setSelectedIncidents((prev: number[]) => [...prev, incident.id]);
                           } else {
-                            setSelectedIncidents((prev) => prev.filter((id) => id !== incident.id));
+                            setSelectedIncidents((prev: number[]) => prev.filter((id: number) => id !== incident.id));
                           }
                         }}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e: React.MouseEvent) => e.stopPropagation()}
                       />
                     </TableCell>
                     <TableCell align="center">{incident.incidentNumber}</TableCell>
@@ -528,9 +529,9 @@ const IncidentListPage: React.FC = () => {
             component="div"
             count={totalElements}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
+            onPageChange={(_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage)}
             rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={(e) => {
+            onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
               setRowsPerPage(parseInt(e.target.value, 10));
               setPage(0);
             }}
@@ -575,7 +576,7 @@ const IncidentListPage: React.FC = () => {
                 fullWidth
                 label="제목"
                 value={editForm.title}
-                onChange={(e) => setEditForm((prev) => ({ ...prev, title: e.target.value }))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm((prev: IncidentUpdateRequest) => ({ ...prev, title: e.target.value }))}
                 size="small"
                 required
               />
@@ -585,7 +586,7 @@ const IncidentListPage: React.FC = () => {
                   <Select
                     value={editForm.incidentType}
                     label="장애유형"
-                    onChange={(e) => setEditForm((prev) => ({ ...prev, incidentType: e.target.value as any }))}
+                    onChange={(e: SelectChangeEvent<string>) => setEditForm((prev: IncidentUpdateRequest) => ({ ...prev, incidentType: e.target.value as IncidentType }))}
                   >
                     <MenuItem value="INCIDENT">인시던트</MenuItem>
                     <MenuItem value="FAILURE">장애</MenuItem>
@@ -596,7 +597,7 @@ const IncidentListPage: React.FC = () => {
                   <Select
                     value={editForm.systemType}
                     label="시스템유형"
-                    onChange={(e) => setEditForm((prev) => ({ ...prev, systemType: e.target.value as any }))}
+                    onChange={(e: SelectChangeEvent<string>) => setEditForm((prev: IncidentUpdateRequest) => ({ ...prev, systemType: e.target.value as SystemType }))}
                   >
                     <MenuItem value="PROGRAM">프로그램</MenuItem>
                     <MenuItem value="DATA">데이터</MenuItem>
@@ -610,7 +611,7 @@ const IncidentListPage: React.FC = () => {
                   <Select
                     value={editForm.severity}
                     label="심각도"
-                    onChange={(e) => setEditForm((prev) => ({ ...prev, severity: e.target.value as any }))}
+                    onChange={(e: SelectChangeEvent<string>) => setEditForm((prev: IncidentUpdateRequest) => ({ ...prev, severity: e.target.value as IncidentSeverity }))}
                   >
                     <MenuItem value="HIGH">높음</MenuItem>
                     <MenuItem value="MEDIUM">보통</MenuItem>
@@ -621,7 +622,7 @@ const IncidentListPage: React.FC = () => {
                   fullWidth
                   label="업무영역"
                   value={editForm.businessArea || ''}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, businessArea: e.target.value }))}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm((prev: IncidentUpdateRequest) => ({ ...prev, businessArea: e.target.value }))}
                   size="small"
                 />
               </Box>
