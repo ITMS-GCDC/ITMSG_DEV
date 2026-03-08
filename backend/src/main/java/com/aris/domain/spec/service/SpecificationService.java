@@ -3,6 +3,7 @@ package com.aris.domain.spec.service;
 import com.aris.domain.spec.dto.SpecRequest;
 import com.aris.domain.spec.dto.SpecResponse;
 import com.aris.domain.spec.entity.Specification;
+import com.aris.domain.spec.entity.SpecCategory;
 import com.aris.domain.spec.entity.SpecStatus;
 import com.aris.domain.spec.entity.SpecType;
 import com.aris.domain.spec.repository.SpecificationRepository;
@@ -13,6 +14,9 @@ import com.aris.domain.user.repository.UserRepository;
 import com.aris.global.common.service.NumberingService;
 import com.aris.global.exception.BusinessException;
 import com.aris.global.exception.ErrorCode;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +26,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+// org.springframework.data.jpa.domain.Specification은 엔티티 Specification과 이름 충돌로
+// searchSpecifications 메서드 내부에서 fully qualified name으로 사용
 
 /**
  * SPEC Service
@@ -108,20 +115,62 @@ public class SpecificationService {
     }
     
     /**
-     * SPEC 목록 조회 (검색 및 필터링)
+     * SPEC 목록 조회 (검색 및 필터링: 회사ID, 프로젝트명, SR번호, 유형, 분류, 상태)
+     * JPA Criteria API: JPQL null 파라미터 타입 추론(bytea 오류) 및 Hibernate 6 CAST 이슈 근본 해결
+     * 회사 검색: SR 관리화면과 동일하게 companyId(정확 일치)로 처리
      */
-    public Page<SpecResponse> searchSpecifications(SpecType specType, SpecStatus status,
-                                                    Long assigneeId, LocalDateTime startDate,
-                                                    LocalDateTime endDate, Pageable pageable) {
-        // 모든 필터가 null이면 기본 findAll 사용 (PostgreSQL Enum 타입 이슈 우회)
-        if (specType == null && status == null && assigneeId == null && startDate == null && endDate == null) {
-            Page<Specification> specs = specificationRepository.findAll(pageable);
-            return specs.map(SpecResponse::from);
-        }
-        
-        Page<Specification> specs = specificationRepository.search(
-                specType, status, assigneeId, startDate, endDate, pageable);
-        return specs.map(SpecResponse::from);
+    public Page<SpecResponse> searchSpecifications(Long companyId, String projectName,
+                                                    String srNumber, SpecType specType,
+                                                    SpecCategory specCategory, SpecStatus status,
+                                                    Pageable pageable) {
+        org.springframework.data.jpa.domain.Specification<Specification> searchSpec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            predicates.add(cb.isNull(root.get("deletedAt")));
+
+            boolean needsSrJoin = hasText(srNumber) || hasText(projectName) || companyId != null;
+            if (needsSrJoin) {
+                Join<Specification, ServiceRequest> srJoin = root.join("serviceRequest", JoinType.LEFT);
+
+                if (hasText(srNumber)) {
+                    predicates.add(cb.like(cb.lower(srJoin.get("srNumber")),
+                            "%" + srNumber.toLowerCase() + "%"));
+                }
+
+                boolean needsProjectJoin = hasText(projectName) || companyId != null;
+                if (needsProjectJoin) {
+                    Join<Object, Object> projectJoin = srJoin.join("project", JoinType.LEFT);
+
+                    if (hasText(projectName)) {
+                        predicates.add(cb.like(cb.lower(projectJoin.get("name")),
+                                "%" + projectName.toLowerCase() + "%"));
+                    }
+
+                    if (companyId != null) {
+                        Join<Object, Object> companyJoin = projectJoin.join("company", JoinType.LEFT);
+                        predicates.add(cb.equal(companyJoin.get("id"), companyId));
+                    }
+                }
+            }
+
+            if (specType != null) {
+                predicates.add(cb.equal(root.get("specType"), specType));
+            }
+            if (specCategory != null) {
+                predicates.add(cb.equal(root.get("specCategory"), specCategory));
+            }
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        return specificationRepository.findAll(searchSpec, pageable).map(SpecResponse::from);
+    }
+
+    private boolean hasText(String value) {
+        return value != null && !value.isBlank();
     }
     
     /**

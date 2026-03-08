@@ -2,7 +2,13 @@
 
 export type SpecType = 'DEVELOPMENT' | 'OPERATION';
 export type SpecCategory = 'ACCEPTED' | 'CANCELLED';
-export type SpecStatus = 'DRAFT' | 'REVIEW' | 'APPROVED' | 'REJECTED';
+export type SpecStatus =
+  | 'PENDING'
+  | 'IN_PROGRESS'
+  | 'APPROVAL_PENDING'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'COMPLETED';
 
 export interface Specification {
   id: number;
@@ -15,6 +21,8 @@ export interface Specification {
   srId: number;
   srNumber?: string;
   srTitle?: string;
+  companyName?: string;
+  projectName?: string;
   assigneeId?: number;
   assigneeName?: string;
   reviewerId?: number;
@@ -36,23 +44,24 @@ export interface SpecCreateRequest {
 }
 
 export interface SpecUpdateRequest {
-  title?: string;
-  description?: string;
+  srId: number;
+  specType: SpecType;
+  specCategory: SpecCategory;
   functionPoint?: number;
   manDay?: number;
-  status?: 'DRAFT' | 'REVIEW' | 'APPROVED' | 'REJECTED';
+  assigneeId?: number;
   reviewerId?: number;
 }
 
 export interface SpecListParams {
   page?: number;
   size?: number;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  companyId?: number;
+  projectName?: string;
+  srNumber?: string;
+  specType?: string;
+  specCategory?: string;
   status?: string;
-  projectId?: number;
-  srId?: number;
-  search?: string;
 }
 
 

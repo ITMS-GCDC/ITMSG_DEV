@@ -24,15 +24,36 @@ public class ProjectResponse {
     private ProjectStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long companyId;
     private String companyName;
     private String description;
     private BigDecimal budget;
+    private Long pmId;
     private String pmName;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
     
     public static ProjectResponse from(Project project) {
+        // 연관 엔티티는 Lazy 로딩 — FK 불일치(ObjectNotFoundException) 등 예외 발생 시 null 처리
+        Long companyId = null;
+        String companyName = null;
+        try {
+            if (project.getCompany() != null) {
+                companyId = project.getCompany().getId();
+                companyName = project.getCompany().getName();
+            }
+        } catch (Exception ignored) { /* FK 참조 대상 없음 — null로 처리 */ }
+
+        Long pmId = null;
+        String pmName = null;
+        try {
+            if (project.getPm() != null) {
+                pmId = project.getPm().getId();
+                pmName = project.getPm().getName();
+            }
+        } catch (Exception ignored) { /* FK 참조 대상 없음 — null로 처리 */ }
+
         return ProjectResponse.builder()
                 .id(project.getId())
                 .code(project.getCode())
@@ -41,10 +62,12 @@ public class ProjectResponse {
                 .status(project.getStatus())
                 .startDate(project.getStartDate())
                 .endDate(project.getEndDate())
-                .companyName(project.getCompany() != null ? project.getCompany().getName() : null)
+                .companyId(companyId)
+                .companyName(companyName)
                 .description(project.getDescription())
                 .budget(project.getBudget())
-                .pmName(project.getPm() != null ? project.getPm().getName() : null)
+                .pmId(pmId)
+                .pmName(pmName)
                 .createdAt(project.getCreatedAt())
                 .createdBy(project.getCreatedBy())
                 .updatedAt(project.getUpdatedAt())

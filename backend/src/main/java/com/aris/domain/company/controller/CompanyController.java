@@ -23,10 +23,10 @@ public class CompanyController {
     
     private final CompanyRepository companyRepository;
     
-    @Operation(summary = "회사 목록 조회", description = "전체 회사 목록을 조회합니다.")
+    @Operation(summary = "회사 목록 조회", description = "활성 회사 목록을 조회합니다 (삭제·폐업 제외, 이름 오름차순).")
     @GetMapping
     public ResponseEntity<List<Company>> getCompanies() {
-        List<Company> companies = companyRepository.findAll();
+        List<Company> companies = companyRepository.findAllActive();
         return ResponseEntity.ok(companies);
     }
 }

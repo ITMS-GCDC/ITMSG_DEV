@@ -21,6 +21,8 @@ public class SpecResponse {
     private String specNumber;
     private Long srId;
     private String srNumber;
+    private String companyName;
+    private String projectName;
     private SpecType specType;
     private SpecCategory specCategory;
     private SpecStatus status;
@@ -35,11 +37,21 @@ public class SpecResponse {
     private LocalDateTime updatedAt;
     
     public static SpecResponse from(Specification spec) {
+        String companyName = null;
+        String projectName = null;
+        if (spec.getServiceRequest() != null && spec.getServiceRequest().getProject() != null) {
+            projectName = spec.getServiceRequest().getProject().getName();
+            if (spec.getServiceRequest().getProject().getCompany() != null) {
+                companyName = spec.getServiceRequest().getProject().getCompany().getName();
+            }
+        }
         return SpecResponse.builder()
                 .id(spec.getId())
                 .specNumber(spec.getSpecNumber())
                 .srId(spec.getServiceRequest() != null ? spec.getServiceRequest().getId() : null)
                 .srNumber(spec.getServiceRequest() != null ? spec.getServiceRequest().getSrNumber() : null)
+                .companyName(companyName)
+                .projectName(projectName)
                 .specType(spec.getSpecType())
                 .specCategory(spec.getSpecCategory())
                 .status(spec.getStatus())

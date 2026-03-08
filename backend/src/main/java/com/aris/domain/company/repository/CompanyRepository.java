@@ -38,6 +38,12 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
      */
     @Query("SELECT c FROM Company c WHERE c.id = :id AND c.deletedAt IS NULL")
     Optional<Company> findByIdAndNotDeleted(Long id);
+
+    /**
+     * 활성 회사 목록 조회 (삭제 및 폐업 제외, 이름 오름차순)
+     */
+    @Query("SELECT c FROM Company c WHERE c.deletedAt IS NULL AND c.isClosed = false ORDER BY c.name ASC")
+    java.util.List<Company> findAllActive();
     
     /**
      * 회사명으로 조회

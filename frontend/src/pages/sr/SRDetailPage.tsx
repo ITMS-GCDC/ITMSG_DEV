@@ -12,8 +12,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowBack, Edit, Delete } from '@mui/icons-material';
-import { getSr, deleteSr } from '../../api/sr';
+import { ArrowBack } from '@mui/icons-material';
+import { getSr } from '../../api/sr';
 import type { ServiceRequest } from '../../types/sr.types';
 
 const SRDetailPage: React.FC = () => {
@@ -24,7 +24,6 @@ const SRDetailPage: React.FC = () => {
   const [sr, setSr] = useState<ServiceRequest | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -43,24 +42,6 @@ const SRDetailPage: React.FC = () => {
       setError(err.message || 'SR을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!sr || !window.confirm('정말 이 SR을 삭제하시겠습니까?')) {
-      return;
-    }
-
-    try {
-      setDeleting(true);
-      await deleteSr(sr.id);
-      alert('SR이 삭제되었습니다.');
-      navigate('/srs');
-    } catch (err: any) {
-      console.error('Failed to delete SR:', err);
-      setError(err.message || 'SR 삭제에 실패했습니다.');
-    } finally {
-      setDeleting(false);
     }
   };
 
@@ -150,26 +131,6 @@ const SRDetailPage: React.FC = () => {
         >
           목록으로
         </Button>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          <Button
-            variant="outlined"
-            startIcon={isMobile ? null : <Edit />}
-            onClick={() => navigate(`/srs/${sr.id}/edit`)}
-            size={isMobile ? 'small' : 'medium'}
-          >
-            수정
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={isMobile ? null : <Delete />}
-            onClick={handleDelete}
-            disabled={deleting}
-            size={isMobile ? 'small' : 'medium'}
-          >
-            {deleting ? '삭제 중...' : '삭제'}
-          </Button>
-        </Box>
       </Box>
 
       <Paper sx={{ p: { xs: 2, sm: 3 }, width: '100%' }}>
@@ -292,4 +253,3 @@ const SRDetailPage: React.FC = () => {
 };
 
 export default SRDetailPage;
-

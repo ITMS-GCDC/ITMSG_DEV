@@ -2,6 +2,7 @@ package com.aris.domain.spec.controller;
 
 import com.aris.domain.spec.dto.SpecRequest;
 import com.aris.domain.spec.dto.SpecResponse;
+import com.aris.domain.spec.entity.SpecCategory;
 import com.aris.domain.spec.entity.SpecStatus;
 import com.aris.domain.spec.entity.SpecType;
 import com.aris.domain.spec.service.SpecificationService;
@@ -16,8 +17,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 /**
  * SPEC Controller
@@ -55,14 +54,15 @@ public class SpecificationController {
     @GetMapping
     @Operation(summary = "SPEC 목록 조회", description = "SPEC 목록을 검색 및 필터링하여 조회합니다.")
     public ResponseEntity<Page<SpecResponse>> searchSpecifications(
+            @RequestParam(required = false) Long companyId,
+            @RequestParam(required = false) String projectName,
+            @RequestParam(required = false) String srNumber,
             @RequestParam(required = false) SpecType specType,
+            @RequestParam(required = false) SpecCategory specCategory,
             @RequestParam(required = false) SpecStatus status,
-            @RequestParam(required = false) Long assigneeId,
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<SpecResponse> response = specificationService.searchSpecifications(
-                specType, status, assigneeId, startDate, endDate, pageable);
+                companyId, projectName, srNumber, specType, specCategory, status, pageable);
         return ResponseEntity.ok(response);
     }
     

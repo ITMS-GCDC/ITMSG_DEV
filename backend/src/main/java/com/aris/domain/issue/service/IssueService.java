@@ -128,8 +128,10 @@ public class IssueService {
     /**
      * 이슈 목록 조회
      */
-    public Page<IssueResponse> getIssues(String title, IssueStatus status, Long reporterId, Long assigneeId, Pageable pageable) {
-        return issueRepository.search(title, status, reporterId, assigneeId, pageable)
+    public Page<IssueResponse> getIssues(Long companyId, String projectName, String issueNumber,
+                                          IssueType issueType, String priority, IssueStatus status,
+                                          Pageable pageable) {
+        return issueRepository.search(companyId, projectName, issueNumber, issueType, priority, status, pageable)
                 .map(IssueResponse::from);
     }
     

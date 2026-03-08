@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import { ArrowBack, Save, Cancel } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getSpec, updateSpec } from '../../api/spec';
-import type { Specification, SpecUpdateRequest } from '../../types/spec.types';
+import { getSpec, updateSpec, updateSpecStatus } from '../../api/spec';
+import type { Specification, SpecStatus, SpecUpdateRequest } from '../../types/spec.types';
 
 const SpecEditPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,10 +25,13 @@ const SpecEditPage: React.FC = () => {
 
   const [spec, setSpec] = useState<Specification | null>(null);
   const [formData, setFormData] = useState<SpecUpdateRequest>({
+    srId: 0,
+    specType: 'DEVELOPMENT',
+    specCategory: 'ACCEPTED',
     functionPoint: undefined,
     manDay: undefined,
-    status: 'DRAFT',
   });
+  const [statusValue, setStatusValue] = useState<SpecStatus>('PENDING');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -47,10 +50,13 @@ const SpecEditPage: React.FC = () => {
       const data = await getSpec(specId);
       setSpec(data);
       setFormData({
+        srId: data.srId,
+        specType: data.specType,
+        specCategory: data.specCategory,
         functionPoint: data.functionPoint,
         manDay: data.manDay,
-        status: data.status,
       });
+      setStatusValue(data.status);
     } catch (err: any) {
       console.error('Failed to fetch SPEC:', err);
       setError(err.response?.data?.message || 'SPEC을 불러오는데 실패했습니다.');
@@ -77,6 +83,9 @@ const SpecEditPage: React.FC = () => {
 
     try {
       await updateSpec(Number(id), formData);
+      if (spec && statusValue !== spec.status) {
+        await updateSpecStatus(Number(id), statusValue);
+      }
       setSuccess('SPEC이 성공적으로 수정되었습니다.');
       setTimeout(() => navigate(`/specs/${id}`), 2000);
     } catch (err: any) {
@@ -155,13 +164,15 @@ const SpecEditPage: React.FC = () => {
               select
               label="상태"
               name="status"
-              value={formData.status}
-              onChange={handleChange}
+              value={statusValue}
+              onChange={(e) => setStatusValue(e.target.value as SpecStatus)}
             >
-              <MenuItem value="DRAFT">초안</MenuItem>
-              <MenuItem value="REVIEW">검토중</MenuItem>
-              <MenuItem value="APPROVED">승인됨</MenuItem>
-              <MenuItem value="REJECTED">반려됨</MenuItem>
+              <MenuItem value="PENDING">대기</MenuItem>
+              <MenuItem value="IN_PROGRESS">진행중</MenuItem>
+              <MenuItem value="APPROVAL_PENDING">승인대기</MenuItem>
+              <MenuItem value="APPROVED">승인</MenuItem>
+              <MenuItem value="REJECTED">반려</MenuItem>
+              <MenuItem value="COMPLETED">완료</MenuItem>
             </TextField>
           </Box>
 

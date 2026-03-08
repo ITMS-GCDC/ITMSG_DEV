@@ -39,7 +39,10 @@ export interface ProjectListParams {
   page?: number;
   size?: number;
   name?: string;
+  projectType?: ProjectType;
   status?: ProjectStatus;
+  companyId?: number;
+  pmId?: number;
   startDate?: string;
   endDate?: string;
 }
