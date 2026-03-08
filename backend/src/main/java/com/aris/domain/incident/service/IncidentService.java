@@ -70,12 +70,6 @@ public class IncidentService {
     public Page<IncidentResponse> getIncidents(String incidentNumber, IncidentStatus status, Severity severity,
                                                Long assigneeId, Long companyId,
                                                LocalDateTime occurredStart, LocalDateTime occurredEnd, Pageable pageable) {
-        // 모든 필터가 null이면 기본 findAll 사용 (PostgreSQL Enum 타입 이슈 우회)
-        if (incidentNumber == null && status == null && severity == null && assigneeId == null
-                && companyId == null && occurredStart == null && occurredEnd == null) {
-            return incidentRepository.findAll(pageable).map(IncidentResponse::from);
-        }
-
         return incidentRepository.search(incidentNumber, status, severity, assigneeId, companyId, occurredStart, occurredEnd, pageable)
                 .map(IncidentResponse::from);
     }

@@ -33,11 +33,12 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
     
     @Query("SELECT i FROM Incident i " +
            "LEFT JOIN i.assignee a " +
+           "LEFT JOIN a.company c " +
            "WHERE (:incidentNumber IS NULL OR i.incidentNumber LIKE %:incidentNumber%) " +
            "AND (:status IS NULL OR i.status = :status) " +
            "AND (:severity IS NULL OR i.severity = :severity) " +
            "AND (:assigneeId IS NULL OR a.id = :assigneeId) " +
-           "AND (:companyId IS NULL OR a.company.id = :companyId) " +
+           "AND (:companyId IS NULL OR c.id = :companyId) " +
            "AND (:occurredStart IS NULL OR i.occurredAt >= :occurredStart) " +
            "AND (:occurredEnd IS NULL OR i.occurredAt <= :occurredEnd) " +
            "AND i.deletedAt IS NULL")
