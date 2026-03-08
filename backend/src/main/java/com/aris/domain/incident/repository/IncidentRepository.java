@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -32,19 +31,19 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
     String findMaxIncidentNumberByPrefix(@Param("prefix") String prefix);
     
     @Query("SELECT i FROM Incident i " +
-           "WHERE (:title IS NULL OR i.title LIKE %:title%) " +
+           "LEFT JOIN i.assignee a " +
+           "LEFT JOIN a.company c " +
+           "WHERE (:incidentNumber IS NULL OR i.incidentNumber LIKE %:incidentNumber%) " +
            "AND (:status IS NULL OR i.status = :status) " +
            "AND (:severity IS NULL OR i.severity = :severity) " +
-           "AND (:assigneeId IS NULL OR i.assignee.id = :assigneeId) " +
-           "AND (:occurredStart IS NULL OR i.occurredAt >= :occurredStart) " +
-           "AND (:occurredEnd IS NULL OR i.occurredAt <= :occurredEnd) " +
+           "AND (:assigneeId IS NULL OR a.id = :assigneeId) " +
+           "AND (:companyId IS NULL OR c.id = :companyId) " +
            "AND i.deletedAt IS NULL")
-    Page<Incident> search(@Param("title") String title,
+    Page<Incident> search(@Param("incidentNumber") String incidentNumber,
                          @Param("status") IncidentStatus status,
                          @Param("severity") Severity severity,
                          @Param("assigneeId") Long assigneeId,
-                         @Param("occurredStart") LocalDateTime occurredStart,
-                         @Param("occurredEnd") LocalDateTime occurredEnd,
+                         @Param("companyId") Long companyId,
                          Pageable pageable);
 }
 

@@ -24,6 +24,8 @@ public record IncidentResponse(
         String resolution,
         Long assigneeId,
         String assigneeName,
+        Long companyId,
+        String companyName,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime updatedAt,
@@ -44,6 +46,10 @@ public record IncidentResponse(
                 .resolution(incident.getResolution())
                 .assigneeId(incident.getAssignee() != null ? incident.getAssignee().getId() : null)
                 .assigneeName(incident.getAssignee() != null ? incident.getAssignee().getName() : null)
+                .companyId(incident.getAssignee() != null && incident.getAssignee().getCompany() != null
+                        ? incident.getAssignee().getCompany().getId() : null)
+                .companyName(incident.getAssignee() != null && incident.getAssignee().getCompany() != null
+                        ? incident.getAssignee().getCompany().getName() : null)
                 .createdAt(incident.getCreatedAt())
                 .createdBy(incident.getCreatedBy())
                 .updatedAt(incident.getUpdatedAt())

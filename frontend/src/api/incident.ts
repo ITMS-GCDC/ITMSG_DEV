@@ -25,10 +25,3 @@ export const updateIncident = async (id: number, data: IncidentUpdateRequest): P
 export const deleteIncident = async (id: number): Promise<void> => {
   await apiClient.delete(`/incidents/${id}`);
 };
-
-
-
-
-
-
-

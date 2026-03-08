@@ -1,59 +1,58 @@
 // 장애 관리 관련 타입 정의
 
+export type IncidentSeverity = 'HIGH' | 'MEDIUM' | 'LOW';
+export type IncidentStatus = 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED';
+export type IncidentType = 'INCIDENT' | 'FAILURE';
+export type SystemType = 'PROGRAM' | 'DATA' | 'SERVER' | 'NETWORK' | 'PC';
+
 export interface Incident {
   id: number;
+  incidentNumber: string;
   title: string;
-  description: string;
-  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  status: 'OPEN' | 'INVESTIGATING' | 'RESOLVED' | 'CLOSED';
-  projectId: number;
-  projectName: string;
-  reporterId: number;
-  reporterName: string;
-  assigneeId?: number;
-  assigneeName?: string;
+  incidentType: IncidentType;
+  systemType: SystemType;
+  businessArea?: string;
+  severity: IncidentSeverity;
+  status: IncidentStatus;
   occurredAt: string;
   resolvedAt?: string;
-  rootCause?: string;
-  solution?: string;
+  resolution?: string;
+  assigneeId?: number;
+  assigneeName?: string;
+  companyId?: number;
+  companyName?: string;
   createdAt: string;
+  createdBy: string;
   updatedAt: string;
+  updatedBy: string;
 }
 
 export interface IncidentCreateRequest {
   title: string;
-  incidentType: 'INCIDENT' | 'FAILURE';
-  systemType: 'PROGRAM' | 'DATA' | 'SERVER' | 'NETWORK' | 'PC';
+  incidentType: IncidentType;
+  systemType: SystemType;
   businessArea?: string;
-  severity: 'HIGH' | 'MEDIUM' | 'LOW';
+  severity: IncidentSeverity;
   occurredAt?: string;
   assigneeId?: number;
 }
 
 export interface IncidentUpdateRequest {
-  title?: string;
-  description?: string;
-  severity?: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  status?: 'OPEN' | 'INVESTIGATING' | 'RESOLVED' | 'CLOSED';
+  title: string;
+  incidentType: IncidentType;
+  systemType: SystemType;
+  businessArea?: string;
+  severity: IncidentSeverity;
+  occurredAt?: string;
   assigneeId?: number;
-  resolvedAt?: string;
-  rootCause?: string;
-  solution?: string;
 }
 
 export interface IncidentListParams {
   page?: number;
   size?: number;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  incidentNumber?: string;
   status?: string;
   severity?: string;
-  projectId?: number;
+  companyId?: number;
   assigneeId?: number;
-  search?: string;
 }
-
-
-
-
-

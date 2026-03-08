@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -67,15 +66,9 @@ public class IncidentService {
         return IncidentResponse.from(incident);
     }
     
-    public Page<IncidentResponse> getIncidents(String title, IncidentStatus status, Severity severity, 
-                                               Long assigneeId, LocalDateTime occurredStart, 
-                                               LocalDateTime occurredEnd, Pageable pageable) {
-        // 모든 필터가 null이면 기본 findAll 사용 (PostgreSQL Enum 타입 이슈 우회)
-        if (title == null && status == null && severity == null && assigneeId == null && occurredStart == null && occurredEnd == null) {
-            return incidentRepository.findAll(pageable).map(IncidentResponse::from);
-        }
-        
-        return incidentRepository.search(title, status, severity, assigneeId, occurredStart, occurredEnd, pageable)
+    public Page<IncidentResponse> getIncidents(String incidentNumber, IncidentStatus status, Severity severity,
+                                               Long assigneeId, Long companyId, Pageable pageable) {
+        return incidentRepository.search(incidentNumber, status, severity, assigneeId, companyId, pageable)
                 .map(IncidentResponse::from);
     }
     

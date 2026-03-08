@@ -26,11 +26,10 @@ const IncidentEditPage: React.FC = () => {
   const [incident, setIncident] = useState<Incident | null>(null);
   const [formData, setFormData] = useState<IncidentUpdateRequest>({
     title: '',
-    description: '',
+    incidentType: 'INCIDENT',
+    systemType: 'PROGRAM',
+    businessArea: '',
     severity: 'MEDIUM',
-    status: 'OPEN',
-    rootCause: '',
-    solution: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -48,11 +47,12 @@ const IncidentEditPage: React.FC = () => {
       setIncident(data);
       setFormData({
         title: data.title,
-        description: data.description,
+        incidentType: data.incidentType,
+        systemType: data.systemType,
+        businessArea: data.businessArea || '',
         severity: data.severity,
-        status: data.status,
-        rootCause: data.rootCause || '',
-        solution: data.solution || '',
+        occurredAt: data.occurredAt,
+        assigneeId: data.assigneeId,
       });
     } catch (err: any) {
       setError(err.response?.data?.message || '장애를 불러오는데 실패했습니다.');
@@ -92,7 +92,11 @@ const IncidentEditPage: React.FC = () => {
   };
 
   if (loading) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!incident) {
@@ -106,14 +110,21 @@ const IncidentEditPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Button startIcon={<ArrowBack />} onClick={() => navigate(`/incidents/${id}`)} sx={{ mb: 2 }}>상세로 돌아가기</Button>
+      <Button startIcon={<ArrowBack />} onClick={() => navigate(`/incidents/${id}`)} sx={{ mb: 2 }}>
+        상세로 돌아가기
+      </Button>
       <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom>장애 수정</Typography>
 
       <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3 }}>
         <Typography variant="subtitle2" color="text.secondary" gutterBottom>장애 정보 (수정 불가)</Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-          <Chip label={`프로젝트: ${incident.projectName}`} variant="outlined" />
-          <Chip label={`보고자: ${incident.reporterName}`} variant="outlined" />
+          <Chip label={`장애번호: ${incident.incidentNumber}`} variant="outlined" />
+          {incident.companyName && (
+            <Chip label={`회사: ${incident.companyName}`} variant="outlined" />
+          )}
+          {incident.assigneeName && (
+            <Chip label={`담당자: ${incident.assigneeName}`} variant="outlined" />
+          )}
           <Chip label={`발생일: ${new Date(incident.occurredAt).toLocaleDateString()}`} variant="outlined" />
         </Box>
       </Paper>
@@ -124,31 +135,60 @@ const IncidentEditPage: React.FC = () => {
           {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField fullWidth label="제목" name="title" value={formData.title} onChange={handleChange} required />
-            <TextField fullWidth label="설명" name="description" value={formData.description} onChange={handleChange} multiline rows={4} />
+            <TextField
+              fullWidth
+              label="제목"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
 
             <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <TextField fullWidth select label="장애유형" name="incidentType" value={formData.incidentType} onChange={handleChange}>
+                <MenuItem value="INCIDENT">인시던트</MenuItem>
+                <MenuItem value="FAILURE">장애</MenuItem>
+              </TextField>
+              <TextField fullWidth select label="시스템유형" name="systemType" value={formData.systemType} onChange={handleChange}>
+                <MenuItem value="PROGRAM">프로그램</MenuItem>
+                <MenuItem value="DATA">데이터</MenuItem>
+                <MenuItem value="SERVER">서버</MenuItem>
+                <MenuItem value="NETWORK">네트워크</MenuItem>
+                <MenuItem value="PC">PC</MenuItem>
+              </TextField>
               <TextField fullWidth select label="심각도" name="severity" value={formData.severity} onChange={handleChange}>
-                <MenuItem value="LOW">낮음</MenuItem>
-                <MenuItem value="MEDIUM">보통</MenuItem>
                 <MenuItem value="HIGH">높음</MenuItem>
-                <MenuItem value="CRITICAL">심각</MenuItem>
+                <MenuItem value="MEDIUM">보통</MenuItem>
+                <MenuItem value="LOW">낮음</MenuItem>
               </TextField>
-              <TextField fullWidth select label="상태" name="status" value={formData.status} onChange={handleChange}>
-                <MenuItem value="OPEN">발생</MenuItem>
-                <MenuItem value="INVESTIGATING">조사중</MenuItem>
-                <MenuItem value="RESOLVED">해결됨</MenuItem>
-                <MenuItem value="CLOSED">종료</MenuItem>
-              </TextField>
+              <TextField
+                fullWidth
+                label="업무영역"
+                name="businessArea"
+                value={formData.businessArea || ''}
+                onChange={handleChange}
+                placeholder="업무영역을 입력하세요"
+              />
             </Box>
-
-            <TextField fullWidth label="원인" name="rootCause" value={formData.rootCause} onChange={handleChange} multiline rows={3} placeholder="장애의 원인을 입력하세요" />
-            <TextField fullWidth label="해결방안" name="solution" value={formData.solution} onChange={handleChange} multiline rows={3} placeholder="해결방안을 입력하세요" />
           </Box>
 
           <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
-            <Button variant="outlined" startIcon={isMobile ? null : <Cancel />} onClick={() => navigate(`/incidents/${id}`)} disabled={saving} fullWidth={isMobile}>취소</Button>
-            <Button type="submit" variant="contained" startIcon={saving ? <CircularProgress size={20} /> : (isMobile ? null : <Save />)} disabled={saving} fullWidth={isMobile}>
+            <Button
+              variant="outlined"
+              startIcon={isMobile ? null : <Cancel />}
+              onClick={() => navigate(`/incidents/${id}`)}
+              disabled={saving}
+              fullWidth={isMobile}
+            >
+              취소
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={saving ? <CircularProgress size={20} /> : (isMobile ? null : <Save />)}
+              disabled={saving}
+              fullWidth={isMobile}
+            >
               {saving ? '저장 중...' : '저장'}
             </Button>
           </Box>
@@ -159,5 +199,3 @@ const IncidentEditPage: React.FC = () => {
 };
 
 export default IncidentEditPage;
-
-
