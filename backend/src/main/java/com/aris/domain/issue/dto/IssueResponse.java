@@ -18,6 +18,8 @@ public record IssueResponse(
         String srNumber,
         Long specId,
         String specNumber,
+        Long companyId,
+        String companyName,
         Long projectId,
         String projectName,
         String title,
@@ -44,6 +46,8 @@ public record IssueResponse(
                 .srNumber(issue.getServiceRequest() != null ? issue.getServiceRequest().getSrNumber() : null)
                 .specId(issue.getSpecification() != null ? issue.getSpecification().getId() : null)
                 .specNumber(issue.getSpecification() != null ? issue.getSpecification().getSpecNumber() : null)
+                .companyId(issue.getProject() != null && issue.getProject().getCompany() != null ? issue.getProject().getCompany().getId() : null)
+                .companyName(issue.getProject() != null && issue.getProject().getCompany() != null ? issue.getProject().getCompany().getName() : null)
                 .projectId(issue.getProject() != null ? issue.getProject().getId() : null)
                 .projectName(issue.getProject() != null ? issue.getProject().getName() : null)
                 .title(issue.getTitle())

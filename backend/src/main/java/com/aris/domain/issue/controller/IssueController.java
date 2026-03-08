@@ -3,6 +3,7 @@ package com.aris.domain.issue.controller;
 import com.aris.domain.issue.dto.IssueRequest;
 import com.aris.domain.issue.dto.IssueResponse;
 import com.aris.domain.issue.entity.IssueStatus;
+import com.aris.domain.issue.entity.IssueType;
 import com.aris.domain.issue.service.IssueService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -52,12 +53,14 @@ public class IssueController {
     @GetMapping
     @Operation(summary = "이슈 목록 조회", description = "이슈 목록을 페이징하여 조회합니다.")
     public ResponseEntity<Page<IssueResponse>> getIssues(
-            @Parameter(description = "이슈 제목") @RequestParam(required = false) String title,
+            @Parameter(description = "회사 ID") @RequestParam(required = false) Long companyId,
+            @Parameter(description = "프로젝트명") @RequestParam(required = false) String projectName,
+            @Parameter(description = "이슈번호") @RequestParam(required = false) String issueNumber,
+            @Parameter(description = "이슈 유형") @RequestParam(required = false) IssueType issueType,
+            @Parameter(description = "우선순위") @RequestParam(required = false) String priority,
             @Parameter(description = "이슈 상태") @RequestParam(required = false) IssueStatus status,
-            @Parameter(description = "보고자 ID") @RequestParam(required = false) Long reporterId,
-            @Parameter(description = "담당자 ID") @RequestParam(required = false) Long assigneeId,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<IssueResponse> response = issueService.getIssues(title, status, reporterId, assigneeId, pageable);
+        Page<IssueResponse> response = issueService.getIssues(companyId, projectName, issueNumber, issueType, priority, status, pageable);
         return ResponseEntity.ok(response);
     }
     

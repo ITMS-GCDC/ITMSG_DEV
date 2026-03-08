@@ -11,6 +11,8 @@ export interface Issue {
   srNumber?: string;
   specId?: number;
   specNumber?: string;
+  companyId?: number;
+  companyName?: string;
   projectId?: number;
   projectName?: string;
   title: string;
@@ -56,10 +58,10 @@ export interface IssueListParams {
   size?: number;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
-  status?: string;
-  priority?: string;
+  companyId?: number;
+  projectName?: string;
+  issueNumber?: string;
   issueType?: string;
-  projectId?: number;
-  assigneeId?: number;
-  search?: string;
+  priority?: string;
+  status?: string;
 }
