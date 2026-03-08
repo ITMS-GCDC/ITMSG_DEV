@@ -8,17 +8,12 @@ import {
   CircularProgress,
   Alert,
   Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowBack, Edit, Delete } from '@mui/icons-material';
-import { getIncident, deleteIncident } from '../../api/incident';
+import { ArrowBack } from '@mui/icons-material';
+import { getIncident } from '../../api/incident';
 import type { Incident } from '../../types/incident.types';
 
 const IncidentDetailPage: React.FC = () => {
@@ -29,8 +24,6 @@ const IncidentDetailPage: React.FC = () => {
   const [incident, setIncident] = useState<Incident | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (id) fetchIncident(Number(id));
@@ -45,20 +38,6 @@ const IncidentDetailPage: React.FC = () => {
       setError(err.response?.data?.message || '장애를 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!incident) return;
-    try {
-      setDeleting(true);
-      await deleteIncident(incident.id);
-      navigate('/incidents');
-    } catch (err: any) {
-      setError(err.response?.data?.message || '장애 삭제에 실패했습니다.');
-    } finally {
-      setDeleting(false);
-      setDeleteDialogOpen(false);
     }
   };
 
@@ -103,12 +82,8 @@ const IncidentDetailPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 1 }}>
+      <Box sx={{ display: 'flex', mb: 3 }}>
         <Button startIcon={isMobile ? null : <ArrowBack />} onClick={() => navigate('/incidents')} size={isMobile ? 'small' : 'medium'}>목록으로</Button>
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          <Button variant="outlined" startIcon={isMobile ? null : <Edit />} onClick={() => navigate(`/incidents/${incident.id}/edit`)} size={isMobile ? 'small' : 'medium'}>수정</Button>
-          <Button variant="outlined" color="error" startIcon={isMobile ? null : <Delete />} onClick={() => setDeleteDialogOpen(true)} size={isMobile ? 'small' : 'medium'}>삭제</Button>
-        </Box>
       </Box>
 
       <Paper sx={{ p: { xs: 2, sm: 3 } }}>
@@ -177,14 +152,6 @@ const IncidentDetailPage: React.FC = () => {
         </Box>
       </Paper>
 
-      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <DialogTitle>장애 삭제</DialogTitle>
-        <DialogContent><DialogContentText>정말 이 장애를 삭제하시겠습니까?</DialogContentText></DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteDialogOpen(false)}>취소</Button>
-          <Button onClick={handleDelete} color="error" disabled={deleting}>{deleting ? '삭제 중...' : '삭제'}</Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 };
