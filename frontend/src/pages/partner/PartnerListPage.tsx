@@ -245,7 +245,7 @@ const PartnerListPage: React.FC = () => {
             onClick={() => navigate('/partners/new')}
             size={isMobile ? 'small' : 'medium'}
           >
-            파트너 등록
+            신규
           </Button>
           <Button
             variant="outlined"
