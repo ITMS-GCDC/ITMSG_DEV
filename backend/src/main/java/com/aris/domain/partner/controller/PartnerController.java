@@ -49,9 +49,10 @@ public class PartnerController {
     @Operation(summary = "파트너 목록 조회", description = "파트너 목록을 페이징하여 조회합니다.")
     public ResponseEntity<Page<PartnerResponse>> getPartners(
             @Parameter(description = "파트너명") @RequestParam(required = false) String name,
+            @Parameter(description = "대표자명") @RequestParam(required = false) String ceoName,
             @Parameter(description = "폐업 여부") @RequestParam(required = false) Boolean isClosed,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<PartnerResponse> response = partnerService.getPartners(name, isClosed, pageable);
+        Page<PartnerResponse> response = partnerService.getPartners(name, ceoName, isClosed, pageable);
         return ResponseEntity.ok(response);
     }
     

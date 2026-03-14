@@ -34,6 +34,7 @@ export interface PartnerListParams {
   page?: number;
   size?: number;
   name?: string;
+  ceoName?: string;
   isClosed?: boolean;
 }
 

@@ -24,9 +24,11 @@ public interface PartnerRepository extends JpaRepository<Partner, Long> {
     
     @Query("SELECT p FROM Partner p " +
            "WHERE (:name IS NULL OR p.name LIKE %:name%) " +
+           "AND (:ceoName IS NULL OR p.ceoName LIKE %:ceoName%) " +
            "AND (:isClosed IS NULL OR p.isClosed = :isClosed) " +
            "AND p.deletedAt IS NULL")
     Page<Partner> search(@Param("name") String name,
+                        @Param("ceoName") String ceoName,
                         @Param("isClosed") Boolean isClosed,
                         Pageable pageable);
 }

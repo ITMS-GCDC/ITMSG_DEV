@@ -65,8 +65,8 @@ public class PartnerService {
         return PartnerResponse.from(partner);
     }
     
-    public Page<PartnerResponse> getPartners(String name, Boolean isClosed, Pageable pageable) {
-        return partnerRepository.search(name, isClosed, pageable)
+    public Page<PartnerResponse> getPartners(String name, String ceoName, Boolean isClosed, Pageable pageable) {
+        return partnerRepository.search(name, ceoName, isClosed, pageable)
                 .map(PartnerResponse::from);
     }
     
