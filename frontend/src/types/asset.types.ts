@@ -12,6 +12,10 @@ export interface Asset {
   expiredAt?: string;
   managerId?: number;
   managerName?: string;
+  projectId?: number;
+  projectName?: string;
+  companyId?: number;
+  companyName?: string;
   createdAt: string;
   createdBy: string;
   updatedAt: string;
@@ -23,12 +27,14 @@ export interface AssetCreateRequest {
   serialNumber?: string;
   acquiredAt: string;
   managerId?: number;
+  projectId?: number;
 }
 
 export interface AssetUpdateRequest {
   assetType: AssetType;
   serialNumber?: string;
   managerId?: number;
+  projectId?: number;
 }
 
 export interface AssetListParams {
@@ -36,9 +42,7 @@ export interface AssetListParams {
   size?: number;
   assetType?: AssetType;
   isExpired?: boolean;
+  assetNumber?: string;
+  companyId?: number;
+  projectId?: number;
 }
-
-
-
-
-

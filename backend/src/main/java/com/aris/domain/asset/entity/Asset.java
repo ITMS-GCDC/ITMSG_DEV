@@ -1,5 +1,6 @@
 package com.aris.domain.asset.entity;
 
+import com.aris.domain.project.entity.Project;
 import com.aris.domain.user.entity.User;
 import com.aris.global.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -46,13 +47,18 @@ public class Asset extends BaseEntity {
     @JoinColumn(name = "manager_id")
     private User manager;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
+
     /**
      * 자산 수정
      */
-    public void updateAsset(AssetType assetType, String serialNumber, User manager) {
+    public void updateAsset(AssetType assetType, String serialNumber, User manager, Project project) {
         this.assetType = assetType;
         this.serialNumber = serialNumber;
         this.manager = manager;
+        this.project = project;
     }
 
     /**

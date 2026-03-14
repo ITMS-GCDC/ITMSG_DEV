@@ -18,12 +18,33 @@ public record AssetResponse(
         LocalDate expiredAt,
         Long managerId,
         String managerName,
+        Long projectId,
+        String projectName,
+        Long companyId,
+        String companyName,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime updatedAt,
         String updatedBy
 ) {
     public static AssetResponse from(Asset asset) {
+        Long projectId = null;
+        String projectName = null;
+        Long companyId = null;
+        String companyName = null;
+        try {
+            if (asset.getProject() != null) {
+                projectId = asset.getProject().getId();
+                projectName = asset.getProject().getName();
+                try {
+                    if (asset.getProject().getCompany() != null) {
+                        companyId = asset.getProject().getCompany().getId();
+                        companyName = asset.getProject().getCompany().getName();
+                    }
+                } catch (Exception ignored) {}
+            }
+        } catch (Exception ignored) {}
+
         return AssetResponse.builder()
                 .id(asset.getId())
                 .assetNumber(asset.getAssetNumber())
@@ -34,6 +55,10 @@ public record AssetResponse(
                 .expiredAt(asset.getExpiredAt())
                 .managerId(asset.getManager() != null ? asset.getManager().getId() : null)
                 .managerName(asset.getManager() != null ? asset.getManager().getName() : null)
+                .projectId(projectId)
+                .projectName(projectName)
+                .companyId(companyId)
+                .companyName(companyName)
                 .createdAt(asset.getCreatedAt())
                 .createdBy(asset.getCreatedBy())
                 .updatedAt(asset.getUpdatedAt())
@@ -41,12 +66,3 @@ public record AssetResponse(
                 .build();
     }
 }
-
-
-
-
-
-
-
-
-
