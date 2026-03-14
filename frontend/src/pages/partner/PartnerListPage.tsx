@@ -32,9 +32,9 @@ import {
   Stack,
   Autocomplete,
 } from '@mui/material';
-import { Add, Search, Refresh, Edit, Delete } from '@mui/icons-material';
+import { Add, Search, Refresh, Edit, Delete, Block, CheckCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { getPartners, updatePartner, deletePartner } from '../../api/partner';
+import { getPartners, updatePartner, deletePartner, closePartner, reopenPartner } from '../../api/partner';
 import apiClient from '../../utils/api';
 import type { Partner, PartnerListParams, PartnerUpdateRequest } from '../../types/partner.types';
 
@@ -83,6 +83,7 @@ const PartnerListPage: React.FC = () => {
     managerId: undefined,
   });
   const [editLoading, setEditLoading] = useState(false);
+  const [closeLoading, setCloseLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [selectedManager, setSelectedManager] = useState<User | null>(null);
 
@@ -172,6 +173,36 @@ const PartnerListPage: React.FC = () => {
       setError(err.message || '파트너 수정에 실패했습니다.');
     } finally {
       setEditLoading(false);
+    }
+  };
+
+  const handleClosePartner = async () => {
+    if (!selectedPartnerData) return;
+    if (!window.confirm('이 파트너를 폐업 처리하시겠습니까?')) return;
+    setCloseLoading(true);
+    try {
+      const updated = await closePartner(selectedPartnerData.id);
+      setSelectedPartnerData(updated);
+      setActiveParams((prev) => ({ ...prev }));
+    } catch (err: any) {
+      setError(err.message || '폐업 처리에 실패했습니다.');
+    } finally {
+      setCloseLoading(false);
+    }
+  };
+
+  const handleReopenPartner = async () => {
+    if (!selectedPartnerData) return;
+    if (!window.confirm('이 파트너를 재개업 처리하시겠습니까?')) return;
+    setCloseLoading(true);
+    try {
+      const updated = await reopenPartner(selectedPartnerData.id);
+      setSelectedPartnerData(updated);
+      setActiveParams((prev) => ({ ...prev }));
+    } catch (err: any) {
+      setError(err.message || '재개업 처리에 실패했습니다.');
+    } finally {
+      setCloseLoading(false);
     }
   };
 
@@ -481,17 +512,44 @@ const PartnerListPage: React.FC = () => {
             </Box>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenEditDialog(false)} disabled={editLoading}>
-            취소
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleEditSubmit}
-            disabled={editLoading || !editForm.name || !editForm.businessNumber}
-          >
-            {editLoading ? <CircularProgress size={20} /> : '저장'}
-          </Button>
+        <DialogActions sx={{ justifyContent: 'space-between' }}>
+          <Box>
+            {selectedPartnerData && (
+              selectedPartnerData.isClosed ? (
+                <Button
+                  variant="outlined"
+                  color="success"
+                  startIcon={<CheckCircle />}
+                  onClick={handleReopenPartner}
+                  disabled={closeLoading || editLoading}
+                >
+                  {closeLoading ? <CircularProgress size={20} /> : '재개업'}
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  startIcon={<Block />}
+                  onClick={handleClosePartner}
+                  disabled={closeLoading || editLoading}
+                >
+                  {closeLoading ? <CircularProgress size={20} /> : '폐업처리'}
+                </Button>
+              )
+            )}
+          </Box>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button onClick={() => setOpenEditDialog(false)} disabled={editLoading || closeLoading}>
+              취소
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleEditSubmit}
+              disabled={editLoading || closeLoading || !editForm.name || !editForm.businessNumber}
+            >
+              {editLoading ? <CircularProgress size={20} /> : '저장'}
+            </Button>
+          </Box>
         </DialogActions>
       </Dialog>
     </Box>
