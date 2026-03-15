@@ -1,18 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, TablePagination, Chip, Card, CardContent, useMediaQuery,
-  useTheme, Alert, CircularProgress, IconButton, Dialog, DialogTitle, DialogContent,
-  DialogContentText, DialogActions, TextField, MenuItem, Select, FormControl,
-  InputLabel, Checkbox, FormGroup, FormControlLabel, FormLabel,
+  Box,
+  Typography,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Chip,
+  CircularProgress,
+  Alert,
+  Card,
+  CardContent,
+  useMediaQuery,
+  useTheme,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Grid,
+  Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Stack,
+  FormGroup,
+  FormControlLabel,
+  FormLabel,
+  type SelectChangeEvent,
 } from '@mui/material';
-import { Add, Edit, Delete, Lock, LockOpen, VpnKey, Search } from '@mui/icons-material';
+import { Add, Search, Refresh, Edit, Delete, Lock, LockOpen, VpnKey } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import {
   getUsers, deleteUser, toggleUserStatus, updateUser,
   type User, type UserUpdateRequest,
 } from '../../api/user';
+
+interface UserSearchForm {
+  companyName: string;
+  email: string;
+  name: string;
+  isActive: string;
+}
+
+const EMPTY_SEARCH_FORM: UserSearchForm = {
+  companyName: '',
+  email: '',
+  name: '',
+  isActive: '',
+};
 
 const AVAILABLE_ROLES = [
   { name: 'ROLE_USER', label: '일반 사용자', description: '기본 사용자 권한' },
@@ -31,19 +75,13 @@ const UserListPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // 검색 조건 (순서: 회사, ID, 이름, 상태)
-  const [searchCompany, setSearchCompany] = useState('');
-  const [searchEmail, setSearchEmail] = useState('');
-  const [searchName, setSearchName] = useState('');
-  const [searchStatus, setSearchStatus] = useState<'' | 'true' | 'false'>('');
+  const [searchForm, setSearchForm] = useState<UserSearchForm>(EMPTY_SEARCH_FORM);
+  const [activeParams, setActiveParams] = useState<{
+    companyName?: string; email?: string; name?: string; isActive?: boolean;
+  }>({});
+  const [hasSearched, setHasSearched] = useState(false);
 
-  // 실제 적용된 검색 조건 (검색 버튼 클릭 시 반영)
-  const [appliedCompany, setAppliedCompany] = useState('');
-  const [appliedEmail, setAppliedEmail] = useState('');
-  const [appliedName, setAppliedName] = useState('');
-  const [appliedStatus, setAppliedStatus] = useState<'' | 'true' | 'false'>('');
-
-  // 체크박스 선택
+  // 체크박스 (단일 선택)
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   // 삭제 확인 Dialog
@@ -59,52 +97,48 @@ const UserListPage: React.FC = () => {
   const { control, handleSubmit, setValue, reset, formState: { errors } } = useForm<UserUpdateRequest>();
 
   useEffect(() => {
-    fetchUsers();
-  }, [page, rowsPerPage, appliedCompany, appliedEmail, appliedName, appliedStatus]);
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const params: {
-        page: number; size: number;
-        companyName?: string; email?: string; name?: string; isActive?: boolean;
-      } = { page, size: rowsPerPage };
-      if (appliedCompany) params.companyName = appliedCompany;
-      if (appliedEmail) params.email = appliedEmail;
-      if (appliedName) params.name = appliedName;
-      if (appliedStatus !== '') params.isActive = appliedStatus === 'true';
-
-      const response = await getUsers(params);
-      setUsers(response.content);
-      setTotalElements(response.totalElements);
-    } catch (err: any) {
-      setError(err.message || '사용자 목록을 불러오는데 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!hasSearched) return;
+    const doFetch = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const params: {
+          page: number; size: number;
+          companyName?: string; email?: string; name?: string; isActive?: boolean;
+        } = { page, size: rowsPerPage, ...activeParams };
+        const response = await getUsers(params);
+        setUsers(response.content || []);
+        setTotalElements(response.totalElements || 0);
+      } catch (err: any) {
+        setError(err.message || '사용자 목록을 불러오는데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    doFetch();
+  }, [page, rowsPerPage, activeParams, hasSearched]);
 
   const handleSearch = () => {
-    setPage(0);
+    const params: { companyName?: string; email?: string; name?: string; isActive?: boolean } = {};
+    if (searchForm.companyName) params.companyName = searchForm.companyName;
+    if (searchForm.email) params.email = searchForm.email;
+    if (searchForm.name) params.name = searchForm.name;
+    if (searchForm.isActive !== '') params.isActive = searchForm.isActive === 'true';
+
+    setHasSearched(true);
     setSelectedUserId(null);
-    setAppliedCompany(searchCompany);
-    setAppliedEmail(searchEmail);
-    setAppliedName(searchName);
-    setAppliedStatus(searchStatus);
-  };
-
-  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSearch();
-  };
-
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    setActiveParams(params);
+  };
+
+  const handleClearSearch = () => {
+    setHasSearched(false);
+    setSearchForm(EMPTY_SEARCH_FORM);
+    setSelectedUserId(null);
+    setPage(0);
+    setActiveParams({});
+    setUsers([]);
+    setTotalElements(0);
   };
 
   const handleCheckboxChange = (userId: number) => {
@@ -112,7 +146,7 @@ const UserListPage: React.FC = () => {
   };
 
   // 수정 팝업 열기
-  const handleEditClick = () => {
+  const handleOpenEdit = () => {
     if (!selectedUserId) return;
     const user = users.find(u => u.id === selectedUserId);
     if (!user) return;
@@ -145,7 +179,7 @@ const UserListPage: React.FC = () => {
       setEditDialogOpen(false);
       setSelectedUserId(null);
       reset();
-      fetchUsers();
+      setActiveParams(prev => ({ ...prev }));
     } catch (err: any) {
       setEditError(err.response?.data?.message || err.message || '사용자 정보 수정에 실패했습니다.');
     } finally {
@@ -153,7 +187,6 @@ const UserListPage: React.FC = () => {
     }
   };
 
-  // 삭제 처리
   const handleDeleteClick = () => {
     if (!selectedUserId) return;
     setDeleteDialogOpen(true);
@@ -165,7 +198,7 @@ const UserListPage: React.FC = () => {
       await deleteUser(selectedUserId);
       setDeleteDialogOpen(false);
       setSelectedUserId(null);
-      fetchUsers();
+      setActiveParams(prev => ({ ...prev }));
     } catch (err: any) {
       setError(err.message || '사용자 삭제에 실패했습니다.');
       setDeleteDialogOpen(false);
@@ -175,7 +208,7 @@ const UserListPage: React.FC = () => {
   const handleToggleStatus = async (userId: number) => {
     try {
       await toggleUserStatus(userId);
-      fetchUsers();
+      setActiveParams(prev => ({ ...prev }));
     } catch (err: any) {
       setError(err.message || '사용자 상태 변경에 실패했습니다.');
     }
@@ -188,103 +221,127 @@ const UserListPage: React.FC = () => {
     return <Chip label="활성" color="success" size="small" />;
   };
 
-  const hasSelection = selectedUserId !== null;
+  const isExactlyOneSelected = selectedUserId !== null;
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
-      {/* 헤더 */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 1 }}>
+      {/* 상단 제목 + 버튼 */}
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 3,
+        flexWrap: 'wrap',
+        gap: 2,
+        width: '100%',
+      }}>
         <Typography variant={isMobile ? 'h5' : 'h4'}>사용자 관리</Typography>
+        <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="flex-end">
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => navigate('/users/new')}
+            size={isMobile ? 'small' : 'medium'}
+          >
+            신규
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Edit />}
+            onClick={handleOpenEdit}
+            disabled={!isExactlyOneSelected}
+            size={isMobile ? 'small' : 'medium'}
+          >
+            수정
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<Delete />}
+            onClick={handleDeleteClick}
+            disabled={!isExactlyOneSelected}
+            size={isMobile ? 'small' : 'medium'}
+          >
+            삭제
+          </Button>
+        </Stack>
       </Box>
 
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>{error}</Alert>
       )}
 
-      {/* 검색 조건 영역 */}
+      {/* 검색 영역: 회사 → ID → 이름 → 상태 */}
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-end' }}>
-          {/* 1. 회사 */}
-          <TextField
-            label="회사"
-            size="small"
-            value={searchCompany}
-            onChange={e => setSearchCompany(e.target.value)}
-            onKeyDown={handleSearchKeyDown}
-            sx={{ minWidth: 160 }}
-          />
-          {/* 2. ID (이메일) */}
-          <TextField
-            label="ID"
-            size="small"
-            value={searchEmail}
-            onChange={e => setSearchEmail(e.target.value)}
-            onKeyDown={handleSearchKeyDown}
-            sx={{ minWidth: 200 }}
-          />
-          {/* 3. 이름 */}
-          <TextField
-            label="이름"
-            size="small"
-            value={searchName}
-            onChange={e => setSearchName(e.target.value)}
-            onKeyDown={handleSearchKeyDown}
-            sx={{ minWidth: 160 }}
-          />
-          {/* 4. 상태 */}
-          <FormControl size="small" sx={{ minWidth: 130 }}>
-            <InputLabel>상태</InputLabel>
-            <Select
-              label="상태"
-              value={searchStatus}
-              onChange={e => setSearchStatus(e.target.value as '' | 'true' | 'false')}
+        <Grid container spacing={1.5} alignItems="center" sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
+            <TextField
+              fullWidth
+              label="회사"
+              value={searchForm.companyName}
+              onChange={(e) => setSearchForm(prev => ({ ...prev, companyName: e.target.value }))}
+              size="small"
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 180 }, flexGrow: { md: 1.2 } }}>
+            <TextField
+              fullWidth
+              label="ID"
+              value={searchForm.email}
+              onChange={(e) => setSearchForm(prev => ({ ...prev, email: e.target.value }))}
+              size="small"
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 150 }, flexGrow: { md: 1 } }}>
+            <TextField
+              fullWidth
+              label="이름"
+              value={searchForm.name}
+              onChange={(e) => setSearchForm(prev => ({ ...prev, name: e.target.value }))}
+              size="small"
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 130 }, flexGrow: { md: 1 } }}>
+            <FormControl fullWidth size="small">
+              <InputLabel>상태</InputLabel>
+              <Select
+                value={searchForm.isActive}
+                label="상태"
+                onChange={(e: SelectChangeEvent<string>) =>
+                  setSearchForm(prev => ({ ...prev, isActive: e.target.value }))
+                }
+              >
+                <MenuItem value="">전체</MenuItem>
+                <MenuItem value="true">활성</MenuItem>
+                <MenuItem value="false">비활성</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, md: 'auto' }} sx={{ display: 'flex', gap: 1, flexShrink: 0 }}>
+            <Button
+              variant="contained"
+              onClick={handleSearch}
+              startIcon={<Search />}
+              size="medium"
+              sx={{ whiteSpace: 'nowrap' }}
             >
-              <MenuItem value="">전체</MenuItem>
-              <MenuItem value="true">활성</MenuItem>
-              <MenuItem value="false">비활성</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            startIcon={<Search />}
-            onClick={handleSearch}
-            size="small"
-          >
-            검색
-          </Button>
-        </Box>
+              검색
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={handleClearSearch}
+              startIcon={<Refresh />}
+              size="medium"
+              sx={{ whiteSpace: 'nowrap' }}
+            >
+              초기화
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
-
-      {/* 버튼 영역 */}
-      <Box sx={{ display: 'flex', gap: 1, mb: 1, justifyContent: 'flex-end' }}>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => navigate('/users/new')}
-          size={isMobile ? 'small' : 'medium'}
-        >
-          신규
-        </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Edit />}
-          onClick={handleEditClick}
-          disabled={!hasSelection}
-          size={isMobile ? 'small' : 'medium'}
-        >
-          수정
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          startIcon={<Delete />}
-          onClick={handleDeleteClick}
-          disabled={!hasSelection}
-          size={isMobile ? 'small' : 'medium'}
-        >
-          삭제
-        </Button>
-      </Box>
 
       {/* 모바일: 카드 뷰 */}
       {isMobile ? (
@@ -294,9 +351,13 @@ const UserListPage: React.FC = () => {
               <CircularProgress size={24} />
               <Typography sx={{ mt: 1 }}>로딩 중...</Typography>
             </Paper>
+          ) : !hasSearched ? (
+            <Paper sx={{ p: 4, textAlign: 'center' }}>
+              <Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography>
+            </Paper>
           ) : users.length === 0 ? (
             <Paper sx={{ p: 3, textAlign: 'center' }}>
-              <Typography color="text.secondary">데이터가 없습니다.</Typography>
+              <Typography color="text.secondary">검색 결과가 없습니다.</Typography>
             </Paper>
           ) : (
             users.map((user) => (
@@ -316,108 +377,141 @@ const UserListPage: React.FC = () => {
                     {user.companyName}{user.departmentName ? ` - ${user.departmentName}` : ''}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-                    <IconButton size="small" color="secondary" onClick={() => navigate(`/users/${user.id}/password`)}>
-                      <VpnKey />
-                    </IconButton>
-                    <IconButton
+                    <Button size="small" color="secondary" startIcon={<VpnKey />}
+                      onClick={() => navigate(`/users/${user.id}/password`)}>
+                      비밀번호
+                    </Button>
+                    <Button
                       size="small"
                       color={user.isActive ? 'warning' : 'success'}
+                      startIcon={user.isActive ? <Lock /> : <LockOpen />}
                       onClick={() => handleToggleStatus(user.id)}
                     >
-                      {user.isActive ? <Lock /> : <LockOpen />}
-                    </IconButton>
+                      {user.isActive ? '비활성화' : '활성화'}
+                    </Button>
                   </Box>
                 </CardContent>
               </Card>
             ))
           )}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <TablePagination
+              component="div"
+              count={totalElements}
+              page={page}
+              onPageChange={(_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage)}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                setRowsPerPage(parseInt(e.target.value, 10));
+                setPage(0);
+              }}
+              labelRowsPerPage="페이지당:"
+            />
+          </Box>
         </Box>
       ) : (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 'calc(100vh - 400px)' }}>
-            <Table stickyHeader aria-label="user table" size="small">
-              <TableHead>
+        /* 데스크탑: 테이블 뷰 */
+        <TableContainer component={Paper} sx={{ width: '100%' }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox" />
+                <TableCell align="center">ID</TableCell>
+                <TableCell align="center">이름</TableCell>
+                <TableCell align="center">이메일</TableCell>
+                <TableCell align="center">회사</TableCell>
+                <TableCell align="center">부서</TableCell>
+                <TableCell align="center">직급</TableCell>
+                <TableCell align="center">권한</TableCell>
+                <TableCell align="center">상태</TableCell>
+                <TableCell align="center">마지막 로그인</TableCell>
+                <TableCell align="center">기타</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
                 <TableRow>
-                  <TableCell padding="checkbox" />
-                  <TableCell>ID</TableCell>
-                  <TableCell>이름</TableCell>
-                  <TableCell>이메일</TableCell>
-                  <TableCell>회사</TableCell>
-                  <TableCell>부서</TableCell>
-                  <TableCell>직급</TableCell>
-                  <TableCell>권한</TableCell>
-                  <TableCell>상태</TableCell>
-                  <TableCell>마지막 로그인</TableCell>
-                  <TableCell align="center">기타</TableCell>
+                  <TableCell colSpan={11} align="center">
+                    <CircularProgress size={24} />
+                    <Typography sx={{ mt: 1 }}>로딩 중...</Typography>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={11} align="center">
-                      <CircularProgress size={24} />
+              ) : !hasSearched ? (
+                <TableRow>
+                  <TableCell colSpan={11} align="center">
+                    <Typography color="text.secondary">검색조건을 입력 후 조회 버튼을 눌러주세요.</Typography>
+                  </TableCell>
+                </TableRow>
+              ) : users.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={11} align="center">
+                    <Typography color="text.secondary">검색 결과가 없습니다.</Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                users.map((user) => (
+                  <TableRow
+                    key={user.id}
+                    hover
+                    selected={selectedUserId === user.id}
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => handleCheckboxChange(user.id)}
+                  >
+                    <TableCell padding="checkbox" onClick={e => e.stopPropagation()}>
+                      <Checkbox
+                        checked={selectedUserId === user.id}
+                        onChange={() => handleCheckboxChange(user.id)}
+                        size="small"
+                      />
+                    </TableCell>
+                    <TableCell align="center">{user.id}</TableCell>
+                    <TableCell align="center">{user.name}</TableCell>
+                    <TableCell align="center">{user.email}</TableCell>
+                    <TableCell align="center">{user.companyName || '-'}</TableCell>
+                    <TableCell align="center">{user.departmentName || '-'}</TableCell>
+                    <TableCell align="center">{user.position || '-'}</TableCell>
+                    <TableCell align="center">{user.roles?.join(', ') || '-'}</TableCell>
+                    <TableCell align="center">{getStatusChip(user)}</TableCell>
+                    <TableCell align="center">
+                      {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : '-'}
+                    </TableCell>
+                    <TableCell align="center" onClick={e => e.stopPropagation()}>
+                      <Button
+                        size="small"
+                        color="secondary"
+                        startIcon={<VpnKey />}
+                        onClick={() => navigate(`/users/${user.id}/password`)}
+                        sx={{ mr: 0.5 }}
+                      >
+                        비밀번호
+                      </Button>
+                      <Button
+                        size="small"
+                        color={user.isActive ? 'warning' : 'success'}
+                        startIcon={user.isActive ? <Lock /> : <LockOpen />}
+                        onClick={() => handleToggleStatus(user.id)}
+                      >
+                        {user.isActive ? '비활성화' : '활성화'}
+                      </Button>
                     </TableCell>
                   </TableRow>
-                ) : users.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={11} align="center">데이터가 없습니다.</TableCell>
-                  </TableRow>
-                ) : (
-                  users.map((user) => (
-                    <TableRow
-                      key={user.id}
-                      hover
-                      selected={selectedUserId === user.id}
-                      onClick={() => handleCheckboxChange(user.id)}
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      <TableCell padding="checkbox" onClick={e => e.stopPropagation()}>
-                        <Checkbox
-                          checked={selectedUserId === user.id}
-                          onChange={() => handleCheckboxChange(user.id)}
-                          size="small"
-                        />
-                      </TableCell>
-                      <TableCell>{user.id}</TableCell>
-                      <TableCell>{user.name}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.companyName || '-'}</TableCell>
-                      <TableCell>{user.departmentName || '-'}</TableCell>
-                      <TableCell>{user.position || '-'}</TableCell>
-                      <TableCell>{user.roles?.join(', ') || '-'}</TableCell>
-                      <TableCell>{getStatusChip(user)}</TableCell>
-                      <TableCell>
-                        {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : '-'}
-                      </TableCell>
-                      <TableCell align="center" onClick={e => e.stopPropagation()}>
-                        <IconButton size="small" color="secondary" onClick={() => navigate(`/users/${user.id}/password`)}>
-                          <VpnKey />
-                        </IconButton>
-                        <IconButton
-                          size="small"
-                          color={user.isActive ? 'warning' : 'success'}
-                          onClick={() => handleToggleStatus(user.id)}
-                          title={user.isActive ? '비활성화' : '활성화'}
-                        >
-                          {user.isActive ? <Lock /> : <LockOpen />}
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                ))
+              )}
+            </TableBody>
+          </Table>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={totalElements}
-            rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+            onPageChange={(_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage)}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+              setRowsPerPage(parseInt(e.target.value, 10));
+              setPage(0);
+            }}
+            labelRowsPerPage="페이지당 행 수:"
           />
-        </Paper>
+        </TableContainer>
       )}
 
       {/* 수정 팝업 Dialog */}
@@ -425,117 +519,134 @@ const UserListPage: React.FC = () => {
         <DialogTitle>사용자 정보 수정</DialogTitle>
         <DialogContent>
           {editUser && (
-            <Box sx={{ mb: 2, p: 1.5, bgcolor: 'rgba(0,0,0,0.03)', borderRadius: 1, mt: 1 }}>
-              <Typography variant="body2" color="text.secondary">
-                이메일: <strong>{editUser.email}</strong>
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                회사: <strong>{editUser.companyName || '-'}</strong>
-              </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+              {editError && <Alert severity="error">{editError}</Alert>}
+
+              {/* 읽기 전용 정보 */}
+              <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: 1,
+                p: 1.5,
+                bgcolor: 'grey.50',
+                borderRadius: 1,
+              }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary">이메일(ID)</Typography>
+                  <Typography variant="body2" fontWeight="bold">{editUser.email}</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="caption" color="text.secondary">회사</Typography>
+                  <Typography variant="body2">{editUser.companyName || '-'}</Typography>
+                </Box>
+              </Box>
+
+              {/* 편집 가능 필드 */}
+              <Box component="form" id="edit-user-form" onSubmit={handleSubmit(onEditSubmit)}>
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={{ required: '이름은 필수입니다.', maxLength: { value: 50, message: '최대 50자' } }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="이름"
+                      fullWidth
+                      margin="dense"
+                      size="small"
+                      error={!!errors.name}
+                      helperText={errors.name?.message}
+                      required
+                    />
+                  )}
+                />
+                <Controller
+                  name="phoneNumber"
+                  control={control}
+                  rules={{ maxLength: { value: 20, message: '최대 20자' } }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="전화번호"
+                      fullWidth
+                      margin="dense"
+                      size="small"
+                      error={!!errors.phoneNumber}
+                      helperText={errors.phoneNumber?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="employeeNumber"
+                  control={control}
+                  rules={{ maxLength: { value: 20, message: '최대 20자' } }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="사번"
+                      fullWidth
+                      margin="dense"
+                      size="small"
+                      error={!!errors.employeeNumber}
+                      helperText={errors.employeeNumber?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="position"
+                  control={control}
+                  rules={{ maxLength: { value: 50, message: '최대 50자' } }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="직급"
+                      fullWidth
+                      margin="dense"
+                      size="small"
+                      error={!!errors.position}
+                      helperText={errors.position?.message}
+                    />
+                  )}
+                />
+                <FormControl component="fieldset" sx={{ mt: 2, width: '100%' }}>
+                  <FormLabel component="legend" sx={{ mb: 0.5, fontWeight: 600, fontSize: '0.875rem' }}>
+                    권한 설정
+                  </FormLabel>
+                  <Paper variant="outlined" sx={{ p: 1.5 }}>
+                    <FormGroup>
+                      {AVAILABLE_ROLES.map((role) => (
+                        <FormControlLabel
+                          key={role.name}
+                          control={
+                            <Checkbox
+                              checked={editRoles.includes(role.name)}
+                              onChange={(e) => handleEditRoleChange(role.name, e.target.checked)}
+                              disabled={editRoles.length === 1 && editRoles.includes(role.name)}
+                              size="small"
+                            />
+                          }
+                          label={
+                            <Box>
+                              <Typography variant="body2">{role.label}</Typography>
+                              <Typography variant="caption" color="text.secondary">{role.description}</Typography>
+                            </Box>
+                          }
+                          sx={{ mb: 0.5, alignItems: 'flex-start' }}
+                        />
+                      ))}
+                    </FormGroup>
+                  </Paper>
+                </FormControl>
+              </Box>
             </Box>
           )}
-          {editError && <Alert severity="error" sx={{ mb: 1 }}>{editError}</Alert>}
-          <Box component="form" id="edit-user-form" onSubmit={handleSubmit(onEditSubmit)}>
-            <Controller
-              name="name"
-              control={control}
-              rules={{ required: '이름은 필수입니다.', maxLength: { value: 50, message: '최대 50자' } }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="이름"
-                  fullWidth
-                  margin="dense"
-                  size="small"
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                  required
-                />
-              )}
-            />
-            <Controller
-              name="phoneNumber"
-              control={control}
-              rules={{ maxLength: { value: 20, message: '최대 20자' } }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="전화번호"
-                  fullWidth
-                  margin="dense"
-                  size="small"
-                  error={!!errors.phoneNumber}
-                  helperText={errors.phoneNumber?.message}
-                />
-              )}
-            />
-            <Controller
-              name="employeeNumber"
-              control={control}
-              rules={{ maxLength: { value: 20, message: '최대 20자' } }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="사번"
-                  fullWidth
-                  margin="dense"
-                  size="small"
-                  error={!!errors.employeeNumber}
-                  helperText={errors.employeeNumber?.message}
-                />
-              )}
-            />
-            <Controller
-              name="position"
-              control={control}
-              rules={{ maxLength: { value: 50, message: '최대 50자' } }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="직급"
-                  fullWidth
-                  margin="dense"
-                  size="small"
-                  error={!!errors.position}
-                  helperText={errors.position?.message}
-                />
-              )}
-            />
-            <FormControl component="fieldset" sx={{ mt: 2, width: '100%' }}>
-              <FormLabel component="legend" sx={{ mb: 0.5, fontWeight: 600, fontSize: '0.875rem' }}>
-                권한 설정
-              </FormLabel>
-              <Paper variant="outlined" sx={{ p: 1.5 }}>
-                <FormGroup>
-                  {AVAILABLE_ROLES.map((role) => (
-                    <FormControlLabel
-                      key={role.name}
-                      control={
-                        <Checkbox
-                          checked={editRoles.includes(role.name)}
-                          onChange={(e) => handleEditRoleChange(role.name, e.target.checked)}
-                          disabled={editRoles.length === 1 && editRoles.includes(role.name)}
-                          size="small"
-                        />
-                      }
-                      label={
-                        <Box>
-                          <Typography variant="body2">{role.label}</Typography>
-                          <Typography variant="caption" color="text.secondary">{role.description}</Typography>
-                        </Box>
-                      }
-                      sx={{ mb: 0.5, alignItems: 'flex-start' }}
-                    />
-                  ))}
-                </FormGroup>
-              </Paper>
-            </FormControl>
-          </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setEditDialogOpen(false); reset(); }} disabled={editLoading}>취소</Button>
+          <Button onClick={() => { setEditDialogOpen(false); reset(); }} disabled={editLoading}>
+            취소
+          </Button>
           <Button type="submit" form="edit-user-form" variant="contained" disabled={editLoading}>
-            {editLoading ? <CircularProgress size={20} color="inherit" /> : '수정'}
+            {editLoading ? <CircularProgress size={20} color="inherit" /> : '저장'}
           </Button>
         </DialogActions>
       </Dialog>
