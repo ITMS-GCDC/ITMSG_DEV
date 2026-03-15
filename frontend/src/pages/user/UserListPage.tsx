@@ -43,16 +43,18 @@ import {
   getUsers, deleteUser, toggleUserStatus, updateUser,
   type User, type UserUpdateRequest,
 } from '../../api/user';
+import { getCompanies } from '../../api/project';
+import type { Company } from '../../types/project.types';
 
 interface UserSearchForm {
-  companyName: string;
+  companyId: string;
   email: string;
   name: string;
   isActive: string;
 }
 
 const EMPTY_SEARCH_FORM: UserSearchForm = {
-  companyName: '',
+  companyId: '',
   email: '',
   name: '',
   isActive: '',
@@ -75,9 +77,11 @@ const UserListPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const [companies, setCompanies] = useState<Company[]>([]);
+
   const [searchForm, setSearchForm] = useState<UserSearchForm>(EMPTY_SEARCH_FORM);
   const [activeParams, setActiveParams] = useState<{
-    companyName?: string; email?: string; name?: string; isActive?: boolean;
+    companyId?: number; email?: string; name?: string; isActive?: boolean;
   }>({});
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -97,6 +101,12 @@ const UserListPage: React.FC = () => {
   const { control, handleSubmit, setValue, reset, formState: { errors } } = useForm<UserUpdateRequest>();
 
   useEffect(() => {
+    getCompanies()
+      .then(setCompanies)
+      .catch((err) => console.error('Failed to load companies:', err));
+  }, []);
+
+  useEffect(() => {
     if (!hasSearched) return;
     const doFetch = async () => {
       setLoading(true);
@@ -104,7 +114,7 @@ const UserListPage: React.FC = () => {
       try {
         const params: {
           page: number; size: number;
-          companyName?: string; email?: string; name?: string; isActive?: boolean;
+          companyId?: number; email?: string; name?: string; isActive?: boolean;
         } = { page, size: rowsPerPage, ...activeParams };
         const response = await getUsers(params);
         setUsers(response.content || []);
@@ -119,8 +129,8 @@ const UserListPage: React.FC = () => {
   }, [page, rowsPerPage, activeParams, hasSearched]);
 
   const handleSearch = () => {
-    const params: { companyName?: string; email?: string; name?: string; isActive?: boolean } = {};
-    if (searchForm.companyName) params.companyName = searchForm.companyName;
+    const params: { companyId?: number; email?: string; name?: string; isActive?: boolean } = {};
+    if (searchForm.companyId) params.companyId = Number(searchForm.companyId);
     if (searchForm.email) params.email = searchForm.email;
     if (searchForm.name) params.name = searchForm.name;
     if (searchForm.isActive !== '') params.isActive = searchForm.isActive === 'true';
@@ -275,14 +285,21 @@ const UserListPage: React.FC = () => {
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={1.5} alignItems="center" sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 160 }, flexGrow: { md: 1 } }}>
-            <TextField
-              fullWidth
-              label="회사"
-              value={searchForm.companyName}
-              onChange={(e) => setSearchForm(prev => ({ ...prev, companyName: e.target.value }))}
-              size="small"
-              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
-            />
+            <FormControl fullWidth size="small">
+              <InputLabel>회사</InputLabel>
+              <Select
+                value={searchForm.companyId}
+                label="회사"
+                onChange={(e: SelectChangeEvent<string>) =>
+                  setSearchForm(prev => ({ ...prev, companyId: e.target.value }))
+                }
+              >
+                <MenuItem value="">전체</MenuItem>
+                {companies.map((c) => (
+                  <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid size={{ xs: 12, md: 'auto' }} sx={{ minWidth: { md: 180 }, flexGrow: { md: 1.2 } }}>
             <TextField
