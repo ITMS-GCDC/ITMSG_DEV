@@ -62,6 +62,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * 삭제되지 않은 사용자 목록 조회
      */
     Page<User> findByDeletedAtIsNull(Pageable pageable);
+
+    /**
+     * 사용자 검색 필터 (회사명, 이메일, 이름, 활성 상태)
+     */
+    @Query("SELECT u FROM User u " +
+           "WHERE (:companyName IS NULL OR u.company.name LIKE %:companyName%) " +
+           "AND (:email IS NULL OR u.email LIKE %:email%) " +
+           "AND (:name IS NULL OR u.name LIKE %:name%) " +
+           "AND (:isActive IS NULL OR u.isActive = :isActive) " +
+           "AND u.deletedAt IS NULL")
+    Page<User> searchByFilters(@Param("companyName") String companyName,
+                               @Param("email") String email,
+                               @Param("name") String name,
+                               @Param("isActive") Boolean isActive,
+                               Pageable pageable);
 }
 
 

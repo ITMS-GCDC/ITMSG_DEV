@@ -47,17 +47,23 @@ export interface PasswordResetRequest {
 export interface UserListParams {
   page?: number;
   size?: number;
-  search?: string;
+  companyName?: string;
+  email?: string;
+  name?: string;
+  isActive?: boolean | '';
 }
 
 /**
  * 사용자 목록 조회
  */
 export const getUsers = async (params: UserListParams = {}): Promise<PageResponse<User>> => {
-  const { page = 0, size = 20, search } = params;
-  const response = await apiClient.get('/users', {
-    params: { page, size, search },
-  });
+  const { page = 0, size = 20, companyName, email, name, isActive } = params;
+  const queryParams: Record<string, unknown> = { page, size };
+  if (companyName) queryParams.companyName = companyName;
+  if (email) queryParams.email = email;
+  if (name) queryParams.name = name;
+  if (isActive !== undefined && isActive !== '') queryParams.isActive = isActive;
+  const response = await apiClient.get('/users', { params: queryParams });
   return response.data;
 };
 

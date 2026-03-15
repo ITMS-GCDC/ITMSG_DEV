@@ -40,9 +40,20 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     
     /**
-     * 사용자 목록 조회 (삭제되지 않은 사용자만)
+     * 사용자 목록 조회 (검색 조건 적용)
      */
-    public Page<UserResponse> getUsers(Pageable pageable) {
+    public Page<UserResponse> getUsers(String companyName, String email, String name, Boolean isActive, Pageable pageable) {
+        boolean hasFilter = StringUtils.hasText(companyName) || StringUtils.hasText(email)
+                || StringUtils.hasText(name) || isActive != null;
+        if (hasFilter) {
+            return userRepository.searchByFilters(
+                    StringUtils.hasText(companyName) ? companyName : null,
+                    StringUtils.hasText(email) ? email : null,
+                    StringUtils.hasText(name) ? name : null,
+                    isActive,
+                    pageable
+            ).map(UserResponse::from);
+        }
         return userRepository.findByDeletedAtIsNull(pageable)
                 .map(UserResponse::from);
     }

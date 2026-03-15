@@ -46,8 +46,12 @@ public class UserController {
     })
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getUsers(
+            @Parameter(description = "회사명 검색") @RequestParam(required = false) String companyName,
+            @Parameter(description = "이메일(ID) 검색") @RequestParam(required = false) String email,
+            @Parameter(description = "이름 검색") @RequestParam(required = false) String name,
+            @Parameter(description = "활성 상태 (true/false)") @RequestParam(required = false) Boolean isActive,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<UserResponse> users = userService.getUsers(pageable);
+        Page<UserResponse> users = userService.getUsers(companyName, email, name, isActive, pageable);
         return ResponseEntity.ok(users);
     }
     
