@@ -27,14 +27,14 @@ public interface AssetRepository extends JpaRepository<Asset, Long> {
            "WHERE (:assetType IS NULL OR a.assetType = :assetType) " +
            "AND (:isExpired IS NULL OR a.isExpired = :isExpired) " +
            "AND (:managerId IS NULL OR a.manager.id = :managerId) " +
-           "AND (:assetNumber IS NULL OR LOWER(a.assetNumber) LIKE LOWER(CONCAT('%', :assetNumber, '%'))) " +
+           "AND (:assetNumberPattern IS NULL OR LOWER(a.assetNumber) LIKE :assetNumberPattern) " +
            "AND (:companyId IS NULL OR c.id = :companyId) " +
            "AND (:projectId IS NULL OR p.id = :projectId) " +
            "AND a.deletedAt IS NULL")
     Page<Asset> search(@Param("assetType") AssetType assetType,
                        @Param("isExpired") Boolean isExpired,
                        @Param("managerId") Long managerId,
-                       @Param("assetNumber") String assetNumber,
+                       @Param("assetNumberPattern") String assetNumberPattern,
                        @Param("companyId") Long companyId,
                        @Param("projectId") Long projectId,
                        Pageable pageable);

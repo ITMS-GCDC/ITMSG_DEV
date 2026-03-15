@@ -73,7 +73,12 @@ public class AssetService {
     public Page<AssetResponse> getAssets(AssetType assetType, Boolean isExpired, Long managerId,
                                           String assetNumber, Long companyId, Long projectId,
                                           Pageable pageable) {
-        return assetRepository.search(assetType, isExpired, managerId, assetNumber, companyId, projectId, pageable)
+        // LOWER() on a bound parameter causes type inference error (bytea) in PostgreSQL.
+        // Pre-compute the lowercase LIKE pattern in Java to apply LOWER() only on the column side.
+        String assetNumberPattern = (assetNumber != null && !assetNumber.isBlank())
+                ? "%" + assetNumber.toLowerCase() + "%"
+                : null;
+        return assetRepository.search(assetType, isExpired, managerId, assetNumberPattern, companyId, projectId, pageable)
                 .map(AssetResponse::from);
     }
 
